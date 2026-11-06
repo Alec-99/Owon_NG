@@ -1,7 +1,7 @@
-# Native oscilloscoopapp 0.3.1
+# Native oscilloscoopapp
 
 Python: installeer requirements-native.txt en start python app.py.
-Windows: pak de volledige native ZIP uit en start Owon_NG-0.3.1.exe. Behoud de map _internal met Python en vervangbare Qt-bibliotheken. Geen Python-installatie vereist voor de Windows-distributie.
+Windows: pak de volledige native ZIP uit en start de Owon_NG-EXE in de uitgepakte versiemap. Behoud de map _internal met Python en vervangbare Qt-bibliotheken. Geen Python-installatie vereist voor de Windows-distributie.
 
 Native Qt Widgets-interface met QPainter-golfvormcanvas. Geen browser, WebView of HTTP-server.
 Werkend: gesimuleerde CKP/lambda/injector/CAN/PWM/sinus, twee kanalen, schalen/offsets, tijdzoom/pan, muis- en toetsenbordcursors, start/pauze/single, hulp, begeleide instructies, notities, JSON bewaren/openen en demo-rapportweergave.

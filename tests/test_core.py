@@ -11,7 +11,7 @@ import unittest
 from unittest.mock import patch
 from native.capture import Capture, ChannelConfig, ViewState
 from native.recording import load_recording, save_recording, encoded
-from native.acquisition import Acquisition, SimulatedScope, Vds1022Adapter
+from native.acquisition import Acquisition, SimulatedScope, Vds1022Adapter, Capabilities
 from native.rendering import envelope
 
 def wait_for(predicate, timeout=3):
@@ -140,7 +140,7 @@ class AcquisitionTests(unittest.TestCase):
         controller=Acquisition(Blocking(),interval=.001)
         try:
             controller.configure("PWM");self.assertTrue(entered.wait(2))
-            controller.configure("Sinus",running=False);release.set()
+            controller.configure("Sinus",running=False);controller.pause();release.set()
             wait_for(lambda:controller.status().state=="stopped")
             self.assertIsNone(controller.latest())
             controller.single();wait_for(lambda:controller.status().produced==1)
@@ -162,6 +162,20 @@ class AcquisitionTests(unittest.TestCase):
             self.assertIsNone(controller.status().error)
         finally:self.assertTrue(controller.close())
         with self.assertRaises(RuntimeError):controller.resume()
+
+    def test_unverified_hardware_frames_are_not_published(self):
+        class Unverified(SimulatedScope):
+            def connect(self):
+                self.connected=True
+                return Capabilities("hardware",2,False)
+            def read_frame(self,timeout=.25):
+                return dataclasses.replace(super().read_frame(timeout),source="hardware",original="hardware")
+        controller=Acquisition(Unverified())
+        try:
+            controller.configure("PWM");wait_for(lambda:controller.status().state=="error")
+            self.assertIn("hardwarevalidatie",controller.status().error)
+            self.assertIsNone(controller.latest())
+        finally:self.assertTrue(controller.close())
 
     def test_hardware_boundary_never_claims_to_connect(self):
         controller=Acquisition(Vds1022Adapter())

@@ -89,6 +89,7 @@ class Acquisition:
         self._quit = Event()
         self._frames = deque()
         self._generation = 0
+        self._requested_profile = None
         self._state = "disconnected"
         self._produced = self._overflow = self._skipped = 0
         self._error = None
@@ -104,7 +105,9 @@ class Acquisition:
             generation = self._generation
             self._frames.clear()
             self._error = None
-            self._commands.put((generation, kind, value))
+            if kind == "configure":
+                self._requested_profile = value[0]
+            self._commands.put((generation, kind, value, self._requested_profile))
 
     def configure(self, profile, running=True):
         self._submit("configure", (profile, running))
@@ -133,12 +136,14 @@ class Acquisition:
 
     def close(self, timeout=2):
         self._quit.set()
-        self._commands.put((0, "close", None))
+        self._commands.put((0, "close", None, None))
         self._thread.join(timeout)
         return not self._thread.is_alive()
 
-    def _set_state(self, state, error=None):
+    def _set_state(self, state, error=None, generation=None):
         with self._lock:
+            if generation is not None and generation != self._generation:
+                return
             self._state, self._error = state, error
 
     def _publish(self, generation):
@@ -161,6 +166,7 @@ class Acquisition:
         running = False
         connected = False
         generation = 0
+        configured_profile = None
         deadline = time.monotonic()
         try:
             while not self._quit.is_set():
@@ -171,7 +177,7 @@ class Acquisition:
                     command = None
                 try:
                     if command:
-                        generation, kind, value = command
+                        generation, kind, value, requested_profile = command
                         if kind == "close":
                             break
                         with self._lock:
@@ -179,12 +185,16 @@ class Acquisition:
                                 continue
                         if not connected:
                             self._capabilities = self.adapter.connect()
+                            connected = True
                             if not isinstance(self._capabilities, Capabilities):
                                 raise TypeError("Adapter mist expliciete mogelijkheden.")
-                            connected = True
+                        if requested_profile is None:
+                            raise RuntimeError("Selecteer eerst een acquisitieprofiel.")
+                        if kind == "configure" or requested_profile != configured_profile:
+                            self.adapter.configure(requested_profile)
+                            configured_profile = requested_profile
                         if kind == "configure":
-                            profile, running = value
-                            self.adapter.configure(profile)
+                            _, running = value
                         elif kind == "pause":
                             running = False
                         elif kind == "resume":
@@ -192,7 +202,7 @@ class Acquisition:
                         elif kind == "single":
                             running = False
                             self._publish(generation)
-                        self._set_state("running" if running else "stopped")
+                        self._set_state("running" if running else "stopped",generation=generation)
                         deadline = time.monotonic()
                     elif running:
                         self._publish(generation)
@@ -200,7 +210,17 @@ class Acquisition:
                         deadline = time.monotonic()+self.interval
                 except Exception as error:
                     running = False
-                    self._set_state("error", str(error))
+                    message = str(error)
+                    try:
+                        if connected:
+                            self.adapter.disconnect()
+                    except Exception as cleanup_error:
+                        message += "; afsluiten: "+str(cleanup_error)
+                    connected = False
+                    configured_profile = None
+                    self._capabilities = None
+                    self._set_state("error", message, generation)
+
         finally:
             try:
                 self.adapter.disconnect()
