@@ -1,3 +1,5 @@
+> **Codex handoff (2026-11-06):** This repository is in a **UI-first** development phase. The complete agent brief is in [AGENTS.md](AGENTS.md); the working branch strategy and current status are in [docs/START_HERE.md](docs/START_HERE.md). The detailed UI quality spec is in [docs/UI_SPEC.md](docs/UI_SPEC.md), the first task in [docs/tasks/UI-001.md](docs/tasks/UI-001.md), and a copy-ready Dutch Codex prompt in [docs/CODEX_START_PROMPT.md](docs/CODEX_START_PROMPT.md). The name Owon_NG is provisional. **Real hardware support is intentionally deferred until the full UI is accepted.**
+
 # Owon NG
 
 An experimental, user-friendly oscilloscope and diagnostics workspace for **OWON VDS1022I**, with guided automotive and electronics workflows. The name is provisional.
