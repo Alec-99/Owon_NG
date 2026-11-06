@@ -49,3 +49,7 @@ Owner found the first UI generic. Replace dashboard styling with a native instru
 ## 2026-11-06 — Owner authorizes autonomous functional work
 
 Supersedes UI-only review gates. Implement acquisition and recording foundations and keep device-dependent work open. Use immutable voltage frames, explicit sample clocks and unknown physical metadata; separate view state from samples. One adapter-owner worker and generation tokens prevent UI blocking and late-profile/import overwrite. A bounded queue is explicitly a preview buffer, not a lossless recorder. Schema 2 persists exact current samples/settings with digest and atomic replacement; schema 1 remains readable. Display min/max envelopes retain sampled spikes. Real USB support remains unavailable rather than guessed.
+
+## 2026-11-06 — Time-aligned native decoder lane
+
+Following owner feedback, render decoder events under the waveform using the same sample-to-time transform. Events are tied to a frozen capture ID; new captures/settings invalidate stale output. Analysis freezes the current simulated frame. Use a single implementation for numeric output and visual spans; expose hexadecimal/decimal/ASCII/binary representations and click-through sample/time details. First lane covers UART 8N1, I²C 7-bit address/data/ACK and sampled PWM periods. No protocol/hardware validation parity claim with PicoScope or LabNation is made.

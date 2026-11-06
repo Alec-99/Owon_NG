@@ -20,3 +20,9 @@ Analyse werkt op samples met een vaste 2,5 V-drempel. UART vereist minimaal 8 sa
 ## 0.3.2 — instrumentindeling
 
 Compacte native menubalk en werkbalk, kanaalinstellingen rechts, testhulp in een eigen tab en decoders/notities onder de grafiek. Het scopecanvas toont voltage- en tijdassen, fijn raster en kleurvaste CH1/CH2-labels. De bibliotheek is een tabel. Cursorbediening houdt rekening met de nieuwe grafiekmarges. Beeldcontrole uitgevoerd op 1440×960 en 1040×760.
+
+## 0.4.0 / 0.4.1 — meetkern en decoderbanen
+
+Opnames bewaren timing, onveranderlijke samples, kanaalmetadata en de weergave-instellingen. De simulator draait in een aparte worker met zichtbare buffer-overloop; oude frames kunnen een geïmporteerde opname niet overschrijven. Dit is nog geen continue verliesvrije recorder. Zie ACQUISITION_CORE.md en HARDWARE_VALIDATION.md.
+
+Decodeblokken staan onder de trace op dezelfde tijdas. Analyse pauzeert de simulatie. Hex/decimaal/ASCII/binair zijn weergavekeuzes; klik een blok voor samples en tijdbereik. UART toont bytes en framing/onvolledigheidsmeldingen; I²C toont 7-bit adres/richting, data en ACK/NACK; PWM toont perioden/duty. Eén decoderbaan tegelijk. Nieuwe samples of instellingen maken oude resultaten ongeldig.

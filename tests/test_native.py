@@ -45,7 +45,7 @@ class NativeTests(unittest.TestCase):
  def test_saved_view_restores_and_import_cannot_be_overwritten_by_worker(self):
   from native.capture import ViewState
   from PySide6.QtTest import QTest
-  view=ViewState(.00123456789,.12345,(.2,5),(1,-2),(False,True),(.2,.8),"UART 8N1",115200)
+  view=ViewState(.00123456789,.12345,(.2,5),(1,-2),(False,True),(.2,.8),"UART 8N1",115200,"Bin")
   self.w.profile.setCurrentText("PWM")
   saved=self.w.capture
   with tempfile.TemporaryDirectory() as folder:
@@ -58,3 +58,26 @@ class NativeTests(unittest.TestCase):
    self.assertFalse(self.w.channel_checks[0].isChecked())
    self.assertEqual(self.w.channel_scales[1].currentText(),"5")
    self.assertEqual(self.w.note.toPlainText(),"herstel")
+ def test_decoder_lane_tracks_capture_and_time_window(self):
+  self.w.profile.setCurrentText("UART 8N1");self.w.decoder.setCurrentText("UART 8N1")
+  self.w.analyse()
+  canvas=self.w.canvas;result=canvas.active_decoding()
+  self.assertIsNotNone(result);self.assertFalse(self.w.running)
+  data=[e for e in result.events if e.kind=="data"]
+  first=data[0]
+  self.assertEqual(first.value,0x55)
+  rect=canvas.plot_rect()
+  box=canvas.event_rect(first)
+  self.assertAlmostEqual(box.left(),rect.left()+(first.start/self.w.capture.rate-canvas.start())/canvas.span()*rect.width())
+  self.w.show();self.app.processEvents()
+  from PySide6.QtTest import QTest
+  from PySide6.QtCore import Qt
+  box=canvas.event_rect(first)
+  QTest.mouseClick(canvas,Qt.LeftButton,pos=box.center().toPoint())
+  self.assertEqual(canvas.decoder_selection,first)
+  self.w.radix.setCurrentText("ASCII");self.assertEqual(canvas.decode_radix,"ASCII")
+  self.w.baud.setCurrentText("19200");self.assertIsNone(canvas.active_decoding())
+  canvas.decode_result=result;canvas.capture=fixture("UART 8N1")
+  self.assertIsNone(canvas.active_decoding())
+  self.w.select_profile("PWM")
+  self.assertIsNone(canvas.active_decoding())

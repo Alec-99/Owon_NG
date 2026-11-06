@@ -102,6 +102,7 @@ class ViewState:
     cursors: tuple = (0.3, 0.7)
     decoder: str = "PWM"
     baud: int = 9600
+    radix: str = "Hex"
 
     def __post_init__(self):
         finite(self.time_div, "tijdbasis", 0.00005, 2)
@@ -122,5 +123,7 @@ class ViewState:
             raise ValueError("Ongeldige kanaalzichtbaarheid.")
         if self.decoder not in ("PWM", "UART 8N1", "I²C", "SPI (gepland)", "CAN-protocol (gepland)"):
             raise ValueError("Onbekende decoder.")
+        if self.radix not in ("Hex", "Dec", "ASCII", "Bin"):
+            raise ValueError("Onbekend getalformaat.")
         if type(self.baud) is not int or self.baud not in (9600, 19200, 38400, 115200):
             raise ValueError("Onbekende baudrate.")

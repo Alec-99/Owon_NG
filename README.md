@@ -1,13 +1,13 @@
 # Owon NG — native oscilloscoopapp
 
-Versie 0.4.0 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
+Versie 0.4.1 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
 
 Start:
 
     python -m pip install -r requirements-native.txt
     python app.py
 
-De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.4.0.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.4.0-python-native.zip.
+De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.4.1.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.4.1-python-native.zip.
 
 Werkend: twee kanalen met zichtbaarheid, V/div en offset; tijdbasis en verschuiven; sleepbare en met toetsenbord bedienbare cursors met Δt/ΔV; start/pauze/single; Vpp/RMS van synthetische samples; CKP/lambda/injector/CAN/PWM/sinus-fixtures; hulp met technische details; begeleide instructies; notities; native bestandsdialogen met JSON bewaren/openen; bibliotheek, opnamegeschiedenis en demo-rapportweergave.
 
@@ -39,3 +39,9 @@ Instrumentindeling geïnspireerd op de bediening van OpenHantek en de native too
 Samples zijn onveranderlijk en worden buiten de UI-thread gegenereerd. Schema-2-opnames bewaren samples, timing, kanaalmetadata en weergave-instellingen met integriteitscontrole en atomair opslaan. Oude demo-opnames blijven leesbaar. Uitzoomen behoudt sampled pieken via min/max-enveloppen. Zie [meetkern](docs/ACQUISITION_CORE.md) en [open toestelcontroles](docs/HARDWARE_VALIDATION.md).
 
 Corechecks: python -m unittest discover -s tests -p test_core.py -v.
+
+## Decoderbanen 0.4.1
+
+UART-, I²C- en PWM-blokken staan op dezelfde tijdas als de samples. Analyse bevriest de huidige simulatie; oude resultaten worden niet boven nieuwe frames getekend. Klik een blok voor sample-/tijddetails. Kies Hex/Dec/ASCII/Bin voor de waardeweergave. De algoritmes zijn nog niet gevalideerd op hardware/ruis.
+
+![Native decoderbaan](docs/images/native-decoder-0.4.1.png)

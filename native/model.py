@@ -1,8 +1,6 @@
 """Synthetic fixtures and a bounded, versioned demo recording format."""
 from native.capture import Capture
 import math
-import json
-from pathlib import Path
 
 PROFILES = {
  "CKP inductief": ("Automotive", 12000, "Krukaspositie • schematische ontbrekende tanden", "Gebruik voertuigdocumentatie om de juiste meetpunten te bepalen. Dit is geen voertuigspecifieke aansluitprocedure."),
@@ -48,7 +46,7 @@ def fixture(profile, phase=0.0, n=4096):
    elif tick<780:
     half=(tick-60)//20;bit=half//2;value=0xA0 if bit<9 else 0x55;pos=bit%9
     a.append(0 if half%2==0 else 5);b.append(0 if pos==8 else 5 if value&(1<<(7-pos)) else 0)
-   else:a.append(0 if tick<800 else 5);b.append(0)
+   else:a.append(5);b.append(0)
   else:
    a.append(3 * math.sin(t * 2 * math.pi * 50)); b.append(math.sin(t * 2 * math.pi * 50 + .7))
  return Capture(profile, rate, [a,b])

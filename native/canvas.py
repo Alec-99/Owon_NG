@@ -1,6 +1,6 @@
 import math
 from native.rendering import envelope
-from PySide6.QtWidgets import QWidget
+from PySide6.QtWidgets import QWidget, QToolTip
 from PySide6.QtGui import QPainter, QColor, QPen, QPainterPath
 from PySide6.QtCore import Qt, Signal, QRectF
 
@@ -9,6 +9,7 @@ class ScopeCanvas(QWidget):
  def __init__(self, capture):
   super().__init__()
   self.capture=capture;self.visible=[True,True];self.scales=[2.,2.];self.offsets=[0.,0.]
+  self.decode_result=None;self.decode_radix="Hex";self.decoder_selection=None
   self.time_div=.01;self.pan=0.;self.cursors=[.3,.7];self.drag=None
   self.setMinimumSize(320,280)
   self.setAccessibleName("Oscilloscoop met twee gesimuleerde kanalen")
@@ -20,8 +21,35 @@ class ScopeCanvas(QWidget):
  def sample(self,channel,x):
   i=round((self.start()+x*self.span())*self.capture.rate)
   return self.capture.channels[channel][max(0,min(i,len(self.capture.channels[channel])-1))]
+ def active_decoding(self):
+  result=self.decode_result
+  return result if result is not None and result.capture_id==self.capture.capture_id and result.rate==self.capture.rate else None
  def plot_rect(self):
-  return QRectF(52,28,max(1,self.width()-72),max(1,self.height()-64))
+  return QRectF(52,28,max(1,self.width()-72),max(1,self.height()-(104 if self.active_decoding() else 64)))
+ def event_rect(self,event):
+  r=self.plot_rect();left=r.left()+(event.start/self.capture.rate-self.start())/self.span()*r.width()
+  right=r.left()+(event.stop/self.capture.rate-self.start())/self.span()*r.width()
+  return QRectF(left,r.bottom()+28,max(1,right-left),23)
+ def set_decode_radix(self,radix):
+  self.decode_radix=radix;self.update()
+ def draw_decoder(self,painter):
+  result=self.active_decoding()
+  if result is None:return
+  r=self.plot_rect()
+  painter.setPen(QColor("#b9c9d6"));painter.drawText(4,int(r.bottom()+44),result.protocol.split()[0])
+  painter.save();painter.setClipRect(QRectF(r.left(),r.bottom()+28,r.width(),23))
+  for event in result.events:
+   rect=self.event_rect(event)
+   if rect.right()<r.left() or rect.left()>r.right():continue
+   warning=event.kind in ("framing","incomplete")
+   painter.setBrush(QColor("#873c43" if warning else "#355a71"))
+   painter.setPen(QPen(QColor("#f0c34d" if event==self.decoder_selection else "#8aa5b7"),1))
+   painter.drawRect(rect)
+   if rect.width()>22:
+    label=painter.fontMetrics().elidedText(event.label(self.decode_radix),Qt.ElideRight,max(1,int(rect.width()-6)))
+    painter.setPen(QColor("#ffffff"));painter.drawText(rect,Qt.AlignCenter,label)
+  painter.restore()
+
  def cursor_x(self,position):
   r=self.plot_rect();return (position.x()-r.left())/r.width()
  def paintEvent(self,event):
@@ -43,8 +71,8 @@ class ScopeCanvas(QWidget):
   for i in range(9):
    value=(4-i)*self.scales[0]-self.offsets[0]
    p.drawText(QRectF(0,r.top()+r.height()*i/8-9,44,18),Qt.AlignRight|Qt.AlignVCenter,f"{value:g}")
-  p.drawText(int(r.right()-12),self.height()-4,"ms")
-  p.drawText(8,18,"V")
+  p.drawText(int(r.right()-12),int(r.bottom()+24),"ms")
+  p.drawText(4,18,"CH1 V")
   for channel,color in enumerate(("#f0c34d","#43b5e2")):
    p.setPen(QColor(color));p.drawText(int(r.left()+channel*220),18,f"CH{channel+1}  {self.scales[channel]:g} V/div"+("" if self.visible[channel] else "  uit"))
    if not self.visible[channel]:continue
@@ -70,7 +98,15 @@ class ScopeCanvas(QWidget):
    x=r.left()+ratio*r.width();p.setPen(QPen(QColor("#bdc8d0"),1,Qt.DashLine))
    p.drawLine(int(x),int(r.top()),int(x),int(r.bottom()))
    p.fillRect(QRectF(x-8,r.top(),16,18),QColor("#44535e"));p.setPen(QColor("#ffffff"));p.drawText(QRectF(x-8,r.top(),16,18),Qt.AlignCenter,"AB"[i])
+  self.draw_decoder(p)
  def mousePressEvent(self,e):
+  result=self.active_decoding()
+  if result is not None:
+   for event in result.events:
+    if self.event_rect(event).contains(e.position()):
+     self.decoder_selection=event;self.update()
+     QToolTip.showText(e.globalPosition().toPoint(),f"{result.protocol} · {event.label(self.decode_radix)}\nSamples {self.capture.sample_start+event.start}–{self.capture.sample_start+event.stop-1} · {event.start/self.capture.rate*1000:.6g}–{event.stop/self.capture.rate*1000:.6g} ms",self)
+     return
   x=self.cursor_x(e.position());self.drag=min(range(2),key=lambda i:abs(self.cursors[i]-x));self.move_cursor(x)
  def mouseMoveEvent(self,e):
   if self.drag is not None:self.move_cursor(self.cursor_x(e.position()))

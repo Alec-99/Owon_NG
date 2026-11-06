@@ -23,3 +23,13 @@ QT_QPA_PLATFORM=offscreen python -m unittest discover -s tests -p test_native.py
 Tests exercise binary-float round-trip (including negative zero), capture immutability, atomic-write failure, corrupt/invalid/legacy files, view restoration, in-flight profile changes, buffer overflow, error recovery, single/pause and shutdown, plus spike-preserving rendering. Windows CI runs both suites before creating the native packages.
 
 See HARDWARE_VALIDATION.md for work that needs a physical instrument. No USB commands or proprietary firmware are shipped.
+
+## Decoder lanes — 0.4.1
+
+Decoding now returns immutable events whose start/stop indices refer to the frozen capture, with its capture ID and sample rate. Native annotation blocks use the waveform's exact horizontal time mapping and follow pan/zoom. Analysing freezes the currently displayed simulation. New frames/profiles/configuration invalidate old results; mismatched capture IDs are never rendered.
+
+UART 8N1 spans identify bytes, framing failures and truncated tails. I²C shows START/STOP, the initial 7-bit address/direction, data and ACK/NACK, plus incomplete fields. 10-bit addressing is not fully interpreted. PWM blocks mark complete periods and their sampled duty. Hex/decimal/ASCII/binary formatting changes representation only. Clicking a block shows full text, sample indices and time bounds. One decoder lane is supported; stacking decoders and decoder export remain outstanding.
+
+These are initial fixed-threshold algorithms, not validated for noisy hardware, autobaud, arbitrary sample clocks or every protocol edge case. Existing UART/I²C/PWM numerical APIs delegate to the same event implementation to avoid divergence.
+
+The typed-event and common-time-axis approach is independently implemented. The supplied PicoScope image and LabNation research informed workflow choices; no proprietary/source assets are used.
