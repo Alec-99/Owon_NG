@@ -1,0 +1,13 @@
+name: Prototype checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  static-checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check standalone prototype syntax and UI contract
+        run: node tests/ui-contract.test.mjs
