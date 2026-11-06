@@ -22,6 +22,6 @@ jobs:
       - run: python scripts/package.py windows
       - uses: actions/upload-artifact@v4
         with:
-          name: Owon_NG-0.3.0-native
-          path: artifacts/Owon_NG-0.3.0-*.zip
+          name: Owon_NG-native
+          path: artifacts/Owon_NG-*-*.zip
           if-no-files-found: error

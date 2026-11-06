@@ -37,3 +37,7 @@ The owner superseded the earlier step/review gate and requested Android APK, Pyt
 ## 2026-11-06 — Native application replaces browser packaging
 
 Owner explicitly rejected browser and WebView variants. Supersedes the earlier packaging decision. Use Python/PySide6 Qt Widgets and QPainter directly for the desktop app. Python source and Windows EXE share the same native implementation. Retire Go browser launchers and Android WebView packaging. Android native implementation remains outstanding rather than relabeling a WebView as native. UI remains synthetic until validated hardware engineering is authorized.
+
+## 2026-11-06 — Two product workspaces and initial sample analysis
+
+Owner reconfirmed Automotive plus general electronics workflows, inspired by PicoScope workflow quality without copying proprietary material. Add an automotive passive PWM actuator example and offline UART 8N1, I²C byte/ACK decoding and PWM duty/frequency analysis. Initial algorithms operate on actual synthetic/imported demo samples, with fixed documented threshold, explicit UART baud selection and basic sampling checks. They are not hardware/noise validated. SPI/CAN protocol UI entries are marked planned. Guided tests are passive instructions, never commands to energize actuators or automatic diagnostic verdicts.

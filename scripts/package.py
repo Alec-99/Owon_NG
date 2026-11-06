@@ -1,6 +1,6 @@
 """Build native distributions without browser or HTTP server."""
-import argparse,pathlib,shutil,subprocess,sys,zipfile,importlib.metadata
-root=pathlib.Path(__file__).resolve().parents[1];version='0.3.0';out=root/'artifacts';out.mkdir(exist_ok=True)
+import argparse,pathlib,shutil,subprocess,sys,zipfile,importlib.metadata,runpy
+root=pathlib.Path(__file__).resolve().parents[1];version=runpy.run_path(str(root/'native/version.py'))['VERSION'];out=root/'artifacts';out.mkdir(exist_ok=True)
 p=argparse.ArgumentParser();p.add_argument('target',choices=['python','windows','android']);args=p.parse_args()
 if args.target=='android':raise SystemExit('Native Android is not implemented; the old WebView APK is retired.')
 if args.target=='python':

@@ -4,8 +4,9 @@ from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBo
 from PySide6.QtCore import Qt,QTimer
 from native.model import PROFILES,WARNING,fixture,load
 from native.canvas import ScopeCanvas
+from native.analysis import pwm,uart,i2c
 
-VERSION="0.3.0"
+from native.version import VERSION
 PAGES=["Automotive","Elektronica","Vrij meten","Bibliotheek","Opnames / Geschiedenis","Rapporten","Instellingen","Help"]
 STYLE="""
 QWidget{background:#121d26;color:#e4eef5;font:14px 'Segoe UI';}
@@ -36,7 +37,7 @@ class ScopeWindow(QMainWindow):
   self.library=self.make_library();self.pages.addWidget(self.library)
   self.history=QListWidget();self.history.addItem("Nog geen lokaal opgeslagen opnames.");self.history.itemDoubleClicked.connect(self.open_history);self.pages.addWidget(self.history)
   self.report=QTextEdit();self.report.setReadOnly(True);self.pages.addWidget(self.report)
-  settings=QLabel("Hardware niet verbonden.\nUSB, decoders en gevalideerde diagnostiek worden later toegevoegd.\n\nDeze app toont uitsluitend synthetische fixtures en geïmporteerde demo-opnames.");settings.setWordWrap(True);self.pages.addWidget(settings)
+  settings=QLabel("Hardware niet verbonden.\nUSB, extra decoders en gevalideerde diagnostiek worden later toegevoegd. De eerste offline UART/I²C/PWM-analyse staat in de scopeweergave.\n\nDeze app toont uitsluitend synthetische fixtures en geïmporteerde demo-opnames.");settings.setWordWrap(True);self.pages.addWidget(settings)
   help_page=QTextEdit();help_page.setReadOnly(True);help_page.setPlainText("Bediening\n\nStart/Pauze bestuurt de simulatie. Single maakt één nieuwe demo-frame.\nSleep cursors A/B in de grafiek; links/rechts bestuurt cursor A, Shift+links/rechts cursor B. Het muiswiel zoomt in tijd.\n\nV/div verandert de weergave, niet de samples. Tijdzoom en verschuiving houden de sampletijd intact.\n\nBewaar/Open gebruikt een versiegebonden JSON-bestand met herkomst en notitie.\n\n"+WARNING);self.pages.addWidget(help_page)
   self.nav.currentRowChanged.connect(self.navigate);self.nav.setCurrentRow(0)
   self.timer=QTimer(self);self.timer.timeout.connect(self.frame);self.timer.start(100)
@@ -52,6 +53,12 @@ class ScopeWindow(QMainWindow):
   split=QSplitter(Qt.Horizontal);layout.addWidget(split,1)
   left=QWidget();ll=QVBoxLayout(left);self.canvas=ScopeCanvas(self.capture);self.canvas.cursorsChanged.connect(self.refresh_metrics);ll.addWidget(self.canvas,1)
   self.metrics=QLabel();self.metrics.setWordWrap(True);ll.addWidget(self.metrics)
+  analysis_box,al=group("Signaalanalyse / decoders")
+  ar=QHBoxLayout();self.decoder=QComboBox();self.decoder.addItems(["PWM","UART 8N1","I²C","SPI (gepland)","CAN-protocol (gepland)"]);ar.addWidget(self.decoder)
+  self.baud=QComboBox();self.baud.addItems(["9600","19200","38400","115200"]);ar.addWidget(self.baud)
+  ar.addWidget(button("Analyseer samples",self.analyse));al.addLayout(ar)
+  self.analysis_result=QLabel("Handmatige drempel 2,5 V. UART 8N1; I²C CH1=SCL, CH2=SDA. Alleen eerste offline algoritmes; niet hardware-gevalideerd.")
+  self.analysis_result.setWordWrap(True);al.addWidget(self.analysis_result);ll.addWidget(analysis_box)
   self.pan=QSlider(Qt.Horizontal);self.pan.setAccessibleName("Tijdvenster verschuiven");self.pan.setRange(0,1000);self.pan.valueChanged.connect(self.pan_changed);ll.addWidget(QLabel("Tijdvenster verschuiven"));ll.addWidget(self.pan);split.addWidget(left)
   side=QWidget();sl=QVBoxLayout(side);side.setMinimumWidth(270)
   g,gl=group("Weergave");form=QFormLayout();gl.addLayout(form)
@@ -110,7 +117,22 @@ class ScopeWindow(QMainWindow):
   a=self.capture.channels[0];vpp=max(a)-min(a);rms=math.sqrt(sum(x*x for x in a)/len(a))
   dt=abs(self.canvas.cursors[1]-self.canvas.cursors[0])*self.canvas.span()
   dv=self.canvas.sample(0,self.canvas.cursors[1])-self.canvas.sample(0,self.canvas.cursors[0])
-  self.metrics.setText(f"DEMO CH1 · Vpp {vpp:.3g} V · RMS {rms:.3g} V · Δt {dt*1000:.3g} ms · ΔV {dv:.3g} V\n{len(a)} samples · {self.capture.rate:g} Sa/s · Trigger/decoders/diagnose: niet beschikbaar")
+  self.metrics.setText(f"DEMO CH1 · Vpp {vpp:.3g} V · RMS {rms:.3g} V · Δt {dt*1000:.3g} ms · ΔV {dv:.3g} V\n{len(a)} samples · {self.capture.rate:g} Sa/s · Hardwaretrigger / diagnose: niet beschikbaar")
+ def analyse(self):
+  try:
+   name=self.decoder.currentText();c=self.capture
+   if name=="PWM":
+    result=pwm(c.channels[0],c.rate);text=f"PWM: {result['frequency_hz']:.4g} Hz · duty {result['duty_percent']:.3g}%"
+   elif name=="UART 8N1":
+    values,errors=uart(c.channels[0],c.rate,int(self.baud.currentText()))
+    text=f"UART: {len(values)} bytes · {errors} framingfouten · "+" ".join(f"{v:02X}" for _,v in values[:40])
+   elif name=="I²C":
+    values,starts=i2c(c.channels[0],c.channels[1],c.rate)
+    text=f"I²C: {starts} START-condities · "+" ".join(f"{v:02X} ({'ACK' if ack else 'NACK'})" for _,v,ack in values[:30])
+   else:
+    self.analysis_result.setText("Deze decoder is nog niet beschikbaar. CAN-fysieke signalen zijn wel als demo-profiel te bekijken.");return
+   self.analysis_result.setText(text+"\nBron: "+c.source+". Drempel 2,5 V; geen ruisfilter, autobaud, clock-stretch-validatie of diagnose. Verifieer instellingen.")
+  except ValueError as e:self.analysis_result.setText(str(e))
  def explain(self,title,basic,advanced):
   d=QDialog(self);d.setWindowTitle(title);l=QVBoxLayout(d);t=QLabel(basic);t.setWordWrap(True);l.addWidget(t);details=QLabel(advanced);details.setWordWrap(True);details.hide();toggle=QCheckBox("Technische uitleg");toggle.toggled.connect(details.setVisible);l.addWidget(toggle);l.addWidget(details);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(d.reject);l.addWidget(buttons);d.resize(520,240);d.exec()
  def save_capture(self):

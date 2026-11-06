@@ -20,3 +20,14 @@ class NativeTests(unittest.TestCase):
    p=pathlib.Path(tmp)/'a.json';a.save(p,'Notitie');b,note=load(p)
    self.assertEqual(a.channels,b.channels);self.assertEqual(b.source,'import');self.assertEqual(note,'Notitie')
    p.write_text('{"schema":42}');self.assertRaises(ValueError,load,p)
+ def test_sample_decoders(self):
+  from native.analysis import pwm,uart,i2c
+  c=fixture("PWM");r=pwm(c.channels[0],c.rate)
+  self.assertAlmostEqual(r["frequency_hz"],100);self.assertLess(abs(r["duty_percent"]-42),1)
+  c=fixture("UART 8N1");data,errors=uart(c.channels[0],c.rate)
+  self.assertEqual([x[1] for x in data[:4]],[0x55,0xA5,0x55,0xA5]);self.assertEqual(errors,0)
+  self.assertRaises(ValueError,uart,c.channels[0],100,9600)
+  c=fixture("I²C");data,starts=i2c(*c.channels,c.rate)
+  self.assertGreater(starts,0);self.assertEqual([(x[1],x[2]) for x in data[:2]],[(0xA0,True),(0x55,True)])
+  self.w.profile.setCurrentText("I²C");self.w.decoder.setCurrentText("I²C");self.w.analyse()
+  self.assertIn("ACK",self.w.analysis_result.text())
