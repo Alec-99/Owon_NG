@@ -44,3 +44,7 @@ Python launcher source, Go launcher source, Android Activity and packaging scrip
 ## Native Qt app 0.3.0
 
 Newly authored native Python modules use PySide6/Qt 6.9.3 (LGPLv3 route). Source: https://code.qt.io/pyside/pyside-setup.git/ tag v6.9.3; wheels pinned in requirements-native.txt. No oscilloscope-project source imported. Distribution uses replaceable shared Qt libraries in an onedir Windows package, includes available wheel licence/NOTICE files, and documents upstream source and replacement rights in docs/NATIVE_APP.md. No QtWebEngine/WebView is imported. Go/Wails/pywebview and Android WebView launchers are retired.
+
+## Native UI revision 0.3.2
+
+Exact OpenHantek/PulseView research revisions and consulted files are recorded in REFERENCE_REPOS.md. Research only: no upstream code/assets adapted or redistributed. The new layout, grid/axes/cursor renderer and library table are original Python/Qt code. File/open icons use Qt's platform-standard QStyle icons. The documentation screenshot was generated from this application.

@@ -1,13 +1,13 @@
 # Owon NG — native oscilloscoopapp
 
-Versie 0.3.1 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
+Versie 0.3.2 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
 
 Start:
 
     python -m pip install -r requirements-native.txt
     python app.py
 
-De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.3.1.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.3.1-python-native.zip.
+De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.3.2.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.3.2-python-native.zip.
 
 Werkend: twee kanalen met zichtbaarheid, V/div en offset; tijdbasis en verschuiven; sleepbare en met toetsenbord bedienbare cursors met Δt/ΔV; start/pauze/single; Vpp/RMS van synthetische samples; CKP/lambda/injector/CAN/PWM/sinus-fixtures; hulp met technische details; begeleide instructies; notities; native bestandsdialogen met JSON bewaren/openen; bibliotheek, opnamegeschiedenis en demo-rapportweergave.
 
@@ -27,3 +27,9 @@ Qt/PySide6 wordt onder LGPLv3 gebruikt. De projectlicentie is nog niet gekozen. 
 
 Automotive: begeleide component- en passieve actuatortests, waaronder PWM-solenoïde.
 Elektronica: eerste offline UART 8N1, I²C byte/ACK en PWM duty/frequentie op de aanwezige samples. SPI/CAN-protocol zijn nog gepland. Zie docs/NATIVE_APP.md voor instellingen en beperkingen. Bronlabels en demonstratiebeperkingen blijven zichtbaar; deze analyse is niet op hardware of ruissignalen gevalideerd.
+
+## Native UI 0.3.2
+
+Instrumentindeling geïnspireerd op de bediening van OpenHantek en de native toolorganisatie van PulseView, onafhankelijk geïmplementeerd.
+
+![Native oscilloscoopinterface](docs/images/native-ui-0.3.2.png)

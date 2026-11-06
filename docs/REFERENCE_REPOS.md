@@ -26,3 +26,10 @@
 - Survey **small charting/Canvas, accessible UI controls and keyboard shortcut libraries**: record each candidate's exact licence and evaluate whether custom Canvas drawing is sufficient.
 - Concentrate on maintaining correct waveform grids, cursor interaction, source badges, trigger affordances, accessibility and simple explanatory UX.
 - Do not add device drivers or decoders to UI-001. That research is for architecture only.
+
+## Native layout review — 0.3.2
+
+- OpenHantek6022 revision 00a622ab2e18290af7c4290e492dadbec3321fb7: README.md and docs/images/screenshot_mainwindow.png visually reviewed. Useful patterns: dominant dark plotting surface, compact light control panels, colored channel identifiers and readouts below the trace.
+- PulseView revision af02198741b4e57c9f9b796bd5e6c0f2ae9f2f2b: README and pv/mainwindow.cpp inspected for native toolbar, menu and dock organization. This motivated grouping secondary tools instead of presenting every explanation simultaneously.
+- Both remain GPL research references. No source, icons, screenshots or other assets were copied into the application or this repository. The screenshot in docs/images/native-ui-0.3.2.png is an original rendering of Owon NG.
+- PicoScope remains a workflow-quality benchmark; no proprietary materials were imported.

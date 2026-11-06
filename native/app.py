@@ -1,6 +1,6 @@
 import sys, math, json
 from pathlib import Path
-from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QListWidget,QStackedWidget,QLabel,QPushButton,QComboBox,QDoubleSpinBox,QCheckBox,QSlider,QTextEdit,QFileDialog,QMessageBox,QGroupBox,QFormLayout,QSplitter,QDialog,QDialogButtonBox,QScrollArea)
+from PySide6.QtWidgets import (QApplication,QMainWindow,QWidget,QVBoxLayout,QHBoxLayout,QListWidget,QStackedWidget,QLabel,QPushButton,QComboBox,QDoubleSpinBox,QCheckBox,QSlider,QTextEdit,QFileDialog,QMessageBox,QGroupBox,QFormLayout,QSplitter,QDialog,QDialogButtonBox,QScrollArea,QTableWidget,QTableWidgetItem,QHeaderView,QAbstractItemView)
 from PySide6.QtCore import Qt,QTimer
 from native.model import PROFILES,WARNING,fixture,load
 from native.canvas import ScopeCanvas
@@ -8,13 +8,7 @@ from native.analysis import pwm,uart,i2c
 
 from native.version import VERSION
 PAGES=["Automotive","Elektronica","Vrij meten","Bibliotheek","Opnames / Geschiedenis","Rapporten","Instellingen","Help"]
-STYLE="""
-QWidget{background:#121d26;color:#e4eef5;font:14px 'Segoe UI';}
-QMainWindow{background:#101820} QGroupBox{border:1px solid #334957;border-radius:8px;margin-top:14px;padding:15px} QGroupBox::title{subcontrol-origin:margin;left:12px;color:#8cd2dc}
-QPushButton,QComboBox,QDoubleSpinBox{background:#243744;border:1px solid #496071;border-radius:5px;padding:7px} QPushButton:hover{background:#335568} QPushButton:disabled{color:#8b99a2}
-QListWidget{border:0;background:#182632;min-width:160px} QListWidget::item{padding:12px} QListWidget::item:selected{background:#315666}
-QTextEdit{background:#0e1921;border:1px solid #3b5362;border-radius:5px;padding:8px}
-"""
+from native.layout import STYLE, shell, scope
 def button(text,fn):
  b=QPushButton(text);b.clicked.connect(fn);return b
 def group(title):
@@ -25,13 +19,7 @@ class ScopeWindow(QMainWindow):
   super().__init__()
   self.setWindowTitle(f"Owon NG {VERSION} — native oscilloscoop · DEMO")
   self.resize(1440,960);self.phase=0.;self.running=True;self.saved=[];self.capture=fixture("CKP inductief")
-  root=QWidget();self.setCentralWidget(root);outer=QHBoxLayout(root)
-  self.nav=QListWidget();self.nav.addItems(PAGES);self.nav.setMaximumWidth(220);outer.addWidget(self.nav)
-  content=QVBoxLayout();outer.addLayout(content,1)
-  top=QHBoxLayout();top.addWidget(QLabel(f"<h2>OWON NG <small>{VERSION}</small></h2>"));top.addStretch()
-  self.provenance=QLabel("DEMO · GESIMULEERD — geen hardware");top.addWidget(self.provenance)
-  top.addWidget(button("Open opname",self.open_capture));top.addWidget(button("Bewaar opname",self.save_capture));content.addLayout(top)
-  self.safety=QLabel(WARNING);self.safety.setWordWrap(True);self.safety.setStyleSheet("background:#36291d;color:#f6d5a7;padding:12px;border-radius:5px;");content.addWidget(self.safety)
+  content=shell(self,button,PAGES,VERSION)
   self.pages=QStackedWidget();content.addWidget(self.pages,1)
   self.scope=self.make_scope();self.pages.addWidget(self.scope)
   self.library=self.make_library();self.pages.addWidget(self.library)
@@ -41,45 +29,26 @@ class ScopeWindow(QMainWindow):
   help_page=QTextEdit();help_page.setReadOnly(True);help_page.setPlainText("Bediening\n\nStart/Pauze bestuurt de simulatie. Single maakt één nieuwe demo-frame.\nSleep cursors A/B in de grafiek; links/rechts bestuurt cursor A, Shift+links/rechts cursor B. Het muiswiel zoomt in tijd.\n\nV/div verandert de weergave, niet de samples. Tijdzoom en verschuiving houden de sampletijd intact.\n\nBewaar/Open gebruikt een versiegebonden JSON-bestand met herkomst en notitie.\n\n"+WARNING);self.pages.addWidget(help_page)
   self.nav.currentRowChanged.connect(self.navigate);self.nav.setCurrentRow(0)
   self.timer=QTimer(self);self.timer.timeout.connect(self.frame);self.timer.start(100)
-  self.statusBar().showMessage("Native Qt-interface · DEMO · geen meetinstrument of foutdiagnose")
+  self.statusBar().showMessage("DEMO — geen hardware verbonden | Triggers en automatische diagnose niet beschikbaar")
   self.refresh_metrics()
  def make_scope(self):
-  w=QWidget();layout=QVBoxLayout(w)
-  toolbar=QHBoxLayout()
-  self.profile=QComboBox();self.profile.addItems(PROFILES);self.profile.currentTextChanged.connect(self.select_profile);toolbar.addWidget(self.profile,1)
-  self.run=button("Ⅱ Pauze",self.toggle_run);toolbar.addWidget(self.run);toolbar.addWidget(button("Single",self.single))
-  toolbar.addWidget(button("i · Bediening",lambda:self.explain("Scopebediening","De signalen worden synthetisch gegenereerd. Pauzeren houdt het huidige frame vast.","Een frame bevat 4096 samples met een expliciete samplefrequentie. De tijdbasis bepaalt alleen het zichtbare tijdvenster.")))
-  layout.addLayout(toolbar)
-  split=QSplitter(Qt.Horizontal);layout.addWidget(split,1)
-  left=QWidget();ll=QVBoxLayout(left);self.canvas=ScopeCanvas(self.capture);self.canvas.cursorsChanged.connect(self.refresh_metrics);ll.addWidget(self.canvas,1)
-  self.metrics=QLabel();self.metrics.setWordWrap(True);ll.addWidget(self.metrics)
-  analysis_box,al=group("Signaalanalyse / decoders")
-  ar=QHBoxLayout();self.decoder=QComboBox();self.decoder.addItems(["PWM","UART 8N1","I²C","SPI (gepland)","CAN-protocol (gepland)"]);ar.addWidget(self.decoder)
-  self.baud=QComboBox();self.baud.addItems(["9600","19200","38400","115200"]);ar.addWidget(self.baud)
-  ar.addWidget(button("Analyseer samples",self.analyse));al.addLayout(ar)
-  self.analysis_result=QLabel("Handmatige drempel 2,5 V. UART 8N1; I²C CH1=SCL, CH2=SDA. Alleen eerste offline algoritmes; niet hardware-gevalideerd.")
-  self.analysis_result.setWordWrap(True);al.addWidget(self.analysis_result);ll.addWidget(analysis_box)
-  self.pan=QSlider(Qt.Horizontal);self.pan.setAccessibleName("Tijdvenster verschuiven");self.pan.setRange(0,1000);self.pan.valueChanged.connect(self.pan_changed);ll.addWidget(QLabel("Tijdvenster verschuiven"));ll.addWidget(self.pan);split.addWidget(left)
-  side=QWidget();sl=QVBoxLayout(side);side.setMinimumWidth(270)
-  g,gl=group("Weergave");form=QFormLayout();gl.addLayout(form)
-  self.time=QDoubleSpinBox();self.time.setRange(.05,2000);self.time.setDecimals(2);self.time.setValue(10);self.time.setSuffix(" ms/div");self.time.valueChanged.connect(self.time_changed);form.addRow("Tijdbasis",self.time)
-  for ch in range(2):
-   row=QHBoxLayout();check=QCheckBox(f"CH{ch+1}");check.setChecked(True);check.toggled.connect(lambda v,c=ch:self.channel_visible(c,v));row.addWidget(check)
-   scale=QComboBox();scale.addItems(["0.1","0.2","0.5","1","2","5","10"]);scale.setCurrentText("2");scale.currentTextChanged.connect(lambda v,c=ch:self.scale_changed(c,float(v)));row.addWidget(scale);form.addRow("V/div",row)
-   offset=QDoubleSpinBox();offset.setRange(-100,100);offset.setSuffix(" V");offset.valueChanged.connect(lambda v,c=ch:self.offset_changed(c,v));form.addRow(f"CH{ch+1} offset",offset)
-  unavailable=button("Trigger · nog niet beschikbaar",lambda:None);unavailable.setEnabled(False);unavailable.setToolTip("Hardwaretrigger en triggeralgoritmes zijn niet geïmplementeerd.");gl.addWidget(unavailable)
-  gl.addWidget(button("i · Schalen en probes",lambda:self.explain("Schalen","V/div bepaalt hoeveel volt één rastervak vertegenwoordigt. Dit verandert geen opgeslagen samples.","Probeverhoudingen, AC/DC-koppeling en kalibratie zijn niet beschikbaar. Er is geen echte probe aangesloten.")));sl.addWidget(g)
-  g,gl=group("Begeleide test");self.guide=QLabel();self.guide.setWordWrap(True);gl.addWidget(self.guide);gl.addWidget(button("Pas demo-preset toe",self.apply_preset));sl.addWidget(g)
-  g,gl=group("Observatie");self.note=QTextEdit();self.note.setPlaceholderText("Noteer omstandigheden en observaties…");gl.addWidget(self.note);sl.addWidget(g,1);scroll=QScrollArea();scroll.setWidgetResizable(True);scroll.setWidget(side);scroll.setMinimumWidth(300);split.addWidget(scroll);split.setSizes([900,340])
-  self.update_guide();return w
+  return scope(self,button)
  def make_library(self):
-  w=QWidget();l=QVBoxLayout(w);l.addWidget(QLabel("<h2>Illustratieve testprofielen</h2>Geen bekende-goede voertuigmetingen."))
-  for name,(_,_,desc,safety) in PROFILES.items():
-   l.addWidget(button(name+" — "+desc,lambda checked=False,n=name:self.choose_from_library(n)))
-  l.addStretch();return w
+  w=QWidget();l=QVBoxLayout(w);l.addWidget(QLabel("Testbibliotheek — illustratieve profielen, geen bekende-goede voertuigmetingen"))
+  table=QTableWidget(len(PROFILES),3);table.setHorizontalHeaderLabels(["Component / signaal","Werkgebied","Toepassing"])
+  table.setSelectionBehavior(QAbstractItemView.SelectRows);table.setSelectionMode(QAbstractItemView.SingleSelection);table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+  names=list(PROFILES)
+  for row,name in enumerate(names):
+   category,_,desc,_=PROFILES[name]
+   for col,value in enumerate((name,category,desc)):table.setItem(row,col,QTableWidgetItem(value))
+  table.horizontalHeader().setSectionResizeMode(0,QHeaderView.ResizeToContents);table.horizontalHeader().setSectionResizeMode(1,QHeaderView.ResizeToContents);table.horizontalHeader().setStretchLastSection(True)
+  table.verticalHeader().hide();table.selectRow(0);table.cellDoubleClicked.connect(lambda row,col:self.choose_from_library(names[row]))
+  l.addWidget(table);l.addWidget(button("Open geselecteerd profiel",lambda:self.choose_from_library(names[table.currentRow()]) if table.currentRow()>=0 else None));return w
  def choose_from_library(self,name):
   self.nav.setCurrentRow(0 if PROFILES[name][0]=="Automotive" else 1);self.profile.setCurrentText(name)
  def navigate(self,row):
+  if row<3:
+   self.modes.blockSignals(True);self.modes.setCurrentIndex(row);self.modes.blockSignals(False)
   if row<3:
    self.pages.setCurrentIndex(0)
    if row==0 and PROFILES[self.profile.currentText()][0]!="Automotive":self.profile.setCurrentText("CKP inductief")
@@ -91,7 +60,7 @@ class ScopeWindow(QMainWindow):
   elif row==6:self.pages.setCurrentIndex(4)
   else:self.pages.setCurrentIndex(5)
  def select_profile(self,name):
-  self.capture=fixture(name);self.canvas.capture=self.capture;self.provenance.setText("DEMO · GESIMULEERD — geen hardware");self.canvas.update();self.update_guide();self.refresh_metrics()
+  self.capture=fixture(name);self.canvas.capture=self.capture;self.provenance.setText("DEMO · GESIMULEERD");self.canvas.update();self.update_guide();self.refresh_metrics()
  def update_guide(self):
   name=self.profile.currentText();_,_,desc,safety=PROFILES[name]
   self.guide.setText(desc+"\n\n1. Kies dit demo-profiel.\n2. Lees aansluitwaarschuwingen.\n3. Bekijk de illustratieve referentie.\n4. Pauzeer, verplaats cursors en voeg een notitie toe.\n5. Bewaar de demo-opname.\n\n"+safety+"\n\nAfwijkingen geven hier geen foutdiagnose.")
@@ -105,10 +74,10 @@ class ScopeWindow(QMainWindow):
  def toggle_run(self):
   if self.capture.source=="import":
    self.explain("Geïmporteerde opname","Deze opname blijft onveranderd. Kies een demo-profiel om nieuwe signalen te simuleren.","Import wijzigt de samplefrequentie en oorspronkelijke samples niet.");return
-  self.running=not self.running;self.run.setText("Ⅱ Pauze" if self.running else "▶ Start")
+  self.running=not self.running;self.run.setText("Pauze" if self.running else "Start")
  def single(self):
   if self.capture.source=="import":return
-  self.running=False;self.run.setText("▶ Start");self.next_frame()
+  self.running=False;self.run.setText("Start");self.next_frame()
  def frame(self):
   if self.running and self.capture.source=="simulation":self.next_frame()
  def next_frame(self):
@@ -150,7 +119,7 @@ class ScopeWindow(QMainWindow):
   try:c,note=load(path)
   except (OSError,ValueError,TypeError,KeyError) as e:QMessageBox.warning(self,"Opname niet geopend",str(e));return
   self.profile.blockSignals(True);self.profile.setCurrentText(c.profile);self.profile.blockSignals(False)
-  self.capture=c;self.canvas.capture=c;self.note.setPlainText(note);self.running=False;self.run.setText("▶ Start");self.provenance.setText("IMPORTED · oorspronkelijke data: SIMULATIE")
+  self.capture=c;self.canvas.capture=c;self.note.setPlainText(note);self.running=False;self.run.setText("Start");self.provenance.setText("IMPORTED · DEMO")
   self.update_guide();self.canvas.update();self.refresh_metrics();self.pages.setCurrentIndex(0)
 
 def main():

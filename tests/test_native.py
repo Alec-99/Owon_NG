@@ -31,3 +31,14 @@ class NativeTests(unittest.TestCase):
   self.assertGreater(starts,0);self.assertEqual([(x[1],x[2]) for x in data[:2]],[(0xA0,True),(0x55,True)])
   self.w.profile.setCurrentText("I²C");self.w.decoder.setCurrentText("I²C");self.w.analyse()
   self.assertIn("ACK",self.w.analysis_result.text())
+ def test_cursor_plot_coordinates_and_decoder_controls(self):
+  from PySide6.QtTest import QTest
+  from PySide6.QtCore import Qt,QPoint
+  self.w.resize(1040,760);self.w.show();self.app.processEvents()
+  canvas=self.w.canvas;rect=canvas.plot_rect()
+  point=QPoint(round(rect.left()+rect.width()*.6),round(rect.center().y()))
+  QTest.mousePress(canvas,Qt.LeftButton,pos=point);QTest.mouseRelease(canvas,Qt.LeftButton,pos=point)
+  self.assertAlmostEqual(canvas.cursors[1],.6,delta=.01)
+  self.assertFalse(self.w.baud.isEnabled())
+  self.w.decoder.setCurrentText("UART 8N1");self.assertTrue(self.w.baud.isEnabled())
+  self.w.modes.setCurrentIndex(1);self.assertEqual(self.w.profile.currentText(),"PWM")

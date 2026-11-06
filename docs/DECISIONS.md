@@ -41,3 +41,7 @@ Owner explicitly rejected browser and WebView variants. Supersedes the earlier p
 ## 2026-11-06 — Two product workspaces and initial sample analysis
 
 Owner reconfirmed Automotive plus general electronics workflows, inspired by PicoScope workflow quality without copying proprietary material. Add an automotive passive PWM actuator example and offline UART 8N1, I²C byte/ACK decoding and PWM duty/frequency analysis. Initial algorithms operate on actual synthetic/imported demo samples, with fixed documented threshold, explicit UART baud selection and basic sampling checks. They are not hardware/noise validated. SPI/CAN protocol UI entries are marked planned. Guided tests are passive instructions, never commands to energize actuators or automatic diagnostic verdicts.
+
+## 2026-11-06 — Instrument-oriented native layout
+
+Owner found the first UI generic. Replace dashboard styling with a native instrument layout: menus and compact toolbars, a dominant dark scope surface, light neutral channel controls, a test-help tab, decoder/note tabs and a native profile table. Use yellow/blue channel identity consistently; show voltage/time axes and minor grid subdivisions. Preserve an always-visible shared-ground warning and source badge; put detailed instructions in the test-help panel. Consulted OpenHantek screenshot and PulseView native toolbar/dock organization without copying their code/assets. Separate layout construction into native/layout.py.

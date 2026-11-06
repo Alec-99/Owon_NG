@@ -1,6 +1,6 @@
 from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import QPainter, QColor, QPen, QPainterPath
-from PySide6.QtCore import Qt, Signal
+from PySide6.QtCore import Qt, Signal, QRectF
 
 class ScopeCanvas(QWidget):
  cursorsChanged = Signal()
@@ -18,29 +18,49 @@ class ScopeCanvas(QWidget):
  def sample(self,channel,x):
   i=round((self.start()+x*self.span())*self.capture.rate)
   return self.capture.channels[channel][max(0,min(i,len(self.capture.channels[channel])-1))]
+ def plot_rect(self):
+  return QRectF(52,28,max(1,self.width()-72),max(1,self.height()-64))
+ def cursor_x(self,position):
+  r=self.plot_rect();return (position.x()-r.left())/r.width()
  def paintEvent(self,event):
-  p=QPainter(self);p.fillRect(self.rect(),QColor("#0a121a"));p.setRenderHint(QPainter.Antialiasing)
-  w,h=self.width(),self.height()
-  p.setPen(QPen(QColor("#263845"),1))
-  for i in range(11):p.drawLine(round(w*i/10),0,round(w*i/10),h)
-  for i in range(9):p.drawLine(0,round(h*i/8),w,round(h*i/8))
-  for channel,color in enumerate(("#f2c26b","#74dca6")):
+  p=QPainter(self);p.fillRect(self.rect(),QColor("#151b20"));p.setRenderHint(QPainter.Antialiasing)
+  r=self.plot_rect()
+  p.fillRect(r,QColor("#10161b"))
+  for i in range(51):
+   x=r.left()+r.width()*i/50
+   p.setPen(QPen(QColor("#303a42" if i%5==0 else "#202a31"),1,Qt.SolidLine if i%5==0 else Qt.DotLine))
+   p.drawLine(int(x),int(r.top()),int(x),int(r.bottom()))
+  for i in range(41):
+   y=r.top()+r.height()*i/40
+   p.setPen(QPen(QColor("#303a42" if i%5==0 else "#202a31"),1,Qt.SolidLine if i%5==0 else Qt.DotLine))
+   p.drawLine(int(r.left()),int(y),int(r.right()),int(y))
+  p.setPen(QColor("#9baab5"))
+  for i in range(11):
+   value=(self.start()+self.span()*i/10)*1000
+   p.drawText(QRectF(r.left()+r.width()*i/10-30,r.bottom()+5,60,20),Qt.AlignCenter,f"{value:.3g}")
+  for i in range(9):
+   value=(4-i)*self.scales[0]-self.offsets[0]
+   p.drawText(QRectF(0,r.top()+r.height()*i/8-9,44,18),Qt.AlignRight|Qt.AlignVCenter,f"{value:g}")
+  p.drawText(int(r.right()-12),self.height()-4,"ms")
+  p.drawText(8,18,"V")
+  for channel,color in enumerate(("#f0c34d","#43b5e2")):
+   p.setPen(QColor(color));p.drawText(int(r.left()+channel*220),18,f"CH{channel+1}  {self.scales[channel]:g} V/div"+("" if self.visible[channel] else "  uit"))
    if not self.visible[channel]:continue
-   path=QPainterPath()
-   for x in range(w):
-    v=self.sample(channel,x/max(1,w-1))
-    y=h/2-(v+self.offsets[channel])/self.scales[channel]*h/8
-    if x==0:path.moveTo(x,y)
-    else:path.lineTo(x,y)
-   p.setPen(QPen(QColor(color),1.5));p.drawPath(path)
-  p.setPen(QPen(QColor("#85d8e1"),1,Qt.DashLine))
-  for i,r in enumerate(self.cursors):
-   x=round(r*w);p.drawLine(x,0,x,h);p.drawText(x+6,30+i*20,"AB"[i])
-  p.setPen(QColor("#b7cbd7"));p.drawText(12,h-12,f"{self.span()*1000/10:.3g} ms/div · CH1 {self.scales[0]:g} V/div · CH2 {self.scales[1]:g} V/div")
+   p.save();p.setClipRect(r);path=QPainterPath()
+   for x in range(int(r.width())+1):
+    v=self.sample(channel,x/r.width())
+    y=r.center().y()-(v+self.offsets[channel])/self.scales[channel]*r.height()/8
+    if x==0:path.moveTo(r.left()+x,y)
+    else:path.lineTo(r.left()+x,y)
+   p.setPen(QPen(QColor(color),1.35));p.drawPath(path);p.restore()
+  for i,ratio in enumerate(self.cursors):
+   x=r.left()+ratio*r.width();p.setPen(QPen(QColor("#bdc8d0"),1,Qt.DashLine))
+   p.drawLine(int(x),int(r.top()),int(x),int(r.bottom()))
+   p.fillRect(QRectF(x-8,r.top(),16,18),QColor("#44535e"));p.setPen(QColor("#ffffff"));p.drawText(QRectF(x-8,r.top(),16,18),Qt.AlignCenter,"AB"[i])
  def mousePressEvent(self,e):
-  x=e.position().x()/self.width();self.drag=min(range(2),key=lambda i:abs(self.cursors[i]-x));self.move_cursor(x)
+  x=self.cursor_x(e.position());self.drag=min(range(2),key=lambda i:abs(self.cursors[i]-x));self.move_cursor(x)
  def mouseMoveEvent(self,e):
-  if self.drag is not None:self.move_cursor(e.position().x()/self.width())
+  if self.drag is not None:self.move_cursor(self.cursor_x(e.position()))
  def mouseReleaseEvent(self,e):self.drag=None
  def move_cursor(self,x):
   self.cursors[self.drag]=max(0,min(1,x));self.update();self.cursorsChanged.emit()
