@@ -36,3 +36,7 @@ The repository owner has **not yet selected a licence for the new project**. Abs
 ## UI-001 dependency and research update (2026-11-06)
 
 The app foundation uses Vite and TypeScript as pinned development dependencies; no third-party runtime library, UI framework, chart package, font, asset or upstream source code was added. The trace renderer and fixture models are original project code. Existing reference survey remains research-only. GitHub API queries for live upstream metadata and open PR/issue/CI status were rejected with `Forbidden` during this task, so no new licence claims are made and no upstream code was reused.
+
+## Versioned launchers (2026-11-06)
+
+Python launcher source, Go launcher source, Android Activity and packaging scripts are newly authored. Android uses only platform classes supplied by the device; no AndroidX or other runtime libraries are bundled. Python is a prerequisite and is not bundled. The Windows EXE includes the Go standard library/runtime (BSD-3-Clause); its LICENSE and vendored library licences from the actual build toolchain are copied to artifacts/THIRD_PARTY_NOTICES. The local build used the checksum-verified official Go 1.27.3 toolchain. SDK/build tools are build prerequisites and are not redistributed in the APK. No code from the previously surveyed oscilloscope projects was incorporated.

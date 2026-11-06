@@ -1,1 +1,19 @@
-{"name":"owon-ng-ui","private":true,"version":"0.2.0","type":"module","scripts":{"dev":"vite --host 0.0.0.0","build":"tsc -b && vite build","test":"node --test tests/*.test.mjs","check":"npm run build && npm test"},"devDependencies":{"typescript":"~5.8.3","vite":"~6.3.5"}}
+{
+  "name": "owon-ng-ui",
+  "private": true,
+  "version": "0.2.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "test": "node --test tests/*.test.mjs",
+    "check": "npm run build && npm test",
+    "package:python": "npm run build && python3 scripts/package.py python",
+    "package:windows": "npm run build && python3 scripts/package.py windows",
+    "package:android": "npm run build && python3 scripts/package.py android"
+  },
+  "devDependencies": {
+    "typescript": "~5.8.3",
+    "vite": "~6.3.5"
+  }
+}

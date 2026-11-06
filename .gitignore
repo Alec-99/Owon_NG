@@ -11,3 +11,10 @@ Thumbs.db
 .env
 .env.*
 !.env.example
+# Generated packaging outputs
+artifacts/
+.packaging/
+packaging/desktop/web/
+*.tsbuildinfo
+*.keystore
+__pycache__/

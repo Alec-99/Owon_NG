@@ -48,3 +48,22 @@ The project's own licence is **not decided yet**. No third-party code has been c
 ## UI-001 app foundation
 
 The modular TypeScript/Vite workspace is under `src/`. Run `npm ci`, `npm run dev`, `npm run build`, or `npm run check`. The new workspace has Dutch navigation for all primary areas, simulated CKP/PWM/lambda profiles, a Canvas trace, channel toggles, demo run/single, zoom/cursor controls, safety and help messaging, notes, local demo save and JSON export. All traces are deterministic fixtures and labeled demo; hardware, decoder, trigger, and diagnostic functionality remain unavailable. The standalone `prototype/index.html` remains as a reference.
+
+## Versie 0.2.0: Android, Python en Windows
+
+Dezelfde demo-UI wordt geleverd als:
+- `Owon_NG-0.2.0-android-debug.apk`: offline Android-app (Android 8/API 26 of hoger), met ingebouwde WebView.
+- `Owon_NG-0.2.0-python.pyz`: starten met `python Owon_NG-0.2.0-python.pyz` (Python 3.10+). Op Linux/macOS werkt ook `python3`. Opent de UI in de browser; Ctrl+C stopt de lokale server.
+- `Owon_NG-0.2.0-windows-x64.exe`: zelfstandige Windows x64-launcher, zonder Python/Node-installatie. Opent de UI in de standaardbrowser. Het consolevenster sluiten stopt de lokale server.
+
+Deze pakketten bevatten dezelfde synthetische demo, zonder hardwareverbinding. Python en Windows luisteren uitsluitend op een lokale loopbackpoort. Android heeft geen internet-, USB- of bestandstoegangsrechten. De APK is met een ontwikkelsleutel ondertekend; een definitieve releasehandtekening is nog niet ingericht. Een APK uit een andere debug-build kan een andere sleutel hebben: verwijder in dat geval eerst de oudere demo. JSON-downloads via de Android WebView worden nog niet ondersteund; browserexports in Python/Windows blijven beschikbaar. Bewaren op Android is lokaal binnen de app en verdwijnt bij verwijderen van de app.
+
+Bouwen: `npm ci && npm run build`, vervolgens:
+```sh
+python3 scripts/package.py python
+python3 scripts/package.py windows
+python3 scripts/package.py android
+```
+Voor Windows is een echte Go-toolchain (1.24+) op PATH vereist; `OWON_GO` kan een absoluut pad aanwijzen. Android vereist JDK 21, `ANDROID_HOME`, SDK platform 35 en build-tools 35.0.0. De APK-bouwer maakt zo nodig een debug-keystore buiten de checkout; `OWON_DEBUG_KEY` kan dat pad bepalen. De versie komt voor alle pakketten uit `package.json`; buildresultaten staan in `artifacts/`. De workflow **Versioned app packages** bouwt en uploadt ze als GitHub Actions artifacts, samen met SHA256-controlesommen en Go-licentieteksten. Binaire bestanden worden niet aan Git toegevoegd.
+
+Validatie van de desktoplaunchers: bouw ook `python3 scripts/package.py linux` op Linux en voer `python3 -m unittest discover -s tests -p 'test_packaging.py' -v` uit. Dat test de Python-server en dezelfde native desktophost met echte HTTP-requests, plus de Windows PE-header. Dat is geen Windows- of Android-interactietest op een apparaat.
