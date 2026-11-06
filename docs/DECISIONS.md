@@ -1,0 +1,23 @@
+# Architectural and product decisions
+
+Maintain an append-only dated record. Each entry should state rationale, alternatives and implications.
+
+## 2026-11-06 — UI-first milestone
+
+**Decision:** Finish and review full UI/UX before implementing acquisition features and real hardware.
+
+**Rationale:** Prioritize a coherent PicoScope-grade diagnostic workflow, including guided tests for components and info buttons, without coupling design iterations to low-level USB work. Simulated inputs let us test interaction first.
+
+**Implications:** All demonstrations must be labeled as synthetic; controls that have no actual implementation must say so. UI-001/UI-002/UI-003 must be reviewed before engineering phase.
+
+## 2026-11-06 — Repository and licensing
+
+**Decision:** Keep \`Owon_NG\` as a provisional name. Do not select the project's own licence without owner approval. External code reuse is allowed subject to licence verification and attribution.
+
+**Alternatives:** Starting from a fork of neowon or a GPL frontend. Neither is automatically chosen: their frameworks and obligations might constrain independent architecture or project licence.
+
+## 2026-11-06 — Initial device
+
+**Decision:** VDS1022I first; future hardware must use a separate adapter.
+
+**Constraint:** Both input channels share a ground even though the USB connection is isolated. No unsupported high-energy use may be presented as safe.

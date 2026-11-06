@@ -1,0 +1,328 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>Owon NG — scope workspace prototype</title>
+<style>
+:root{--bg:#091018;--panel:#111c29;--panel2:#162433;--line:#2a3a4a;--text:#e4eff9;--muted:#9aafc1;--accent:#67cbd5;--ch1:#ffce70;--ch2:#73dba2;--danger:#f4a69a;--radius:12px;font-family:Inter,Segoe UI,Arial,sans-serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-size:14px}
+button,select,input{font:inherit}button{cursor:pointer}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button,.control select{color:var(--text);border:1px solid var(--line);background:#192a39;border-radius:8px;padding:9px 11px}
+button:hover{background:#244055}
+button.primary{background:#155a62;border-color:#2a9ba4;color:#e7ffff}
+button.primary:hover{background:#19717a}
+button.tiny{padding:3px 7px;font-size:12px;border-radius:6px}
+button.active{background:#244a54;border-color:var(--accent)}
+button:disabled{opacity:.45;cursor:not-allowed}
+h1,h2,h3,p{margin:0}
+h2{font-size:16px}h3{font-size:14px}
+small,.muted{color:var(--muted)}
+.app{min-height:100vh;display:grid;grid-template-columns:205px minmax(0,1fr)}
+aside{border-right:1px solid var(--line);background:#0c1721;padding:20px 13px;display:flex;flex-direction:column;gap:14px}
+.brand{padding:0 10px 16px;border-bottom:1px solid var(--line)}
+.brand strong{font-size:22px;letter-spacing:.2px}.brand span{color:var(--accent)}
+.brand p{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.5}
+nav{display:grid;gap:5px}
+nav button{text-align:left;padding:12px;border-color:transparent;background:none;color:var(--muted)}
+nav button.active{color:var(--text);background:var(--panel2);border-color:#365265}
+.sidebar-bottom{margin-top:auto;line-height:1.7;font-size:12px;color:var(--muted)}
+.content{min-width:0}
+.topbar{border-bottom:1px solid var(--line);padding:14px 22px;display:flex;gap:14px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.topbar h1{font-size:18px;font-weight:650}
+.status{display:inline-flex;align-items:center;gap:7px;color:#b5d5db;font-size:12px;background:#15303a;border:1px solid #2a6168;padding:7px 10px;border-radius:30px}
+.dot{width:7px;height:7px;background:#71d4c8;border-radius:50%}
+.toolbar{display:flex;gap:8px;flex-wrap:wrap}
+.work{padding:18px 22px 24px;max-width:1800px;margin:auto}
+.summary{display:flex;justify-content:space-between;gap:12px;align-items:center;margin-bottom:15px;flex-wrap:wrap}
+.summary p{color:var(--muted);margin-top:5px;line-height:1.45}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 315px;gap:16px;align-items:start}
+.left{min-width:0}
+.panel{border:1px solid var(--line);background:var(--panel);border-radius:var(--radius);overflow:hidden}
+.panelHead{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+.panelTitle{display:flex;align-items:center;gap:8px;font-weight:650}
+.controls{display:grid;grid-template-columns:repeat(4,minmax(130px,1fr));gap:10px;padding:14px}
+.control{background:#0e1923;padding:11px;border:1px solid #233647;border-radius:9px;min-width:0}
+.control label{display:block;color:var(--muted);font-size:11px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px}
+.control select{width:100%}
+.control input[type="range"]{width:100%;accent-color:var(--accent)}
+.channel{display:flex;align-items:center;gap:7px}
+.channel input{accent-color:var(--accent)}
+.tag{display:inline-block;padding:3px 7px;border-radius:5px;font-weight:700;font-size:11px;color:#061019}
+.tag.ch1{background:var(--ch1)}.tag.ch2{background:var(--ch2)}
+.wavePanel{margin-top:14px}
+.scopeBar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;font-size:12px;color:var(--muted)}
+.scopeBar span{display:inline-flex;gap:6px;align-items:center}
+.scopeViewport{position:relative;background:#060d15;overflow:hidden}
+canvas{width:100%;height:420px;display:block;touch-action:none;cursor:crosshair}
+.legend{position:absolute;left:16px;top:12px;display:flex;gap:12px;align-items:center;font-size:12px;pointer-events:none;background:#081321c7;padding:6px 9px;border-radius:7px}
+.legend b{font-weight:600}
+.scopeFoot{display:flex;align-items:center;gap:10px;justify-content:space-between;padding:12px 15px;border-top:1px solid var(--line);flex-wrap:wrap}
+.scopeFoot small{font-size:12px}
+.measurements{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:14px}
+.metric{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:13px;min-width:0}
+.metric small{display:block;font-size:11px}
+.metric strong{font-size:21px;display:block;margin-top:7px;white-space:nowrap}
+.right{display:grid;gap:14px;min-width:0}
+.cardBody{padding:15px;display:grid;gap:13px}
+.selectFull{width:100%;color:var(--text);padding:10px;border-radius:8px;background:#172a39;border:1px solid var(--line)}
+.step{padding:12px;background:#0d1a25;border:1px solid #284052;border-radius:9px;line-height:1.55;font-size:13px}
+.step strong{display:block;margin-bottom:4px;font-size:12px;color:var(--accent)}
+.warning{border:1px solid #6f4c35;background:#2e211e;color:#f7d4b7;border-radius:9px;padding:12px;font-size:12px;line-height:1.55}
+.mini{font-size:12px;line-height:1.55;color:var(--muted)}
+.helpText{font-size:13px;line-height:1.7;color:#d7e5ef}
+.hidden{display:none!important}
+.helpTop{display:flex;gap:7px;align-items:center;justify-content:space-between}
+.pill{display:inline-flex;align-items:center;background:#233541;padding:5px 8px;font-size:11px;border-radius:5px;color:#b5d5e5}
+.infoBtn{border-radius:100%;height:25px;width:25px;padding:0;line-height:1;font-weight:800;color:var(--accent)}
+.footer{margin-top:12px;font-size:12px;color:var(--muted)}
+.importer{display:none}
+@media(max-width:1120px){.layout{grid-template-columns:1fr}.right{grid-template-columns:repeat(2,minmax(0,1fr))}.controls{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:720px){.app{display:block}aside{padding:10px;gap:8px}nav{display:flex;overflow:auto}nav button{white-space:nowrap}.brand{padding:6px}.sidebar-bottom{display:none}.topbar{padding:12px}.work{padding:12px}.right{grid-template-columns:1fr}.measurements{grid-template-columns:repeat(2,minmax(0,1fr))}canvas{height:330px}.controls{grid-template-columns:1fr 1fr}.control{padding:9px}}
+</style>
+</head>
+<body>
+<div class="app">
+<aside>
+  <div class="brand"><strong>OWON <span>NG</span></strong><p>Scope & diagnostic workspace<br>UX-prototype · v0.1</p></div>
+  <nav aria-label="Werkmodi">
+    <button id="nav-auto" class="active" data-mode="auto">Automotive</button>
+    <button id="nav-electronics" data-mode="electronics">Elektronica</button>
+    <button id="nav-lab" data-mode="lab">Vrij meten</button>
+  </nav>
+  <div class="sidebar-bottom"><b>Hardware</b><br>OWON VDS1022I (gepland)<br>USB: niet verbonden<br><br>Alle weergegeven signalen zijn <b>synthetische demonstraties</b>.</div>
+</aside>
+<div class="content">
+  <header class="topbar">
+    <div><h1>Oscilloscoopwerkruimte</h1><small>Meet → begrijp → vergelijk → bewaar</small></div>
+    <div class="toolbar">
+      <span class="status"><span class="dot"></span> DEMOMODUS · geen hardware</span>
+      <button id="btn-open" title="Laad een lokaal bewaarde demo-opname">Open opname</button>
+      <button id="btn-save" title="Bewaar instellingen en samples als JSON">Bewaar opname</button>
+    </div>
+  </header>
+  <main class="work">
+    <div class="summary">
+      <div><h2 id="workspace-title">Automotive · begeleide test</h2><p id="workspace-subtitle">Kies een test. De app toont aansluitadvies, veilige startinstellingen en een voorbeeldsignaal.</p></div>
+      <span class="pill" id="profile-type">Simulatie</span>
+    </div>
+    <div class="layout">
+      <div class="left">
+        <section class="panel" aria-label="Meetinstellingen">
+          <div class="panelHead"><span class="panelTitle">Meetinstellingen <button class="infoBtn" data-help="general" aria-label="Uitleg meetinstellingen">i</button></span><button class="tiny" id="reset">Herstel testinstellingen</button></div>
+          <div class="controls">
+            <div class="control"><label for="timebase">Tijdbasis <button class="tiny" data-help="timebase" aria-label="Uitleg tijdbasis">i</button></label><select id="timebase"></select></div>
+            <div class="control"><label for="vdiv">Verticale schaal <button class="tiny" data-help="vdiv" aria-label="Uitleg volts per divisie">i</button></label><select id="vdiv"></select></div>
+            <div class="control"><label for="trigger">Triggerniveau <button class="tiny" data-help="trigger" aria-label="Uitleg trigger">i</button></label><input type="range" id="trigger" min="-20" max="20" value="0" step=".5"><small id="triggerLabel">0 V</small></div>
+            <div class="control"><label>Kanalen <button class="tiny" data-help="channels" aria-label="Uitleg kanalen">i</button></label><div class="channel"><label><input type="checkbox" id="ch1" checked><span class="tag ch1">CH1</span></label><label><input type="checkbox" id="ch2"><span class="tag ch2">CH2</span></label></div><small>Gedeelde massa!</small></div>
+          </div>
+        </section>
+        <section class="panel wavePanel" aria-label="Golfvorm">
+          <div class="panelHead">
+            <div class="panelTitle">Golfvorm <button class="infoBtn" data-help="wave" aria-label="Uitleg golfvorm">i</button></div>
+            <div class="scopeBar"><span id="sampleLabel">Demo · 4096 samples</span><span id="cursorLabel">Δt —</span></div>
+          </div>
+          <div class="scopeViewport"><canvas id="scope" aria-label="Gesimuleerde golfvorm met twee versleepbare tijdcursors"></canvas><div class="legend"><span style="color:var(--ch1)">● <b>CH1</b></span><span style="color:var(--ch2)">● <b>CH2</b></span><span id="scopeStatus">RUN</span></div></div>
+          <div class="scopeFoot">
+            <div class="toolbar"><button class="primary" id="run">Pauze</button><button id="single">Single</button><button id="zoomIn" title="Zoom in op de tijdbasis">− tijd/div</button><button id="zoomOut" title="Zoom uit op de tijdbasis">+ tijd/div</button></div>
+            <div class="toolbar"><button id="export">CSV export</button><button id="clearCursor">Reset cursors</button></div>
+          </div>
+        </section>
+        <section class="measurements" aria-label="Automatische metingen">
+          <div class="metric"><small>Top-topspanning <button class="tiny" data-help="vpp">i</button></small><strong id="mVpp">—</strong></div>
+          <div class="metric"><small>Effectieve spanning <button class="tiny" data-help="rms">i</button></small><strong id="mRms">—</strong></div>
+          <div class="metric"><small>Frequentie (geschat) <button class="tiny" data-help="freq">i</button></small><strong id="mFreq">—</strong></div>
+          <div class="metric"><small>Cursors Δt <button class="tiny" data-help="cursors">i</button></small><strong id="mCursor">—</strong></div>
+        </section>
+        <div class="footer">Dit is een functioneel UI-prototype, geen meetsoftware. Simulaties en berekeningen zijn uitsluitend demonstratief. Geen USB-verbinding, hardwaretrigger of gevalideerde decoder.</div>
+      </div>
+      <div class="right">
+        <section class="panel">
+          <div class="panelHead"><span class="panelTitle">Begeleide test</span><span class="pill">stap voor stap</span></div>
+          <div class="cardBody">
+            <div><label for="profile" class="mini">Kies een meetprocedure</label><select class="selectFull" id="profile"></select></div>
+            <p class="mini" id="testDesc"></p>
+            <div class="step"><strong>1 · Aansluiten</strong><span id="wire"></span></div>
+            <div class="step"><strong>2 · Wat verwacht je?</strong><span id="expect"></span></div>
+            <div class="step"><strong>3 · Interpretatie</strong><span id="interpret"></span></div>
+            <div class="warning" id="safety"></div>
+          </div>
+        </section>
+        <section class="panel">
+          <div class="panelHead"><span class="panelTitle">Uitleg bij de instelling</span><button class="tiny" id="detailToggle">Technische uitleg</button></div>
+          <div class="cardBody"><div class="helpTop"><h3 id="helpTitle">Tijdbasis</h3><span class="pill">Uitlegfunctie</span></div><p class="helpText" id="helpBody"></p><p class="mini" id="helpAdvanced"></p></div>
+        </section>
+        <section class="panel">
+          <div class="panelHead"><span class="panelTitle">Opnamebeheer</span></div>
+          <div class="cardBody">
+            <p class="mini">Bewaar een momentopname van het gesimuleerde signaal of open een eerdere JSON-opname. Exporteren naar CSV werkt zonder netwerk.</p>
+            <div class="toolbar"><button id="store">Bewaar JSON</button><button id="load">Open JSON</button></div>
+            <p class="mini" id="fileMessage" role="status" aria-live="polite">Nog geen opname geopend.</p>
+          </div>
+        </section>
+      </div>
+    </div>
+    <input id="fileInput" class="importer" type="file" accept=".json,application/json">
+  </main>
+</div>
+</div>
+<script>
+(function(){
+'use strict';
+var profiles={
+ auto:[
+ {id:'ckp',name:'Krukassensor (inductief)',description:'Voorbeeld van een 60−2-tandwiel bij 600 rpm. Vergelijk ritme en ontbrekende tanden.',wire:'Gebruik geschikte automotive meetprobes. Meet de signaaldraad ten opzichte van de correcte voertuigmassa. Controleer eerst het sensortype.',expect:'Een herhalende wisselspanningsreeks met eenmaal per omwenteling een opening voor de ontbrekende tanden.',interpret:'Let op ontbrekende pulsen, amplitudeverschillen en verschuiving ten opzichte van de nokkenas.',safety:'Niet aansluiten op ontstekingshoogspanning. Gebruik nooit willekeurige massapunten voor CH1 en CH2.',time:0.002,volt:2,trigger:0,dual:true},
+ {id:'o2',name:'Lambdasonde (smalband)',description:'Een vereenvoudigde voorbeeldgolfvorm van een warme smalband-lambdasonde.',wire:'Identificeer de signaaldraad met het voertuigdiagram. Meet ten opzichte van de juiste signaalmassa.',expect:'Bij gesloten regeling wisselt het signaal typisch tussen arm en rijk, afhankelijk van het systeem.',interpret:'Beoordeel schakelfrequentie, bereik én voorwaarden zoals motortemperatuur en closed loop.',safety:'Dit profiel is niet toepasbaar op breedbandsondes. Verwissel nooit verwarming en signaal.',time:0.2,volt:0.2,trigger:0.45,dual:false},
+ {id:'injector',name:'Injector (laagzijde)',description:'Vereenvoudigd 12 V-injectorstuurcircuit, inclusief inductieve uitschakelpiek.',wire:'Gebruik een geschikte hoogspanningsbestendige probe en voertuigschema. Voor stroommeting is een stroomtang vereist.',expect:'Bij aansturen zakt de geschakelde draad naar nabij 0 V; bij uitschakeling kan een hoge inductieve piek verschijnen.',interpret:'Controleer pulsduur, aanstuurfrequentie, spanningsval en de vorm van de uitschakeltransient.',safety:'Inductieve pieken kunnen de ingang overschrijden. Sluit de massa nooit op een geschakelde injectorleiding aan. Dit is geen veilige standaardtest zonder juiste accessoires.',time:0.005,volt:20,trigger:6,dual:false},
+ {id:'alternator',name:'Alternatorrimpel',description:'Vereenvoudigde AC-rimpel bovenop een stabiele boordspanning.',wire:'CH1 over de 12 V-batterij, massa op batterĳ-min. Controleer het meetbereik en gebruik de juiste probe.',expect:'Een gelijkspanning met een kleine periodieke rimpel.',interpret:'Let op grote uitschieters en patronen die onder belasting veranderen; trek geen conclusie uit één opname.',safety:'Blijf weg van draaiende onderdelen. Sluit geen scope op de wisselstroomfasen van de alternator zonder geschikte testprocedure aan.',time:0.001,volt:5,trigger:13.8,dual:false},
+ {id:'can',name:'CAN-bus (vereenvoudigd)',description:'Twee complementaire CAN-H en CAN-L signaalniveaus, geen echte protocoldecode.',wire:'CH1 op CAN-H en CH2 op CAN-L, beide probe-massa’s op hetzelfde toegestane voertuigmassapunt.',expect:'Recessief rond 2,5 V; dominant typisch CAN-H omhoog en CAN-L omlaag.',interpret:'Vergelijk differentieel gedrag, dominante niveaus en storingen. Exacte decodering volgt in een latere versie.',safety:'CAN-probing kan de bus verstoren. Gebruik geschikte hoge-impedantieprobes; maak geen kortsluiting tussen de leidingen.',time:0.00001,volt:1,trigger:2.5,dual:true}
+ ],
+ electronics:[
+ {id:'pwm',name:'PWM-regeling',description:'Simuleert een PWM-uitgang waarmee je frequentie, dutycycle en trigger leert instellen.',wire:'Probe op het PWM-signaal; massaklem uitsluitend op de gemeenschappelijke circuitmassa.',expect:'Rechthoekige pulsen tussen 0 en 5 V met ongeveer 30% dutycycle.',interpret:'Verander de tijdbasis om afzonderlijke perioden te herkennen. Let op ruis en flankvorm.',safety:'Meet uitsluitend op een geschikt laagspanningscircuit. Controleer massa vóór aansluiting.',time:0.0005,volt:1,trigger:2.5,dual:false},
+ {id:'sine',name:'Sinusgenerator',description:'Een symmetrisch testsignaal van 1 kHz en ongeveer 4 V top-top.',wire:'Sluit de signaalbron aan op CH1 en de massa op zijn gemeenschappelijke referentie.',expect:'Een symmetrische, stabiele sinusvorm.',interpret:'Gebruik Vpp en RMS om te controleren of je de schaal en het type spanning juist begrijpt.',safety:'Gebruik een veilige, geïsoleerde laagspanningssignaalbron.',time:0.0002,volt:1,trigger:0,dual:false},
+ {id:'uart',name:'UART (simulatie)',description:'Een herhalend 8N1-bytesequentiepatroon op 9600 baud.',wire:'CH1 op de TX-lijn van een compatibele logische schakeling; massa op gemeenschappelijke GND.',expect:'Idle hoog, startbit laag, acht databits LSB-eerst, stopbit hoog.',interpret:'Controleer baudrate en polariteit. Er is nog geen actieve digitale decoder in dit prototype.',safety:'Sluit 3,3 V/5 V UART niet rechtstreeks aan op RS-232-spanningsniveaus.',time:0.0002,volt:1,trigger:2,dual:false},
+ {id:'ripple',name:'Schakelvoeding-rimpel',description:'Een vereenvoudigd 5 V-voedingssignaal met 50 kHz-rimpel.',wire:'Meet over de uitgangscondensator met korte massa-aansluiting en geschikte laagspanningsprobe.',expect:'Een kleine wisselcomponent op 5 V DC.',interpret:'Met een aangepaste verticale schaal zie je de rimpel beter; een grote massalus kan schijnruis veroorzaken.',safety:'Meet uitsluitend aan de veilige secundaire zijde. De primaire netzijde vereist andere meetmiddelen.',time:0.00002,volt:1,trigger:5,dual:false}
+ ]
+};
+profiles.lab=profiles.electronics.concat(profiles.auto);
+var helps={
+ general:['Meetinstellingen','De tijdbasis bepaalt hoeveel tijd zichtbaar is. De verticale schaal bepaalt hoeveel volt in één rastervak passen. De trigger helpt een periodiek signaal stil te zetten.','Een veilige workflow is: juiste probe en massa kiezen → spanningsbereik → tijdbasis → trigger → meting verifiëren.'],
+ timebase:['Tijdbasis','Bij 1 ms/div is één horizontaal rastervak 1 milliseconde. Op een raster van tien vakken zie je samen 10 ms. Een kleinere waarde zoomt in de tijd in.','Deze UI tekent tien horizontale divisies. De ingestelde tijdbasis verandert de voorbeeldtijdspanne, niet de echte samplefrequentie van hardware.'],
+ vdiv:['Verticale schaal','Bij 2 V/div stelt elk verticaal rastervak 2 volt voor. Kies eerst voldoende bereik zodat het signaal niet buiten beeld valt.','Acht verticale divisies; een gecentreerd signaal heeft dus ongeveer ±4 divisies ruimte. Probe-attenuatie moet in echte hardware overeenkomen met de softwareinstelling.'],
+ trigger:['Trigger','Een trigger bepaalt op welk spanningsniveau de oscilloscoop de golfvorm kan stabiliseren. Kies een niveau dat daadwerkelijk door je signaal wordt gekruist.','Een hardwaretrigger hangt ook af van flankrichting, holdoff en modus. In de demo is de lijn alleen een visuele markering.'],
+ channels:['Kanalen','CH1 en CH2 tonen twee gelijktijdige spanningssignalen. Je kunt ze apart aan- en uitzetten.','Belangrijk: de OWON VDS1022I heeft gemeenschappelijke kanaalmassa. Isolatie van de USB-verbinding betekent geen onderlinge kanaalisolatie.'],
+ wave:['Golfvorm','De horizontale as is tijd en de verticale as is spanning. Sleep de twee verticale cursors om een tijdverschil te meten; gebruik het muiswiel om de tijdbasis te veranderen.','Dit prototype tekent door ons gegenereerde samples op Canvas. De gegevens zijn geen USB-acquisities.'],
+ vpp:['Top-topspanning','Vpp is het verschil tussen de hoogste en laagste spanning in het zichtbare samplevenster.','Vpp = max(samples) − min(samples). Piekruis kan deze meting beïnvloeden.'],
+ rms:['RMS','De effectieve spanning geeft aan welke gelijkspanning hetzelfde gemiddelde vermogen zou leveren aan een weerstand.','RMS = wortel(gemiddelde(v²)). De demo berekent DC+AC RMS over het zichtbare venster.'],
+ freq:['Frequentie','Frequentie is het aantal herhalingen per seconde. Bij niet-periodieke signalen is één frequentiewaarde vaak misleidend.','De schatting gebruikt stijgende nuldoorgangen rond het midden van de golfvorm; bij CAN, ruis of onregelmatige tanden is de waarde beperkt betrouwbaar.'],
+ cursors:['Tijdcursors','Sleep de blauwe verticale lijnen. Hun onderlinge afstand is Δt. Voor een periodiek signaal kun je T meten en vervolgens f = 1 / T berekenen.','Δt = |xB−xA| × totale tijdspanne. Dit is een cursorberekening op het scherm, niet een precisieclaim over het instrument.']
+};
+var times=[0.000001,0.000002,0.000005,0.00001,0.00002,0.00005,0.0001,0.0002,0.0005,0.001,0.002,0.005,0.01,0.02,0.05,0.1,0.2,0.5,1];
+var volts=[0.05,0.1,0.2,0.5,1,2,5,10,20,50,100];
+var state={mode:'auto',profile:'ckp',time:0.002,volt:2,trigger:0,show1:true,show2:true,running:true,cursorA:.30,cursorB:.68,advanced:false,help:'timebase',data:null,imported:false,offset:0};
+var $=function(id){return document.getElementById(id);};
+var canvas=$('scope'), ctx=canvas.getContext('2d');
+var selectProfile=$('profile'), timeSelect=$('timebase'),voltSelect=$('vdiv'),trigger=$('trigger');
+function esc(s){return String(s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function fmtTime(s){return s>=1?Number(s.toFixed(3))+' s':s>=.001?Number((s*1000).toFixed(3))+' ms':Number((s*1000000).toFixed(2))+' µs';}
+function fmtVolt(v){return Math.abs(v)<1?Number((v*1000).toFixed(2))+' mV':Number(v.toFixed(3))+' V';}
+function option(select,list,formatter){select.innerHTML=list.map(function(v){return '<option value="'+v+'">'+formatter(v)+'/div</option>';}).join('');}
+option(timeSelect,times,fmtTime);option(voltSelect,volts,fmtVolt);
+function profile(){return profiles[state.mode].find(function(p){return p.id===state.profile;})||profiles[state.mode][0];}
+function updateMode(mode){
+ state.mode=mode; state.imported=false;state.data=null;state.offset=0;state.profile=profiles[mode][0].id;
+ document.querySelectorAll('nav button').forEach(function(b){b.classList.toggle('active',b.dataset.mode===mode);});
+ $('workspace-title').textContent=mode==='auto'?'Automotive · begeleide test':mode==='electronics'?'Elektronica · begeleide test':'Vrij meten · demonstratiesignalen';
+ $('workspace-subtitle').textContent=mode==='lab'?'Probeer de meetinstellingen uit met verschillende signalen.':'Kies een test. De app toont aansluitadvies, veilige startinstellingen en een voorbeeldsignaal.';
+ selectProfile.innerHTML=profiles[mode].map(function(p){return '<option value="'+p.id+'">'+esc(p.name)+'</option>';}).join('');
+ selectProfile.value=state.profile;applyProfile();
+}
+function applyProfile(){
+ var p=profile();state.profile=p.id;state.time=p.time;state.volt=p.volt;state.trigger=p.trigger;state.show1=true;state.show2=p.dual;state.imported=false;state.data=null;state.offset=0;
+ ['timebase','zoomIn','zoomOut','run','single'].forEach(function(id){$(id).disabled=false;});
+ timeSelect.value=String(state.time);voltSelect.value=String(state.volt);trigger.min=String(Math.min(-20,Math.floor(p.trigger-20)));trigger.max=String(Math.max(80,Math.ceil(p.trigger+20)));trigger.value=String(state.trigger);$('triggerLabel').textContent=fmtVolt(state.trigger);
+ $('ch1').checked=true;$('ch2').checked=p.dual;
+ $('testDesc').textContent=p.description;$('wire').textContent=p.wire;$('expect').textContent=p.expect;$('interpret').textContent=p.interpret;$('safety').textContent='Veiligheid: '+p.safety;
+ $('profile-type').textContent='Simulatie · '+p.name;render();
+}
+function signal(id,ch,t){
+ var cycle,bit,index;
+ if(id==='sine')return (ch===2?.5:2)*Math.sin(2*Math.PI*1000*t);
+ if(id==='pwm')return ((t*500)%1+1)%1<.30?(ch===2?3.3:5):0;
+ if(id==='ckp'){cycle=((t*10)%1+1)%1;index=cycle*60;return ch===2?(cycle<.50?3.3:0):index>=58?0:2.4*Math.sin(2*Math.PI*index);}
+ if(id==='o2')return .48+.40*Math.tanh(2.5*Math.sin(2*Math.PI*.75*t));
+ if(id==='injector'){cycle=((t*10)%1+1)%1;return cycle<.025?.2:cycle<.032?12+50*Math.exp(-(cycle-.025)*700):12;}
+ if(id==='alternator')return 14.0+.17*Math.sin(2*Math.PI*330*t)+.05*Math.sin(2*Math.PI*660*t);
+ if(id==='can'){cycle=Math.floor(t*500000);bit=((cycle%23)+23)%23;return (bit===0||bit===2||bit===5||bit===9||bit===12)?(ch===1?3.5:1.5):2.5;}
+ if(id==='uart'){cycle=Math.floor(t*9600);index=((cycle%10)+10)%10;bit=index===0?0:index===9?1:((0x55>>(index-1))&1);return bit?3.3:0;}
+ if(id==='ripple')return 5+.06*Math.sin(2*Math.PI*50000*t)+.02*Math.sin(2*Math.PI*100000*t);
+ return 0;
+}
+function makeData(){
+ var count=4096,total=state.time*10, arr1=[],arr2=[],phase=state.offset;
+ for(var i=0;i<count;i++){var t=phase+total*(i/(count-1)-.5);arr1.push(signal(state.profile,1,t));arr2.push(signal(state.profile,2,t));}
+ return {ch1:arr1,ch2:arr2,interval:total/(count-1)};
+}
+function getData(){if(state.imported&&state.data)return state.data;if(!state.data)state.data=makeData();return state.data;}
+function calc(samples,interval){
+ if(!samples||!samples.length)return {vpp:NaN,rms:NaN,freq:NaN};
+ var mn=Infinity,mx=-Infinity,sum=0;
+ for(var i=0;i<samples.length;i++){var v=samples[i];if(v<mn)mn=v;if(v>mx)mx=v;sum+=v*v;}
+ var mid=(mn+mx)/2,rises=[];
+ for(var j=1;j<samples.length;j++)if(samples[j-1]<mid&&samples[j]>=mid)rises.push(j);
+ var freq=NaN;
+ if(rises.length>=3){var periods=[];for(var k=1;k<rises.length;k++)periods.push((rises[k]-rises[k-1])*interval);periods.sort(function(a,b){return a-b;});var p=periods[Math.floor(periods.length/2)];if(p>0)freq=1/p;}
+ return {vpp:mx-mn,rms:Math.sqrt(sum/samples.length),freq:freq};
+}
+function updateMetrics(d){
+ var s=state.show1?d.ch1:state.show2?d.ch2:[];
+ var m=calc(s,d.interval||state.time*10/4095);
+ $('mVpp').textContent=Number.isFinite(m.vpp)?fmtVolt(m.vpp):'—';
+ $('mRms').textContent=Number.isFinite(m.rms)?fmtVolt(m.rms):'—';
+ $('mFreq').textContent=Number.isFinite(m.freq)?(m.freq>=1000?(m.freq/1000).toFixed(2)+' kHz':m.freq.toFixed(1)+' Hz'):'—';
+ $('mCursor').textContent=fmtTime(Math.abs(state.cursorB-state.cursorA)*(d.interval||state.time*10/4095)*(d.ch1.length-1));
+ $('cursorLabel').textContent='Δt '+$('mCursor').textContent;
+ $('sampleLabel').textContent=(state.imported?'JSON-import':'Demo')+' · '+d.ch1.length+' samples';
+}
+function render(){
+ var r=canvas.getBoundingClientRect(),ratio=window.devicePixelRatio||1;
+ if(!r.width)return;
+ var w=r.width,h=r.height||420;
+ if(canvas.width!==Math.round(w*ratio)||canvas.height!==Math.round(h*ratio)){canvas.width=Math.round(w*ratio);canvas.height=Math.round(h*ratio);}
+ ctx.setTransform(ratio,0,0,ratio,0,0);ctx.clearRect(0,0,w,h);
+ var left=48,right=w-16,top=18,bottom=h-30,ww=right-left,hh=bottom-top;
+ ctx.fillStyle='#070e17';ctx.fillRect(0,0,w,h);
+ for(var i=0;i<=10;i++){var x=left+ww*i/10;ctx.beginPath();ctx.strokeStyle=i===5?'#355162':'#203140';ctx.lineWidth=1;ctx.moveTo(x,top);ctx.lineTo(x,bottom);ctx.stroke();}
+ for(var j=0;j<=8;j++){var y=top+hh*j/8;ctx.beginPath();ctx.strokeStyle=j===4?'#355162':'#203140';ctx.moveTo(left,y);ctx.lineTo(right,y);ctx.stroke();ctx.fillStyle='#83a0b0';ctx.font='11px Segoe UI, Arial';ctx.textAlign='right';ctx.fillText(Number(((4-j)*state.volt).toFixed(2))+'V',left-7,y+4);}
+ ctx.textAlign='center';for(var k=0;k<=10;k++){ctx.fillStyle='#83a0b0';ctx.fillText(fmtTime((k-5)*state.time),left+ww*k/10,bottom+17);}
+ var triggerY=top+hh*.5-state.trigger/state.volt*(hh/8);
+ if(triggerY>=top&&triggerY<=bottom){ctx.setLineDash([5,4]);ctx.strokeStyle='#f8b3ae70';ctx.beginPath();ctx.moveTo(left,triggerY);ctx.lineTo(right,triggerY);ctx.stroke();ctx.setLineDash([]);}
+ var d=getData();
+ function trace(samples,color){if(!samples||!samples.length)return;ctx.beginPath();ctx.strokeStyle=color;ctx.lineWidth=1.75;ctx.lineJoin='round';for(var n=0;n<samples.length;n++){var xx=left+ww*n/(samples.length-1),yy=top+hh*.5-samples[n]/state.volt*(hh/8);if(n===0)ctx.moveTo(xx,yy);else ctx.lineTo(xx,yy);}ctx.stroke();}
+ if(state.show1)trace(d.ch1,'#ffce70');if(state.show2)trace(d.ch2,'#73dba2');
+ [['A',state.cursorA],['B',state.cursorB]].forEach(function(c){var x=left+ww*c[1];ctx.strokeStyle='#70c4fc';ctx.lineWidth=1;ctx.setLineDash([6,5]);ctx.beginPath();ctx.moveTo(x,top);ctx.lineTo(x,bottom);ctx.stroke();ctx.setLineDash([]);ctx.fillStyle='#153956';ctx.fillRect(x-11,top,22,20);ctx.fillStyle='#d7edff';ctx.font='bold 12px Segoe UI, Arial';ctx.textAlign='center';ctx.fillText(c[0],x,top+14);});
+ updateMetrics(d);
+}
+function selectedHelp(id){state.help=id;var h=helps[id]||helps.general;$('helpTitle').textContent=h[0];$('helpBody').textContent=h[1];$('helpAdvanced').textContent=state.advanced?h[2]:'';$('detailToggle').textContent=state.advanced?'Verberg technische uitleg':'Technische uitleg';}
+function setRunning(run){state.running=run;$('run').textContent=run?'Pauze':'Verder';$('scopeStatus').textContent=run?'RUN':'STOP';$('run').classList.toggle('primary',run);}
+function changeTime(step){var idx=times.indexOf(state.time);idx=Math.max(0,Math.min(times.length-1,idx+step));state.time=times[idx];timeSelect.value=String(state.time);if(!state.imported)state.data=null;render();}
+function download(name,content,type){var blob=new Blob([content],{type:type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;document.body.appendChild(a);a.click();a.remove();setTimeout(function(){URL.revokeObjectURL(url);},1500);}
+function exportJson(){var d=getData();download('owon-ng-demo-capture.json',JSON.stringify({schema:'owon-ng-demo-v1',origin:'synthetic-demo',profile:state.profile,mode:state.mode,timebase:state.time,voltsPerDiv:state.volt,trigger:state.trigger,channels:{ch1:d.ch1,ch2:d.ch2},interval:d.interval},null,2),'application/json');$('fileMessage').textContent='Demo-opname als JSON bewaard.';}
+function exportCsv(){var d=getData(),out=['index,time_s,ch1_v,ch2_v'];for(var i=0;i<d.ch1.length;i++)out.push(i+','+(i*d.interval).toPrecision(9)+','+d.ch1[i]+','+d.ch2[i]);download('owon-ng-demo-capture.csv',out.join('\n'),'text/csv');$('fileMessage').textContent='CSV met gesimuleerde samples geëxporteerd.';}
+function loadJson(file){if(!file)return;var reader=new FileReader();reader.onload=function(){try{var j=JSON.parse(reader.result);if(j.schema!=='owon-ng-demo-v1'||j.origin!=='synthetic-demo'||!j.channels||!Array.isArray(j.channels.ch1)||!Array.isArray(j.channels.ch2)||j.channels.ch1.length<2||j.channels.ch1.length>200000||j.channels.ch1.length!==j.channels.ch2.length||!Number.isFinite(j.interval)||j.interval<=0)throw new Error('Ongeldig opnameformaat');if(!j.channels.ch1.every(Number.isFinite)||!j.channels.ch2.every(Number.isFinite))throw new Error('Niet-numerieke samples');if(!times.includes(j.timebase)||!volts.includes(j.voltsPerDiv)||!profiles[j.mode]||!profiles[j.mode].some(function(p){return p.id===j.profile;}))throw new Error('Instellingen of testprofiel niet ondersteund');updateMode(j.mode);state.profile=j.profile;selectProfile.value=j.profile;applyProfile();state.time=j.timebase;state.volt=j.voltsPerDiv;state.trigger=Number.isFinite(j.trigger)?j.trigger:0;timeSelect.value=String(state.time);voltSelect.value=String(state.volt);trigger.value=String(state.trigger);$('triggerLabel').textContent=fmtVolt(state.trigger);state.imported=true;state.data={ch1:j.channels.ch1,ch2:j.channels.ch2,interval:j.interval};state.running=false;setRunning(false);['timebase','zoomIn','zoomOut','run','single'].forEach(function(id){$(id).disabled=true;});$('fileMessage').textContent='Gesimuleerde JSON-opname geopend ('+j.channels.ch1.length+' samples). Om tijdbasis te wijzigen, kies een nieuw testprofiel.';$('profile-type').textContent='Geïmporteerde demo-opname';render();}catch(e){$('fileMessage').textContent='Kan bestand niet openen: '+e.message;}};reader.readAsText(file);}
+document.querySelectorAll('nav button').forEach(function(b){b.addEventListener('click',function(){updateMode(b.dataset.mode);});});
+document.querySelectorAll('[data-help]').forEach(function(b){b.addEventListener('click',function(){selectedHelp(b.dataset.help);});});
+selectProfile.addEventListener('change',function(){state.profile=selectProfile.value;applyProfile();});
+timeSelect.addEventListener('change',function(){state.time=Number(timeSelect.value);state.data=state.imported?state.data:null;render();});
+voltSelect.addEventListener('change',function(){state.volt=Number(voltSelect.value);render();});
+trigger.addEventListener('input',function(){state.trigger=Number(trigger.value);$('triggerLabel').textContent=fmtVolt(state.trigger);render();});
+$('ch1').addEventListener('change',function(){state.show1=this.checked;render();});
+$('ch2').addEventListener('change',function(){state.show2=this.checked;render();});
+$('reset').addEventListener('click',applyProfile);
+$('run').addEventListener('click',function(){setRunning(!state.running);});
+$('single').addEventListener('click',function(){state.data=state.imported?state.data:makeData();setRunning(false);render();});
+$('zoomIn').addEventListener('click',function(){changeTime(-1);});
+$('zoomOut').addEventListener('click',function(){changeTime(1);});
+$('clearCursor').addEventListener('click',function(){state.cursorA=.30;state.cursorB=.68;render();});
+$('export').addEventListener('click',exportCsv);$('btn-save').addEventListener('click',exportJson);$('store').addEventListener('click',exportJson);
+$('btn-open').addEventListener('click',function(){$('fileInput').click();});$('load').addEventListener('click',function(){$('fileInput').click();});
+$('fileInput').addEventListener('change',function(){loadJson(this.files[0]);this.value='';});
+$('detailToggle').addEventListener('click',function(){state.advanced=!state.advanced;selectedHelp(state.help);});
+var dragging=null,pan=null;
+function position(e){var rect=canvas.getBoundingClientRect(),left=48,right=rect.width-16;return Math.max(0,Math.min(1,(e.clientX-rect.left-left)/(right-left)));}
+canvas.addEventListener('pointerdown',function(e){var pos=position(e);dragging=Math.abs(pos-state.cursorA)<=Math.abs(pos-state.cursorB)?'A':'B';canvas.setPointerCapture(e.pointerId);if(dragging==='A')state.cursorA=pos;else state.cursorB=pos;render();});
+canvas.addEventListener('pointermove',function(e){if(!dragging)return;var pos=position(e);if(dragging==='A')state.cursorA=pos;else state.cursorB=pos;render();});
+canvas.addEventListener('pointerup',function(){dragging=null;});canvas.addEventListener('pointercancel',function(){dragging=null;});
+canvas.addEventListener('wheel',function(e){e.preventDefault();changeTime(e.deltaY<0?-1:1);},{passive:false});
+window.addEventListener('resize',render);
+document.addEventListener('keydown',function(e){if(e.code==='Space'&&!['SELECT','INPUT','BUTTON'].includes(document.activeElement.tagName)){e.preventDefault();setRunning(!state.running);}if(e.key==='Escape')dragging=null;});
+var last=performance.now();
+function animate(now){if(state.running&&!state.imported){if(now-last>150){state.offset+=.000027;state.data=null;render();last=now;}}requestAnimationFrame(animate);}
+updateMode('auto');selectedHelp('timebase');setRunning(true);requestAnimationFrame(animate);
+})();
+</script>
+</body>
+</html>
