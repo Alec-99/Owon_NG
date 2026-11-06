@@ -6,7 +6,7 @@ An experimental, user-friendly oscilloscope and diagnostics workspace for **OWON
 
 ## Current state
 
-**v0.1 — interactive UX prototype, simulation only.** No USB device control, verified hardware sampling, actual trigger, CAN decoder or automatic diagnostic verdicts yet.
+**v0.2 — modular UI foundation plus the retained v0.1 prototype; simulation only.** No USB device control, verified hardware sampling, actual trigger, CAN decoder or automatic diagnostic verdicts yet.
 
 ### Try the prototype
 
@@ -44,3 +44,7 @@ The long-term target is **professional-grade workflow and software correctness**
 ## Licence
 
 The project's own licence is **not decided yet**. No third-party code has been copied into this branch. See `docs/THIRD_PARTY.md`.
+
+## UI-001 app foundation
+
+The modular TypeScript/Vite workspace is under `src/`. Run `npm ci`, `npm run dev`, `npm run build`, or `npm run check`. The new workspace has Dutch navigation for all primary areas, simulated CKP/PWM/lambda profiles, a Canvas trace, channel toggles, demo run/single, zoom/cursor controls, safety and help messaging, notes, local demo save and JSON export. All traces are deterministic fixtures and labeled demo; hardware, decoder, trigger, and diagnostic functionality remain unavailable. The standalone `prototype/index.html` remains as a reference.

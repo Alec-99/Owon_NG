@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {readFile} from 'node:fs/promises';
+test('required workspaces and honest simulation state',async()=>{const s=await readFile('src/main.ts','utf8');for(const p of ['Automotive','Elektronica','Vrij meten','Bibliotheek','Opnames/Geschiedenis','Rapporten','Instellingen','Help'])assert.ok(s.includes(p));assert.match(s,/DEMO/);assert.match(s,/gemeenschappelijke massa/i);assert.match(s,/gesimuleerd/i)});
+test('deterministic fixture model',async()=>{const s=await readFile('src/fixtures/signals.ts','utf8');assert.match(s,/Math\.sin/);assert.match(s,/source:'simulation'/);assert.match(s,/peakToPeak/)});

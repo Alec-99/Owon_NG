@@ -21,3 +21,11 @@ Maintain an append-only dated record. Each entry should state rationale, alterna
 **Decision:** VDS1022I first; future hardware must use a separate adapter.
 
 **Constraint:** Both input channels share a ground even though the USB connection is isolated. No unsupported high-energy use may be presented as safe.
+
+## 2026-11-06 — UI-001 frontend foundation
+
+**Decision:** Use Vite + TypeScript with a small native Canvas renderer and explicit fixture/state modules.
+
+**Rationale:** The current UI scope needs a fast, responsive trace without adopting a large charting dependency. This keeps rendering and simulated acquisition replaceable behind typed modules, while avoiding third-party code and licence obligations during UI-001.
+
+**Implications:** The current renderer and measurements are illustrative only. Real signal processing, calibrated units and device-control semantics remain deferred until the UI phase is accepted.

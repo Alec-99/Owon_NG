@@ -32,3 +32,7 @@ The repository owner has **not yet selected a licence for the new project**. Abs
 - [REFERENCE_REPOS.md](REFERENCE_REPOS.md) lists source investigation guidance and the steps required before adoption.
 
 **Current implementation provenance:** The Codex instruction/requirements/task files added in the handoff are new project documents. No third-party source code, proprietary waveforms or vendor assets were imported in this handoff.
+
+## UI-001 dependency and research update (2026-11-06)
+
+The app foundation uses Vite and TypeScript as pinned development dependencies; no third-party runtime library, UI framework, chart package, font, asset or upstream source code was added. The trace renderer and fixture models are original project code. Existing reference survey remains research-only. GitHub API queries for live upstream metadata and open PR/issue/CI status were rejected with `Forbidden` during this task, so no new licence claims are made and no upstream code was reused.
