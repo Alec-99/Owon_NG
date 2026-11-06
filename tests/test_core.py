@@ -103,6 +103,11 @@ class RecordingTests(unittest.TestCase):
         with self.assertRaises(ValueError):ViewState(cursors=(-.1,.5))
 
 class AcquisitionTests(unittest.TestCase):
+    def test_invalid_worker_timing_is_rejected_before_start(self):
+        for value in (float("nan"),float("inf"),True,0,-1,"fast"):
+            with self.assertRaises(ValueError):Acquisition(interval=value)
+            with self.assertRaises(ValueError):Acquisition(read_timeout=value)
+
     def test_simulator_sample_clock_continues_across_frames(self):
         adapter=SimulatedScope();adapter.connect();adapter.configure("PWM")
         first=adapter.read_frame();second=adapter.read_frame()
@@ -178,7 +183,11 @@ class AcquisitionTests(unittest.TestCase):
         finally:self.assertTrue(controller.close())
 
     def test_hardware_boundary_never_claims_to_connect(self):
-        controller=Acquisition(Vds1022Adapter())
+        class FalseyAdapter(Vds1022Adapter):
+            def __bool__(self):return False
+        adapter=FalseyAdapter()
+        controller=Acquisition(adapter)
+        self.assertIs(controller.adapter,adapter)
         try:
             controller.configure("PWM");wait_for(lambda:controller.status().state=="error")
             self.assertIn("niet geïmplementeerd",controller.status().error)

@@ -6,7 +6,7 @@ from threading import Event, Lock, Thread
 from typing import Protocol
 import time
 import uuid
-from native.capture import Capture
+from native.capture import Capture, finite
 from native.model import PROFILES, fixture
 
 @dataclass(frozen=True)
@@ -78,9 +78,11 @@ class AcquisitionStatus:
 
 class Acquisition:
     def __init__(self, adapter=None, capacity=8, interval=0.1, read_timeout=0.25):
-        if type(capacity) is not int or capacity < 1 or interval <= 0 or read_timeout <= 0:
+        if type(capacity) is not int or capacity < 1:
             raise ValueError("Ongeldige acquisitiebuffer.")
-        self.adapter = adapter or SimulatedScope()
+        finite(interval,"acquisitie-interval",1e-6)
+        finite(read_timeout,"read-timeout",1e-6)
+        self.adapter = adapter if adapter is not None else SimulatedScope()
         self.capacity = capacity
         self.interval = interval
         self.read_timeout = read_timeout
