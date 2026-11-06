@@ -52,3 +52,7 @@ Exact OpenHantek/PulseView research revisions and consulted files are recorded i
 ## Acquisition-core research
 
 New capture, persistence, acquisition and rendering code is independently authored using Python's standard library. LabNation SmartScopeApp was inspected only as documented in REFERENCE_REPOS.md. Reuse permission was not established; no source, assets or waveforms were copied. The owner-provided PicoScope image is a UX reference and is not redistributed.
+
+## Native UI clarity 0.4.2
+
+Arrow SVGs in native/assets are original project assets, registered through native/resources.qrc and generated resources_rc.py (pyside6-rcc). QtSvg is explicitly included in frozen builds to render them. No third-party icons were imported. Normal file/open toolbar icons remain platform-standard QStyle icons. The new documentation screenshot is from this app.

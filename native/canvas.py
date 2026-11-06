@@ -71,7 +71,7 @@ class ScopeCanvas(QWidget):
   for i in range(9):
    value=(4-i)*self.scales[0]-self.offsets[0]
    p.drawText(QRectF(0,r.top()+r.height()*i/8-9,44,18),Qt.AlignRight|Qt.AlignVCenter,f"{value:g}")
-  p.drawText(int(r.right()-12),int(r.bottom()+24),"ms")
+  p.drawText(4,int(r.bottom()+19),"ms")
   p.drawText(4,18,"CH1 V")
   for channel,color in enumerate(("#f0c34d","#43b5e2")):
    p.setPen(QColor(color));p.drawText(int(r.left()+channel*220),18,f"CH{channel+1}  {self.scales[channel]:g} V/div"+("" if self.visible[channel] else "  uit"))

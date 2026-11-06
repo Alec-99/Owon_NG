@@ -53,3 +53,9 @@ Supersedes UI-only review gates. Implement acquisition and recording foundations
 ## 2026-11-06 — Time-aligned native decoder lane
 
 Following owner feedback, render decoder events under the waveform using the same sample-to-time transform. Events are tied to a frozen capture ID; new captures/settings invalidate stale output. Analysis freezes the current simulated frame. Use a single implementation for numeric output and visual spans; expose hexadecimal/decimal/ASCII/binary representations and click-through sample/time details. First lane covers UART 8N1, I²C 7-bit address/data/ACK and sampled PWM periods. No protocol/hardware validation parity claim with PicoScope or LabNation is made.
+
+## 2026-11-07 — Explicit control theme and screenshot evidence
+
+Owner screenshot showed Windows-dark input surfaces with fixed dark text. Own the complete Fusion palette/color-scheme request and explicit widget state colors instead of relying on inherited OS surfaces. Add original embedded SVG chevrons so styled dropdown/spin controls remain recognizable. Replace technical-only labels with acquisition status, short next-step hints and a clearly emphasized analysis action. Hide irrelevant UART/radix controls for PWM, and scroll the channel panel at compact sizes. Trim display-only trailing zeros without reducing stored numeric precision.
+
+Owner requests screenshot review during development. Capture the native source UI in 12 scenario/palette combinations, retain screenshots on CI failures, and check the actual frozen Windows EXE at normal/125% scale. Keep provenance/manifest metadata so local offscreen images are not misrepresented as Windows results. No third-party image assets are used.

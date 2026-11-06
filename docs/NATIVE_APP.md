@@ -26,3 +26,9 @@ Compacte native menubalk en werkbalk, kanaalinstellingen rechts, testhulp in een
 Opnames bewaren timing, onveranderlijke samples, kanaalmetadata en de weergave-instellingen. De simulator draait in een aparte worker met zichtbare buffer-overloop; oude frames kunnen een geïmporteerde opname niet overschrijven. Dit is nog geen continue verliesvrije recorder. Zie ACQUISITION_CORE.md en HARDWARE_VALIDATION.md.
 
 Decodeblokken staan onder de trace op dezelfde tijdas. Analyse pauzeert de simulatie. Hex/decimaal/ASCII/binair zijn weergavekeuzes; klik een blok voor samples en tijdbereik. UART toont bytes en framing/onvolledigheidsmeldingen; I²C toont 7-bit adres/richting, data en ACK/NACK; PWM toont perioden/duty. Eén decoderbaan tegelijk. Nieuwe samples of instellingen maken oude resultaten ongeldig.
+
+## 0.4.2 — leesbaarheid en screenshotcontrole
+
+Lichte, expliciet beheerde bediening blijft leesbaar bij een donker Windows-thema. De grafiek blijft donker. Start/pauze/opgeslagen opname hebben een aparte status en korte bedieningshints; de analyseknop is herkenbaar. Irrelevante baud-/getalinstellingen worden verborgen. Keuzelijst- en spinpijlen zijn ingebedde assets. Een compact venster gebruikt een scrollbaar kanaalpaneel.
+
+CI bewaart native screenshots en controleert ook het gebouwde EXE bij normale en 125%-schaal. Zie VISUAL_QA.md voor cases en beperkingen.

@@ -1,13 +1,13 @@
 # Owon NG — native oscilloscoopapp
 
-Versie 0.4.1 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
+Versie 0.4.2 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
 
 Start:
 
     python -m pip install -r requirements-native.txt
     python app.py
 
-De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.4.1.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.4.1-python-native.zip.
+De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.4.2.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.4.2-python-native.zip.
 
 Werkend: twee kanalen met zichtbaarheid, V/div en offset; tijdbasis en verschuiven; sleepbare en met toetsenbord bedienbare cursors met Δt/ΔV; start/pauze/single; Vpp/RMS van synthetische samples; CKP/lambda/injector/CAN/PWM/sinus-fixtures; hulp met technische details; begeleide instructies; notities; native bestandsdialogen met JSON bewaren/openen; bibliotheek, opnamegeschiedenis en demo-rapportweergave.
 
@@ -45,3 +45,9 @@ Corechecks: python -m unittest discover -s tests -p test_core.py -v.
 UART-, I²C- en PWM-blokken staan op dezelfde tijdas als de samples. Analyse bevriest de huidige simulatie; oude resultaten worden niet boven nieuwe frames getekend. Klik een blok voor sample-/tijddetails. Kies Hex/Dec/ASCII/Bin voor de waardeweergave. De algoritmes zijn nog niet gevalideerd op hardware/ruis.
 
 ![Native decoderbaan](docs/images/native-decoder-0.4.1.png)
+
+## Leesbaarheid 0.4.2
+
+Een beheerd licht bedieningsthema voorkomt donkere tekst op donkere Windows-invoervelden. Duidelijke status en actieknoppen, contextafhankelijke decoderinstellingen en visuele regressiecontroles. Zie [screenshotcontrole](docs/VISUAL_QA.md).
+
+![Leesbare native bediening](docs/images/native-clarity-0.4.2.png)

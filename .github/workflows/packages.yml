@@ -23,8 +23,25 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
         run: python -m unittest discover -s tests -p test_native.py -v
+      - name: Contrast and clarity checks
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m unittest discover -s tests -p test_visual.py -v
+      - name: Capture native Windows UI screenshots
+        if: always()
+        timeout-minutes: 3
+        run: python scripts/capture_ui.py
       - run: python scripts/package.py python
       - run: python scripts/package.py windows
+      - name: Check the actual packaged Windows EXE
+        run: python scripts/check_windows_bundle.py
+      - name: Retain visual review evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Owon_NG-ui-screenshots
+          path: artifacts/ui/
+          if-no-files-found: warn
       - uses: actions/upload-artifact@v4
         with:
           name: Owon_NG-native

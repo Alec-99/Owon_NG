@@ -60,3 +60,7 @@ Before copying any source, assets, examples or documentation: verify the **exact
 5. Licensing and safety audit recorded, including external code attribution when applicable.
 6. PR with summary, screenshots if helpful, test results, known limitations and next milestones.
 7. **Stop** at the assigned batch; wait for user's feedback.
+
+## Visual verification required by owner
+
+For meaningful native UI changes, capture screenshots during testing and inspect them before reporting success. Cover running/paused/decoded/imported states, compact sizing, inherited dark palette and dropdown/popups. Use scripts/capture_ui.py and the Windows packaged-EXE proof workflow, and retain the images as CI artifacts. Describe which platform was actually reviewed; automated contrast checks do not replace visual inspection. See docs/VISUAL_QA.md.
