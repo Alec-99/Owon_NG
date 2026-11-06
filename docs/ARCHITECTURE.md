@@ -1,3 +1,5 @@
+> **Development sequence updated 2026-11-06:** The product owner requires the **complete UI first** (UI-001, UI-002, UI-003 in [ROADMAP.md](ROADMAP.md)), then validated signal-processing and real hardware features. The earlier P1–P5 bullets below are **conceptual engineering milestones**, not permission to begin USB or DSP work during the UI phase. See [UI_SPEC.md](UI_SPEC.md).
+
 # Architecture and quality bar
 
 Status: design proposal. Only `prototype/index.html` is implemented.
