@@ -11,3 +11,5 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check standalone prototype syntax and UI contract
         run: node tests/ui-contract.test.mjs
+      - name: Check Codex agent handoff and UI-first requirements
+        run: node tests/agent-handoff.test.mjs
