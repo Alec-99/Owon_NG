@@ -23,3 +23,12 @@ The repository owner has **not yet selected a licence for the new project**. Abs
 4. Bundle exact required copyright and licence notices when a dependency is incorporated.
 5. Reject unclear/proprietary redistribution unless permission is documented.
 6. Keep a separate hardware firmware provenance/redistribution register.
+
+
+## Additional UX research references (no code imported)
+
+- [sigrok/PulseView](https://github.com/sigrokproject/pulseview) — GPL-3.0 according to GitHub metadata. UX and protocol-timeline research only until project licensing is compatible and explicitly approved.
+- [OpenHantek/OpenHantek6022](https://github.com/OpenHantek/OpenHantek6022) — GPL-3.0 according to GitHub metadata. UX/measurement control research only; don't copy code into the repo by default.
+- [REFERENCE_REPOS.md](REFERENCE_REPOS.md) lists source investigation guidance and the steps required before adoption.
+
+**Current implementation provenance:** The Codex instruction/requirements/task files added in the handoff are new project documents. No third-party source code, proprietary waveforms or vendor assets were imported in this handoff.
