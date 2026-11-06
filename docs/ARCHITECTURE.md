@@ -1,3 +1,5 @@
+> **Implemented native architecture (0.4.0):** Native Qt presentation; frozen capture data and schema-2 recordings; adapter-owner worker with bounded preview buffer and an indexed simulator. See ACQUISITION_CORE.md. The Rust/Tauri/Web UI proposal below is historical and superseded. Hardware integration remains unavailable pending implementation and physical validation.
+
 > **Development sequence updated 2026-11-06:** The product owner requires the **complete UI first** (UI-001, UI-002, UI-003 in [ROADMAP.md](ROADMAP.md)), then validated signal-processing and real hardware features. The earlier P1–P5 bullets below are **conceptual engineering milestones**, not permission to begin USB or DSP work during the UI phase. See [UI_SPEC.md](UI_SPEC.md).
 
 # Architecture and quality bar

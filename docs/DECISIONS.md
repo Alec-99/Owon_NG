@@ -45,3 +45,7 @@ Owner reconfirmed Automotive plus general electronics workflows, inspired by Pic
 ## 2026-11-06 — Instrument-oriented native layout
 
 Owner found the first UI generic. Replace dashboard styling with a native instrument layout: menus and compact toolbars, a dominant dark scope surface, light neutral channel controls, a test-help tab, decoder/note tabs and a native profile table. Use yellow/blue channel identity consistently; show voltage/time axes and minor grid subdivisions. Preserve an always-visible shared-ground warning and source badge; put detailed instructions in the test-help panel. Consulted OpenHantek screenshot and PulseView native toolbar/dock organization without copying their code/assets. Separate layout construction into native/layout.py.
+
+## 2026-11-06 — Owner authorizes autonomous functional work
+
+Supersedes UI-only review gates. Implement acquisition and recording foundations and keep device-dependent work open. Use immutable voltage frames, explicit sample clocks and unknown physical metadata; separate view state from samples. One adapter-owner worker and generation tokens prevent UI blocking and late-profile/import overwrite. A bounded queue is explicitly a preview buffer, not a lossless recorder. Schema 2 persists exact current samples/settings with digest and atomic replacement; schema 1 remains readable. Display min/max envelopes retain sampled spikes. Real USB support remains unavailable rather than guessed.

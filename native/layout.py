@@ -63,12 +63,13 @@ def scope(w,button):
  main.addWidget(left)
  tabs=QTabWidget();tabs.setMinimumWidth(280);tabs.setMaximumWidth(360)
  controls=QWidget();cl=QVBoxLayout(controls);form=QFormLayout();form.setVerticalSpacing(8);cl.addLayout(form)
- w.time=QDoubleSpinBox();w.time.setRange(.05,2000);w.time.setDecimals(2);w.time.setValue(10);w.time.setSuffix(" ms/div");w.time.valueChanged.connect(w.time_changed);form.addRow("Tijdbasis",w.time)
+ w.time=QDoubleSpinBox();w.time.setRange(.05,2000);w.time.setDecimals(6);w.time.setValue(10);w.time.setSuffix(" ms/div");w.time.valueChanged.connect(w.time_changed);form.addRow("Tijdbasis",w.time)
+ w.channel_checks=[];w.channel_scales=[];w.channel_offsets=[]
  for ch,color in enumerate(("#ad7900","#007fa8")):
   label=QLabel(f"CH{ch+1}");label.setStyleSheet(f"font-weight:bold;color:{color};padding-top:10px;");form.addRow(label)
-  check=QCheckBox("Zichtbaar");check.setChecked(True);check.toggled.connect(lambda v,c=ch:w.channel_visible(c,v));form.addRow("",check)
-  scale=QComboBox();scale.addItems(["0.1","0.2","0.5","1","2","5","10"]);scale.setCurrentText("2");scale.currentTextChanged.connect(lambda v,c=ch:w.scale_changed(c,float(v)));form.addRow("V/div",scale)
-  offset=QDoubleSpinBox();offset.setRange(-100,100);offset.setSuffix(" V");offset.valueChanged.connect(lambda v,c=ch:w.offset_changed(c,v));form.addRow("Offset",offset)
+  check=QCheckBox("Zichtbaar");check.setChecked(True);check.toggled.connect(lambda v,c=ch:w.channel_visible(c,v));form.addRow("",check);w.channel_checks.append(check)
+  scale=QComboBox();scale.addItems(["0.1","0.2","0.5","1","2","5","10"]);scale.setCurrentText("2");scale.currentTextChanged.connect(lambda v,c=ch:w.scale_changed(c,float(v)));form.addRow("V/div",scale);w.channel_scales.append(scale)
+  offset=QDoubleSpinBox();offset.setRange(-100,100);offset.setSuffix(" V");offset.valueChanged.connect(lambda v,c=ch:w.offset_changed(c,v));form.addRow("Offset",offset);w.channel_offsets.append(offset)
  unavailable=button("Trigger — niet beschikbaar",lambda:None);unavailable.setEnabled(False);unavailable.setToolTip("Triggering is nog niet geïmplementeerd.");cl.addSpacing(15);cl.addWidget(unavailable)
  cl.addWidget(button("i · Schalen en probes",lambda:w.explain("Kanaalinstellingen","V/div verandert de verticale weergave; offset verschuift de trace.","Probeverhouding, koppeling en kalibratie zijn nog niet geïmplementeerd.")));cl.addStretch()
  tabs.addTab(controls,"Kanalen")

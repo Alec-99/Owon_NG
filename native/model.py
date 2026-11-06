@@ -1,5 +1,5 @@
 """Synthetic fixtures and a bounded, versioned demo recording format."""
-from dataclasses import dataclass
+from native.capture import Capture
 import math
 import json
 from pathlib import Path
@@ -16,16 +16,6 @@ PROFILES = {
  "Sinus": ("Elektronica", 12000, "Sinus • synthetische testbron", "Gebruik alleen meetapparatuur met geschikte spannings- en veiligheidsclassificatie."),
 }
 WARNING = "CH1 en CH2 delen een gemeenschappelijke massa. Verbind aardklemmen nooit met verschillende potentialen. USB-isolatie maakt de kanalen niet onderling geïsoleerd. Geen live hoogspanning-, ontsteking-, net- of EV-meting zonder gevalideerde accessoires en procedure."
-
-@dataclass
-class Capture:
- profile: str
- rate: float
- channels: list
- source: str = "simulation"
- original: str = "simulation"
- def save(self, path, note):
-  Path(path).write_text(json.dumps(dict(schema=1, source=self.source, original=self.original, profile=self.profile, rate=self.rate, channels=self.channels, note=note)), encoding="utf8")
 
 def fixture(profile, phase=0.0, n=4096):
  rate = PROFILES[profile][1]
@@ -50,7 +40,7 @@ def fixture(profile, phase=0.0, n=4096):
    level=True if bit<2 or bit>=12 else False if bit==2 else bool(value & (1<<(bit-3))) if bit<11 else True
    a.append(5 if level else 0);b.append(0)
   elif profile == "I²C":
-   tick=i%1000
+   tick=(i+round(phase*rate))%1000
    if tick<40 or tick>=820:
     a.append(5);b.append(5 if tick<20 or tick>=840 else 0)
    elif tick<60:
@@ -64,18 +54,7 @@ def fixture(profile, phase=0.0, n=4096):
  return Capture(profile, rate, [a,b])
 
 def load(path):
- if Path(path).stat().st_size > 8_000_000: raise ValueError("Bestand is te groot (maximaal 8 MB).")
- d = json.loads(Path(path).read_text(encoding="utf8"))
- if not isinstance(d,dict): raise ValueError("Geen opnameobject.")
- if d.get("schema") != 1 or d.get("source") not in ("simulation","import"): raise ValueError("Geen ondersteunde demo-opname.")
- if d.get("profile") not in PROFILES: raise ValueError("Onbekend profiel.")
- rate=d.get("rate")
- if isinstance(rate,bool) or not isinstance(rate,(int,float)) or not math.isfinite(rate) or not 1 <= rate <= 1e8: raise ValueError("Ongeldige samplefrequentie.")
- channels=d.get("channels")
- if not isinstance(channels,list) or len(channels)!=2: raise ValueError("Twee kanalen vereist.")
- for c in channels:
-  if not isinstance(c,list) or not 2<=len(c)<=100000 or any(isinstance(v,bool) or not isinstance(v,(int,float)) or not math.isfinite(v) or abs(v)>1e6 for v in c): raise ValueError("Ongeldige samples.")
- if len(channels[0])!=len(channels[1]): raise ValueError("Kanalen hebben verschillende lengtes.")
- note=d.get("note","")
- if not isinstance(note,str): raise ValueError("Ongeldige notitie.")
- return Capture(d["profile"],rate,channels,"import","simulation"), note[:20000]
+ from native.recording import load_recording
+ capture,note,_=load_recording(path)
+ if capture.profile not in PROFILES:raise ValueError("Onbekend profiel.")
+ return capture,note

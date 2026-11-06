@@ -1,13 +1,13 @@
 # Owon NG — native oscilloscoopapp
 
-Versie 0.3.2 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
+Versie 0.4.0 is een native Python/Qt-app met een QPainter-golfvormcanvas. De oude browserlaunchers en WebView-verpakking zijn verwijderd. De HTML/TypeScript-prototypes blijven uitsluitend als ontwerpreferentie aanwezig.
 
 Start:
 
     python -m pip install -r requirements-native.txt
     python app.py
 
-De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.3.2.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.3.2-python-native.zip.
+De workflow **Native app packages** bouwt op Windows een ZIP met Owon_NG-0.4.0.exe en de vereiste Qt/Python-bibliotheken. Pak de hele ZIP uit. De Python-brondistributie heet Owon_NG-0.4.0-python-native.zip.
 
 Werkend: twee kanalen met zichtbaarheid, V/div en offset; tijdbasis en verschuiven; sleepbare en met toetsenbord bedienbare cursors met Δt/ΔV; start/pauze/single; Vpp/RMS van synthetische samples; CKP/lambda/injector/CAN/PWM/sinus-fixtures; hulp met technische details; begeleide instructies; notities; native bestandsdialogen met JSON bewaren/openen; bibliotheek, opnamegeschiedenis en demo-rapportweergave.
 
@@ -33,3 +33,9 @@ Elektronica: eerste offline UART 8N1, I²C byte/ACK en PWM duty/frequentie op de
 Instrumentindeling geïnspireerd op de bediening van OpenHantek en de native toolorganisatie van PulseView, onafhankelijk geïmplementeerd.
 
 ![Native oscilloscoopinterface](docs/images/native-ui-0.3.2.png)
+
+## Meetkern 0.4.0
+
+Samples zijn onveranderlijk en worden buiten de UI-thread gegenereerd. Schema-2-opnames bewaren samples, timing, kanaalmetadata en weergave-instellingen met integriteitscontrole en atomair opslaan. Oude demo-opnames blijven leesbaar. Uitzoomen behoudt sampled pieken via min/max-enveloppen. Zie [meetkern](docs/ACQUISITION_CORE.md) en [open toestelcontroles](docs/HARDWARE_VALIDATION.md).
+
+Corechecks: python -m unittest discover -s tests -p test_core.py -v.

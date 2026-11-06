@@ -33,3 +33,9 @@
 - PulseView revision af02198741b4e57c9f9b796bd5e6c0f2ae9f2f2b: README and pv/mainwindow.cpp inspected for native toolbar, menu and dock organization. This motivated grouping secondary tools instead of presenting every explanation simultaneously.
 - Both remain GPL research references. No source, icons, screenshots or other assets were copied into the application or this repository. The screenshot in docs/images/native-ui-0.3.2.png is an original rendering of Owon NG.
 - PicoScope remains a workflow-quality benchmark; no proprietary materials were imported.
+
+## Decoder UX direction supplied during acquisition-core work
+
+The owner supplied a PicoScope screenshot demonstrating compact channel controls, synchronized analogue/digital traces and byte/field annotations on the signal time axis. Treat it as a workflow reference; no image, code, branding or proprietary example data is incorporated.
+
+LabNation SmartScopeApp revision 76ceff0d6f2c7b91293c58612c59525ea50e074c: README.md, Drawables/GraphArea/Waveform/WaveformDecoded.cs and Drawables/GraphArea/Panorama.cs inspected. Useful general concepts: time-bounded decoder items, filtering annotations to the visible time window, numeric display formats and a capture overview. No explicit root licence grant was established by this inspection; do not reuse source/assets. No LabNation code is imported. Follow-up: immutable decode events tied to capture ID/sample indices and time-aligned native decoder lanes.

@@ -1,3 +1,5 @@
+> **Owner update (2026-11-06):** Autonomous functional development is authorized. Native UI and initial offline UART/I²C/PWM analysis are implemented. ENG-001 first increment now includes immutable captures, schema-2 atomic recordings, worker lifecycle and spike-preserving preview. Next: time-aligned decoder lanes and stronger decoder validation. Physical work stays tracked in HARDWARE_VALIDATION.md; native Android remains outstanding. Historical UI-only gates below no longer require a feedback pause.
+
 # Roadmap — UI first, features later
 
 The **UI phase must be completed and user-reviewed first**. Do not work on the functional acquisition or diagnostic backend in an early UI batch. Each task is independently reviewable; the agent stops between batches.

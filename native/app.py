@@ -5,6 +5,9 @@ from PySide6.QtCore import Qt,QTimer
 from native.model import PROFILES,WARNING,fixture,load
 from native.canvas import ScopeCanvas
 from native.analysis import pwm,uart,i2c
+from native.acquisition import Acquisition
+from native.capture import ViewState
+from native.recording import load_recording
 
 from native.version import VERSION
 PAGES=["Automotive","Elektronica","Vrij meten","Bibliotheek","Opnames / Geschiedenis","Rapporten","Instellingen","Help"]
@@ -28,7 +31,8 @@ class ScopeWindow(QMainWindow):
   settings=QLabel("Hardware niet verbonden.\nUSB, extra decoders en gevalideerde diagnostiek worden later toegevoegd. De eerste offline UART/I²C/PWM-analyse staat in de scopeweergave.\n\nDeze app toont uitsluitend synthetische fixtures en geïmporteerde demo-opnames.");settings.setWordWrap(True);self.pages.addWidget(settings)
   help_page=QTextEdit();help_page.setReadOnly(True);help_page.setPlainText("Bediening\n\nStart/Pauze bestuurt de simulatie. Single maakt één nieuwe demo-frame.\nSleep cursors A/B in de grafiek; links/rechts bestuurt cursor A, Shift+links/rechts cursor B. Het muiswiel zoomt in tijd.\n\nV/div verandert de weergave, niet de samples. Tijdzoom en verschuiving houden de sampletijd intact.\n\nBewaar/Open gebruikt een versiegebonden JSON-bestand met herkomst en notitie.\n\n"+WARNING);self.pages.addWidget(help_page)
   self.nav.currentRowChanged.connect(self.navigate);self.nav.setCurrentRow(0)
-  self.timer=QTimer(self);self.timer.timeout.connect(self.frame);self.timer.start(100)
+  self.acquisition=Acquisition();self.acquisition.configure(self.profile.currentText(),self.running)
+  self.timer=QTimer(self);self.timer.timeout.connect(self.frame);self.timer.start(50)
   self.statusBar().showMessage("DEMO — geen hardware verbonden | Triggers en automatische diagnose niet beschikbaar")
   self.refresh_metrics()
  def make_scope(self):
@@ -60,6 +64,7 @@ class ScopeWindow(QMainWindow):
   elif row==6:self.pages.setCurrentIndex(4)
   else:self.pages.setCurrentIndex(5)
  def select_profile(self,name):
+  if hasattr(self,"acquisition"):self.acquisition.configure(name,self.running)
   self.capture=fixture(name);self.canvas.capture=self.capture;self.provenance.setText("DEMO · GESIMULEERD");self.canvas.update();self.update_guide();self.refresh_metrics()
  def update_guide(self):
   name=self.profile.currentText();_,_,desc,safety=PROFILES[name]
@@ -73,20 +78,46 @@ class ScopeWindow(QMainWindow):
  def pan_changed(self,v):self.canvas.pan=v/1000;self.canvas.update();self.refresh_metrics()
  def toggle_run(self):
   if self.capture.source=="import":
-   self.explain("Geïmporteerde opname","Deze opname blijft onveranderd. Kies een demo-profiel om nieuwe signalen te simuleren.","Import wijzigt de samplefrequentie en oorspronkelijke samples niet.");return
-  self.running=not self.running;self.run.setText("Pauze" if self.running else "Start")
+   self.explain("Geïmporteerde opname","De opgeslagen samples blijven ongewijzigd. Kies een demo-profiel om nieuwe samples te genereren.","Opname- en weergave-instellingen worden afzonderlijk bewaard.");return
+  self.running=not self.running
+  if self.running:self.acquisition.resume()
+  else:self.acquisition.pause()
+  self.run.setText("Pauze" if self.running else "Start")
  def single(self):
-  if self.capture.source=="import":return
-  self.running=False;self.run.setText("Start");self.next_frame()
+  if self.capture.source=="import":
+   self.statusBar().showMessage("Single is niet beschikbaar voor een opgeslagen opname.");return
+  self.running=False;self.run.setText("Start");self.acquisition.single()
  def frame(self):
-  if self.running and self.capture.source=="simulation":self.next_frame()
- def next_frame(self):
-  self.phase+=.1;self.capture=fixture(self.profile.currentText(),self.phase);self.canvas.capture=self.capture;self.canvas.update();self.refresh_metrics()
+  capture=self.acquisition.latest()
+  if capture is not None:
+   self.capture=capture;self.canvas.capture=capture;self.canvas.update();self.refresh_metrics()
+  status=self.acquisition.status()
+  if status.error:
+   self.running=False;self.run.setText("Start")
+   self.statusBar().showMessage("Acquisitiefout: "+status.error)
+  elif self.capture.source!="import":
+   self.statusBar().showMessage(f"Simulator: {status.state} | Frames {status.produced} | Previewbuffer overgelopen: {status.overflow} | Overgeslagen weergaveframes: {status.preview_skipped}")
+ def closeEvent(self,event):
+  self.timer.stop()
+  if not self.acquisition.close():
+   event.ignore();self.statusBar().showMessage("Acquisitieworker stopt nog; sluit opnieuw na afloop van de read-timeout.");return
+  super().closeEvent(event)
+ def view_state(self):
+  c=self.canvas
+  return ViewState(c.time_div,c.pan,tuple(c.scales),tuple(c.offsets),tuple(c.visible),tuple(c.cursors),self.decoder.currentText(),int(self.baud.currentText()))
+ def restore_view(self,view):
+  self.time.blockSignals(True);self.time.setValue(view.time_div*1000);self.time.blockSignals(False)
+  self.pan.blockSignals(True);self.pan.setValue(round(view.pan*1000));self.pan.blockSignals(False)
+  for i in range(2):
+   for widget,value,method in ((self.channel_checks[i],view.visible[i],"setChecked"),(self.channel_scales[i],str(view.scales[i]).removesuffix(".0"),"setCurrentText"),(self.channel_offsets[i],view.offsets[i],"setValue")):
+    widget.blockSignals(True);getattr(widget,method)(value);widget.blockSignals(False)
+  c=self.canvas;c.time_div=view.time_div;c.pan=view.pan;c.scales=list(view.scales);c.offsets=list(view.offsets);c.visible=list(view.visible);c.cursors=list(view.cursors)
+  self.decoder.setCurrentText(view.decoder);self.baud.setCurrentText(str(view.baud))
  def refresh_metrics(self):
   a=self.capture.channels[0];vpp=max(a)-min(a);rms=math.sqrt(sum(x*x for x in a)/len(a))
   dt=abs(self.canvas.cursors[1]-self.canvas.cursors[0])*self.canvas.span()
   dv=self.canvas.sample(0,self.canvas.cursors[1])-self.canvas.sample(0,self.canvas.cursors[0])
-  self.metrics.setText(f"DEMO CH1 · Vpp {vpp:.3g} V · RMS {rms:.3g} V · Δt {dt*1000:.3g} ms · ΔV {dv:.3g} V\n{len(a)} samples · {self.capture.rate:g} Sa/s · Hardwaretrigger / diagnose: niet beschikbaar")
+  self.metrics.setText(f"{self.capture.source.upper()} CH1 · Vpp {vpp:.3g} V · RMS {rms:.3g} V · Δt {dt*1000:.3g} ms · ΔV {dv:.3g} V\n{len(a)} samples · {self.capture.rate:g} Sa/s · Hardwaretrigger / diagnose: niet beschikbaar")
  def analyse(self):
   try:
    name=self.decoder.currentText();c=self.capture
@@ -107,8 +138,8 @@ class ScopeWindow(QMainWindow):
  def save_capture(self):
   path,_=QFileDialog.getSaveFileName(self,"Bewaar demo-opname","Owon_NG-demo.json","Demo-opname (*.json)")
   if not path:return
-  try:self.capture.save(path,self.note.toPlainText())
-  except OSError as e:QMessageBox.warning(self,"Opslaan mislukt",str(e));return
+  try:self.capture.save(path,self.note.toPlainText(),self.view_state())
+  except (OSError,ValueError) as e:QMessageBox.warning(self,"Opslaan mislukt",str(e));return
   if not self.saved:self.history.clear()
   self.saved.append(path);self.history.addItem(path);self.statusBar().showMessage("Demo-opname opgeslagen: "+path)
  def open_history(self,item):self.read_capture(item.text())
@@ -116,10 +147,14 @@ class ScopeWindow(QMainWindow):
   path,_=QFileDialog.getOpenFileName(self,"Open demo-opname","","Demo-opname (*.json)")
   if path:self.read_capture(path)
  def read_capture(self,path):
-  try:c,note=load(path)
+  try:
+   c,note,view=load_recording(path)
+   if c.profile not in PROFILES:raise ValueError("Onbekend profiel.")
   except (OSError,ValueError,TypeError,KeyError) as e:QMessageBox.warning(self,"Opname niet geopend",str(e));return
+  self.acquisition.pause()
   self.profile.blockSignals(True);self.profile.setCurrentText(c.profile);self.profile.blockSignals(False)
-  self.capture=c;self.canvas.capture=c;self.note.setPlainText(note);self.running=False;self.run.setText("Start");self.provenance.setText("IMPORTED · DEMO")
+  self.capture=c;self.canvas.capture=c;self.note.setPlainText(note);self.running=False;self.run.setText("Start");self.provenance.setText("IMPORTED · "+("DEMO" if c.original=="simulation" else "HARDWAREBRON"))
+  self.restore_view(view);self.statusBar().showMessage("Opname geopend — oorspronkelijke samples en instellingen behouden; geen live hardware.")
   self.update_guide();self.canvas.update();self.refresh_metrics();self.pages.setCurrentIndex(0)
 
 def main():

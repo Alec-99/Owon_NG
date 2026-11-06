@@ -1,3 +1,5 @@
+> **Current owner authorization (2026-11-06):** The owner now requests autonomous functional development starting with the acquisition/recording core, incorporating feedback without recurring review gates. This supersedes the earlier UI-only/stop-after-UI-001 instructions below. Native Qt is the chosen desktop UI. Keep hardware-dependent validation explicitly open; do not merge PRs or claim untested hardware support. See docs/ACQUISITION_CORE.md and docs/HARDWARE_VALIDATION.md.
+
 # Codex agent instructions — Owon NG
 
 Applies to the entire repository. This is an instruction document, not evidence that any feature has been implemented. Project name is provisional.

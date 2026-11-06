@@ -1,3 +1,5 @@
+import math
+from native.rendering import envelope
 from PySide6.QtWidgets import QWidget
 from PySide6.QtGui import QPainter, QColor, QPen, QPainterPath
 from PySide6.QtCore import Qt, Signal, QRectF
@@ -47,12 +49,23 @@ class ScopeCanvas(QWidget):
    p.setPen(QColor(color));p.drawText(int(r.left()+channel*220),18,f"CH{channel+1}  {self.scales[channel]:g} V/div"+("" if self.visible[channel] else "  uit"))
    if not self.visible[channel]:continue
    p.save();p.setClipRect(r);path=QPainterPath()
-   for x in range(int(r.width())+1):
-    v=self.sample(channel,x/r.width())
-    y=r.center().y()-(v+self.offsets[channel])/self.scales[channel]*r.height()/8
-    if x==0:path.moveTo(r.left()+x,y)
-    else:path.lineTo(r.left()+x,y)
-   p.setPen(QPen(QColor(color),1.35));p.drawPath(path);p.restore()
+   first=max(0,math.floor(self.start()*self.capture.rate))
+   stop=min(len(self.capture.channels[channel]),math.ceil((self.start()+self.span())*self.capture.rate)+1)
+   pixels=max(1,int(r.width()))
+   if stop-first>pixels:
+    p.setPen(QPen(QColor(color),1))
+    for x,(low,high) in enumerate(envelope(self.capture.channels[channel],first,stop,pixels)):
+     y1=r.center().y()-(high+self.offsets[channel])/self.scales[channel]*r.height()/8
+     y2=r.center().y()-(low+self.offsets[channel])/self.scales[channel]*r.height()/8
+     p.drawLine(int(r.left()+x),round(y1),int(r.left()+x),round(y2))
+   else:
+    for x in range(pixels+1):
+     v=self.sample(channel,x/r.width())
+     y=r.center().y()-(v+self.offsets[channel])/self.scales[channel]*r.height()/8
+     if x==0:path.moveTo(r.left()+x,y)
+     else:path.lineTo(r.left()+x,y)
+    p.setPen(QPen(QColor(color),1.35));p.drawPath(path)
+   p.restore()
   for i,ratio in enumerate(self.cursors):
    x=r.left()+ratio*r.width();p.setPen(QPen(QColor("#bdc8d0"),1,Qt.DashLine))
    p.drawLine(int(x),int(r.top()),int(x),int(r.bottom()))

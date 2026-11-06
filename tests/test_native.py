@@ -42,3 +42,19 @@ class NativeTests(unittest.TestCase):
   self.assertFalse(self.w.baud.isEnabled())
   self.w.decoder.setCurrentText("UART 8N1");self.assertTrue(self.w.baud.isEnabled())
   self.w.modes.setCurrentIndex(1);self.assertEqual(self.w.profile.currentText(),"PWM")
+ def test_saved_view_restores_and_import_cannot_be_overwritten_by_worker(self):
+  from native.capture import ViewState
+  from PySide6.QtTest import QTest
+  view=ViewState(.00123456789,.12345,(.2,5),(1,-2),(False,True),(.2,.8),"UART 8N1",115200)
+  self.w.profile.setCurrentText("PWM")
+  saved=self.w.capture
+  with tempfile.TemporaryDirectory() as folder:
+   path=pathlib.Path(folder)/"frame.json";saved.save(path,"herstel",view)
+   self.w.read_capture(str(path))
+   QTest.qWait(80);self.w.frame()
+   self.assertEqual(self.w.capture.capture_id,saved.capture_id)
+   self.assertEqual(self.w.capture.source,"import")
+   self.assertEqual(self.w.view_state(),view)
+   self.assertFalse(self.w.channel_checks[0].isChecked())
+   self.assertEqual(self.w.channel_scales[1].currentText(),"5")
+   self.assertEqual(self.w.note.toPlainText(),"herstel")

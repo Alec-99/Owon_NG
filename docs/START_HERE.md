@@ -1,3 +1,5 @@
+> **Current state, 0.4.0:** Native Python/Qt app runs with python app.py after installing requirements-native.txt. The owner authorized autonomous acquisition-core development beyond UI-001. Branch codex/acquisition-core is based on codex/UI-001-app-foundation (still unmerged). Target its PR at that branch; merge nothing. Active boundaries/tests: ACQUISITION_CORE.md. Hardware checks: HARDWARE_VALIDATION.md. Earlier HTML/TypeScript notes below are historical.
+
 # Owon NG — start here (Codex)
 
 ## State of repository

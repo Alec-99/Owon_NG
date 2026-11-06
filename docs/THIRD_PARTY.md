@@ -48,3 +48,7 @@ Newly authored native Python modules use PySide6/Qt 6.9.3 (LGPLv3 route). Source
 ## Native UI revision 0.3.2
 
 Exact OpenHantek/PulseView research revisions and consulted files are recorded in REFERENCE_REPOS.md. Research only: no upstream code/assets adapted or redistributed. The new layout, grid/axes/cursor renderer and library table are original Python/Qt code. File/open icons use Qt's platform-standard QStyle icons. The documentation screenshot was generated from this application.
+
+## Acquisition-core research
+
+New capture, persistence, acquisition and rendering code is independently authored using Python's standard library. LabNation SmartScopeApp was inspected only as documented in REFERENCE_REPOS.md. Reuse permission was not established; no source, assets or waveforms were copied. The owner-provided PicoScope image is a UX reference and is not redistributed.
