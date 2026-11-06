@@ -1,50 +1,27 @@
-name: Versioned app packages
+name: Native app packages
 on:
   workflow_dispatch:
   push:
     branches: ['codex/UI-001-app-foundation']
-    tags: ['v*']
 permissions:
   contents: read
 jobs:
-  package:
-    runs-on: ubuntu-latest
+  windows:
+    runs-on: windows-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - uses: actions/setup-go@v5
-        with:
-          go-version: '1.27.x'
-          cache: false
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: '21'
-      - run: npm ci && npm run check
-      - name: Install Android build tools
-        shell: bash
-        run: |
-          sdkmanager_path="$(find "$ANDROID_HOME/cmdline-tools" -type f -name sdkmanager -print -quit)"
-          test -n "$sdkmanager_path"
-          "$sdkmanager_path" "platforms;android-35" "build-tools;35.0.0"
-      - name: Build versioned demo packages
-        run: |
-          python scripts/package.py python
-          python scripts/package.py windows
-          python scripts/package.py linux
-          python scripts/package.py android
-      - name: Smoke-test launchers and generate hashes
-        run: |
-          python -m unittest discover -s tests -p 'test_packaging.py' -v
-          cd artifacts
-          sha256sum Owon_NG-* > SHA256SUMS.txt
+      - run: python -m pip install -r requirements-native.txt pyinstaller==6.14.2
+      - name: Native UI checks
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m unittest discover -s tests -p test_native.py -v
+      - run: python scripts/package.py python
+      - run: python scripts/package.py windows
       - uses: actions/upload-artifact@v4
         with:
-          name: Owon_NG-versioned-demo-packages
-          path: artifacts/
+          name: Owon_NG-0.3.0-native
+          path: artifacts/Owon_NG-0.3.0-*.zip
+          if-no-files-found: error

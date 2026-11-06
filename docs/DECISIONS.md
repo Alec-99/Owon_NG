@@ -33,3 +33,7 @@ Maintain an append-only dated record. Each entry should state rationale, alterna
 ## 2026-11-06 — Versioned distribution requested by owner
 
 The owner superseded the earlier step/review gate and requested Android APK, Python launch and a Windows EXE with version numbers. Reuse the existing offline frontend: Python stdlib zipapp, a small Go stdlib HTTP/browser launcher for Windows, and an Android platform-only WebView shell. This avoids rewriting UI logic in three languages. All package names derive from package.json. Windows and Python are local browser applications; the Android APK is a debug build. Device acquisition remains outside these packages. CI builds artifacts rather than automatically publishing a release.
+
+## 2026-11-06 — Native application replaces browser packaging
+
+Owner explicitly rejected browser and WebView variants. Supersedes the earlier packaging decision. Use Python/PySide6 Qt Widgets and QPainter directly for the desktop app. Python source and Windows EXE share the same native implementation. Retire Go browser launchers and Android WebView packaging. Android native implementation remains outstanding rather than relabeling a WebView as native. UI remains synthetic until validated hardware engineering is authorized.
