@@ -31,7 +31,8 @@ def schedule_capture(window,app,destination):
                 controls.append({"name":name,"background":surface.name(),
                                  "text":widget.palette().color(QPalette.Text).name(),
                                  "arrow_pixels":arrow_pixels})
-            proof={"version":VERSION,"qt_platform":app.platformName(),
+            if window.windowIcon().isNull():raise RuntimeError("Branded window icon missing")
+            proof={"application_name":app.applicationName(),"window_icon_sizes":[[s.width(),s.height()] for s in window.windowIcon().availableSizes()],"version":VERSION,"qt_platform":app.platformName(),
                    "window":[window.width(),window.height()],"device_scale":window.devicePixelRatioF(),"controls":controls,
                    "scope":"Native window only; no desktop or hardware capture."}
             destination.with_suffix(".json").write_text(json.dumps(proof,indent=2),encoding="utf8")

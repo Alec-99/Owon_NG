@@ -18,7 +18,7 @@ for scale in ("1","1.25"):
     env=os.environ.copy();env["QT_SCALE_FACTOR"]=scale
     subprocess.run([str(exe),"--capture-ui",str(destination)],check=True,timeout=60,env=env)
     proof=json.loads(destination.with_suffix(".json").read_text(encoding="utf8"))
-    if proof["qt_platform"]!="windows" or proof["version"]!=version:
+    if proof["qt_platform"]!="windows" or proof["version"]!=version or proof.get("application_name")!="OWON NG" or not proof.get("window_icon_sizes"):
         raise SystemExit("Wrong platform or package version in UI proof.")
     files.extend((destination,destination.with_suffix(".json")))
     print("Built Windows EXE rendered and captured:",destination)

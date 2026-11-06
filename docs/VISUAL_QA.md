@@ -4,7 +4,7 @@ Owner requirement: capture AND visually inspect screenshots when changing the UI
 
 ## Automated cases
 
-scripts/capture_ui.py renders the actual native Qt window in running, paused, UART-decoded, compact (1040x760), imported and profile-popup states. Each is captured with the system palette and with a deliberately inherited dark palette. It writes 12 PNGs, a manifest (OS, Qt platform, scale, dimensions, version) and a versioned ZIP. Only the named screenshot files go into that ZIP. Existing unrelated files in an output directory are not included.
+scripts/capture_ui.py renders the actual native Qt window in running, paused, UART-decoded, compact (1040x760), imported and profile-popup states. Each is captured with the system palette and with a deliberately inherited dark palette. With branding startup/About checks it writes 16 PNGs, a manifest (OS, Qt platform, scale, dimensions, version) and a versioned ZIP. Only the named screenshot files go into that ZIP. Existing unrelated files in an output directory are not included.
 
 Windows CI runs this on Qt's Windows backend without QT_QPA_PLATFORM=offscreen. Separate visual tests deliberately supply a dark palette and check rendered input contrast, visible dropdown arrows, meaningful acquisition labels and compact window sizing.
 

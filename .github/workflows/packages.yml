@@ -23,6 +23,10 @@ jobs:
         env:
           QT_QPA_PLATFORM: offscreen
         run: python -m unittest discover -s tests -p test_native.py -v
+      - name: Brand asset and native identity checks
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m unittest discover -s tests -p test_branding.py -v
       - name: Contrast and clarity checks
         env:
           QT_QPA_PLATFORM: offscreen

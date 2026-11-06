@@ -12,6 +12,8 @@ from native.version import VERSION
 PAGES=["Automotive","Elektronica","Vrij meten","Bibliotheek","Opnames / Geschiedenis","Rapporten","Instellingen","Help"]
 from native.layout import STYLE, shell, scope
 from native.theme import configure_theme
+from native.branding import apply_branding,startup_splash,BrandImage,BANNER,ICON
+from PySide6.QtGui import QIcon
 def button(text,fn):
  b=QPushButton(text);b.clicked.connect(fn);return b
 def group(title):
@@ -20,7 +22,7 @@ def group(title):
 class ScopeWindow(QMainWindow):
  def __init__(self):
   super().__init__()
-  configure_theme(QApplication.instance())
+  configure_theme(QApplication.instance());apply_branding(QApplication.instance());self.setWindowIcon(QIcon(ICON))
   self.setWindowTitle(f"Owon NG {VERSION} — native oscilloscoop · DEMO")
   self.resize(1440,960);self.running=True;self.saved=[];self.capture=fixture("CKP inductief")
   content=shell(self,button,PAGES,VERSION)
@@ -170,8 +172,17 @@ class ScopeWindow(QMainWindow):
    self.canvas.decode_result=result;self.canvas.decoder_selection=None;self.canvas.update();self.update_acquisition_ui()
    self.analysis_result.setText(result.description+"\nBron: "+self.capture.source+". Drempel 2,5 V; geen ruis-/hardwarevalidatie. Klik op een decodeblok voor sample- en tijddetails.")
   except ValueError as e:self.analysis_result.setText(str(e))
+ def about_dialog(self):
+  dialog=QDialog(self);dialog.setWindowTitle("Over OWON NG")
+  layout=QVBoxLayout(dialog);layout.addWidget(BrandImage(BANNER,560,122))
+  text=QLabel(f"<b>OWON NG {VERSION}</b><br>Native oscilloscoop voor automotive en elektronica.<br><br>Deze ontwikkelversie gebruikt simulaties en geïmporteerde samples.<br>Een werkende OWON-USB-driver en fysieke validatie zijn nog niet beschikbaar.<br><br>Onafhankelijk project; geen officiële fabrikantsoftware.")
+  text.setWordWrap(True);layout.addWidget(text)
+  buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.button(QDialogButtonBox.Close).setText("Sluiten");buttons.rejected.connect(dialog.reject);layout.addWidget(buttons)
+  return dialog
+ def show_about(self):
+  self.about_dialog().exec()
  def explain(self,title,basic,advanced):
-  d=QDialog(self);d.setWindowTitle(title);l=QVBoxLayout(d);t=QLabel(basic);t.setWordWrap(True);l.addWidget(t);details=QLabel(advanced);details.setWordWrap(True);details.hide();toggle=QCheckBox("Technische uitleg");toggle.toggled.connect(details.setVisible);l.addWidget(toggle);l.addWidget(details);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.rejected.connect(d.reject);l.addWidget(buttons);d.resize(520,240);d.exec()
+  d=QDialog(self);d.setWindowTitle(title);l=QVBoxLayout(d);t=QLabel(basic);t.setWordWrap(True);l.addWidget(t);details=QLabel(advanced);details.setWordWrap(True);details.hide();toggle=QCheckBox("Technische uitleg");toggle.toggled.connect(details.setVisible);l.addWidget(toggle);l.addWidget(details);buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.button(QDialogButtonBox.Close).setText("Sluiten");buttons.rejected.connect(d.reject);l.addWidget(buttons);d.resize(520,240);d.exec()
  def save_capture(self):
   path,_=QFileDialog.getSaveFileName(self,"Bewaar demo-opname","Owon_NG-demo.json","Demo-opname (*.json)")
   if not path:return
@@ -201,7 +212,12 @@ def main():
  parser=argparse.ArgumentParser(description="Owon NG native oscilloscoop")
  parser.add_argument("--capture-ui",help="QA: schrijf een vensterscreenshot en sluit af")
  args,qt_args=parser.parse_known_args()
- app=QApplication([sys.argv[0],*qt_args]);configure_theme(app);window=ScopeWindow();window.show()
+ app=QApplication([sys.argv[0],*qt_args]);configure_theme(app);apply_branding(app)
+ splash=None
+ if not args.capture_ui:
+  splash=startup_splash(app);splash.show();app.processEvents()
+ window=ScopeWindow();window.show()
+ if splash is not None:splash.finish(window)
  if args.capture_ui:
   from native.visual_capture import schedule_capture
   schedule_capture(window,app,args.capture_ui)

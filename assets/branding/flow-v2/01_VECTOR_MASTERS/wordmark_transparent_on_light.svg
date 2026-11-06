@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1880" height="440" viewBox="0 0 1880 440" role="img">
+<defs>
+<linearGradient id="darkbg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#334557"/><stop offset=".46" stop-color="#19232E"/><stop offset="1" stop-color="#080D14"/></linearGradient>
+<linearGradient id="flowOrange" x1="0" y1="0" x2="1" y2=".2"><stop stop-color="#D45A08"/><stop offset=".20" stop-color="#FF8700"/><stop offset=".54" stop-color="#FFB132"/><stop offset=".85" stop-color="#FF7C00"/><stop offset="1" stop-color="#FF6B00"/></linearGradient>
+<linearGradient id="flowDark" x1="0" y1="0" x2=".85" y2="1"><stop stop-color="#3A4A5B"/><stop offset="1" stop-color="#17202A"/></linearGradient>
+<radialGradient id="glow" cx="65%" cy="43%" r="70%"><stop stop-color="#F18714" stop-opacity=".23"/><stop offset="1" stop-color="#F18714" stop-opacity="0"/></radialGradient>
+<linearGradient id="cyan" x1="0" y1="0" x2="1" y2="0"><stop stop-color="#0288D2"/><stop offset=".48" stop-color="#40D4FF"/><stop offset="1" stop-color="#0993ED"/></linearGradient>
+</defs><g transform="translate(70 101)"><rect width="300" height="226" rx="24" fill="none" stroke="#16202A" stroke-width="14"/>
+    <g stroke="#8B9BAD" stroke-width="2" opacity=".16"><path d="M 50 10 V 216"/><path d="M 100 10 V 216"/><path d="M 150 10 V 216"/><path d="M 200 10 V 216"/><path d="M 250 10 V 216"/><path d="M 10 45 H 290"/><path d="M 10 90 H 290"/><path d="M 10 135 H 290"/><path d="M 10 180 H 290"/></g>
+    <path d="M 18 131.07999999999998 H 54.0 L 81.0 115.26 L 111.0 155.94 L 153.0 58.760000000000005 L 195.0 169.5 L 228.0 124.30000000000001 H 276.0" fill="none" stroke="#FF8900" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/></g><path d="M 425 75 V 365" stroke="#FF8900" stroke-width="4"/><g transform="translate(485 246) scale(1.0)" font-family="Inter, DejaVu Sans, sans-serif" font-weight="800" letter-spacing="-5">
+    <text x="0" y="0" font-size="158" fill="#16202A">owon</text>
+    <text x="475" y="0" font-size="158" fill="#FF8900">NG</text></g><text x="485" y="305.0" font-size="31.0" font-family="Inter, DejaVu Sans, sans-serif" letter-spacing="3.3" fill="#243242">OSCILLOSCOPE  •  ANALYSIS  •  DIAGNOSTICS</text></svg>

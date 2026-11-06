@@ -1,0 +1,3 @@
+# Preserve all owner-supplied brand-kit bytes, including SVG/XML/JSON line endings.
+/assets/branding/flow-v2/** -text
+/native/resources_rc.py linguist-generated=true

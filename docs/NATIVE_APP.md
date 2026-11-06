@@ -32,3 +32,7 @@ Decodeblokken staan onder de trace op dezelfde tijdas. Analyse pauzeert de simul
 Lichte, expliciet beheerde bediening blijft leesbaar bij een donker Windows-thema. De grafiek blijft donker. Start/pauze/opgeslagen opname hebben een aparte status en korte bedieningshints; de analyseknop is herkenbaar. Irrelevante baud-/getalinstellingen worden verborgen. Keuzelijst- en spinpijlen zijn ingebedde assets. Een compact venster gebruikt een scrollbaar kanaalpaneel.
 
 CI bewaart native screenshots en controleert ook het gebouwde EXE bij normale en 125%-schaal. Zie VISUAL_QA.md voor cases en beperkingen.
+
+## 0.4.3 — aangeleverde Flow-branding
+
+Het venster en de Windows-EXE gebruiken het meegeleverde icoon. Het woordmerk staat in de werkbalk; Help → Over OWON NG toont het bannerlogo. Het opstartbeeld verschijnt alleen terwijl de interface wordt gemaakt, zonder verplichte wachttijd. Alle originele bestanden en bronnotities staan in assets/branding/flow-v2. Zie BRANDING.md voor de gebruikte varianten en de nog niet actieve platformassets.

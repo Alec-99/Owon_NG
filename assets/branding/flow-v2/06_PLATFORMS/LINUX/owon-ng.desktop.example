@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=OWON NG
+Comment=Oscilloscope analysis and diagnostics
+Exec=/path/to/your/owon-ng-binary
+Icon=owon-ng
+Terminal=false
+Categories=Development;Electronics;

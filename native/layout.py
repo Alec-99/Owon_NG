@@ -4,6 +4,7 @@ from PySide6.QtGui import QAction
 from PySide6.QtCore import Qt
 from native.model import PROFILES,WARNING
 from native.canvas import ScopeCanvas
+from native.branding import BrandImage,WORDMARK
 
 from native.theme import STYLE
 
@@ -14,7 +15,7 @@ class CompactSpinBox(QDoubleSpinBox):
 
 
 def shell(w,button,pages,version):
- w.setWindowTitle(f"Owon NG {version} — oscilloscoop")
+ w.setWindowTitle(f"OWON NG {version} — oscilloscoop")
  w.nav=QListWidget();w.nav.addItems(pages);w.nav.hide()
  file=w.menuBar().addMenu("&Bestand")
  for name,slot,key in (("Opname openen…",w.open_capture,"Ctrl+O"),("Opname bewaren…",w.save_capture,"Ctrl+S")):
@@ -23,8 +24,9 @@ def shell(w,button,pages,version):
  menu=w.menuBar().addMenu("&Werkruimte")
  for i,p in enumerate(pages):
   a=QAction(p,w);a.triggered.connect(lambda checked=False,r=i:w.nav.setCurrentRow(r));menu.addAction(a)
- help=w.menuBar().addMenu("&Help");help.addAction("Bediening en veiligheid",lambda:w.nav.setCurrentRow(7))
+ help=w.menuBar().addMenu("&Help");help.addAction("Bediening en veiligheid",lambda:w.nav.setCurrentRow(7));help.addSeparator();help.addAction("Over OWON NG",w.show_about)
  bar=QToolBar("Bestand",w);bar.setMovable(False);bar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon);w.addToolBar(bar)
+ w.wordmark=BrandImage(WORDMARK,154,36,trim_padding=True);bar.addWidget(w.wordmark);bar.addSeparator()
  for text,slot,icon in (("Openen",w.open_capture,QStyle.SP_DialogOpenButton),("Bewaren",w.save_capture,QStyle.SP_DialogSaveButton)):
   a=QAction(w.style().standardIcon(icon),text,w);a.triggered.connect(slot);bar.addAction(a)
  bar.addSeparator();bar.addWidget(QLabel("  Werkruimte  "))

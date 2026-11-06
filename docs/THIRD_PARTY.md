@@ -56,3 +56,7 @@ New capture, persistence, acquisition and rendering code is independently author
 ## Native UI clarity 0.4.2
 
 Arrow SVGs in native/assets are original project assets, registered through native/resources.qrc and generated resources_rc.py (pyside6-rcc). QtSvg is explicitly included in frozen builds to render them. No third-party icons were imported. Normal file/open toolbar icons remain platform-standard QStyle icons. The new documentation screenshot is from this app.
+
+## Owner-supplied Flow brand kit v2 — 0.4.3
+
+The owner supplied owon-ng-flow-final-v2.zip and explicitly authorized importing and using its logos in this project. The complete kit is preserved unchanged under assets/branding/flow-v2 with source documentation, archive SHA-256 in IMPORT.json and per-file checksums. This is owner-provided art; no additional public reuse licence or manufacturer endorsement is inferred. PNG exports avoid any need to redistribute the fonts referenced by SVG masters. Runtime resources, Windows ICO, README image and inactive platform exports are documented in BRANDING.md. Concept references and store screenshot placeholders are not deployed as app screenshots.

@@ -1,0 +1,1452 @@
+{
+  "name": "OWON NG Flow Brand Kit v2",
+  "design": "B \u2014 Golf/Flow",
+  "primary_brand_name": "OWON NG",
+  "visual_wordmark": "owonNG",
+  "colors": {
+    "name": "OWON NG",
+    "brand_direction": "B \u2014 Golf / Flow",
+    "brand_wordmark": "owonNG (OWON NG)",
+    "primary": "#FF8900",
+    "accent": "#E96700",
+    "background": "#101720",
+    "background_deep": "#080D14",
+    "graphite": "#243242",
+    "white": "#FFFFFF",
+    "technical_cyan": "#23B6F0"
+  },
+  "contents": [
+    {
+      "path": "01_VECTOR_MASTERS/app_icon_flow_light_with_name.svg",
+      "size": 2351
+    },
+    {
+      "path": "01_VECTOR_MASTERS/app_icon_flow_round_with_name.svg",
+      "size": 2413
+    },
+    {
+      "path": "01_VECTOR_MASTERS/app_icon_flow_dark_symbol_only.svg",
+      "size": 2117
+    },
+    {
+      "path": "01_VECTOR_MASTERS/splash_portrait_dark.svg",
+      "size": 3066
+    },
+    {
+      "path": "01_VECTOR_MASTERS/flow_symbol_mono_orange.svg",
+      "size": 1613
+    },
+    {
+      "path": "01_VECTOR_MASTERS/flow_symbol_transparent_dark.svg",
+      "size": 1613
+    },
+    {
+      "path": "01_VECTOR_MASTERS/flow_symbol_mono_black.svg",
+      "size": 1613
+    },
+    {
+      "path": "01_VECTOR_MASTERS/flow_symbol_mono_white.svg",
+      "size": 1613
+    },
+    {
+      "path": "01_VECTOR_MASTERS/splash_portrait_light.svg",
+      "size": 3066
+    },
+    {
+      "path": "01_VECTOR_MASTERS/wordmark_panel_light.svg",
+      "size": 2282
+    },
+    {
+      "path": "01_VECTOR_MASTERS/splash_dark_with_spinner.svg",
+      "size": 3830
+    },
+    {
+      "path": "01_VECTOR_MASTERS/flow_symbol_transparent_light.svg",
+      "size": 1613
+    },
+    {
+      "path": "01_VECTOR_MASTERS/wordmark_panel_dark.svg",
+      "size": 2287
+    },
+    {
+      "path": "01_VECTOR_MASTERS/app_icon_flow_dark_with_name.svg",
+      "size": 2433
+    },
+    {
+      "path": "01_VECTOR_MASTERS/banner_light_scope_and_wave.svg",
+      "size": 3588
+    },
+    {
+      "path": "01_VECTOR_MASTERS/splash_technical_blue_scope.svg",
+      "size": 3179
+    },
+    {
+      "path": "01_VECTOR_MASTERS/splash_light.svg",
+      "size": 3715
+    },
+    {
+      "path": "01_VECTOR_MASTERS/banner_dark_scope_and_wave.svg",
+      "size": 3665
+    },
+    {
+      "path": "01_VECTOR_MASTERS/wordmark_transparent_on_light.svg",
+      "size": 2226
+    },
+    {
+      "path": "01_VECTOR_MASTERS/wordmark_transparent_on_dark.svg",
+      "size": 2226
+    },
+    {
+      "path": "01_VECTOR_MASTERS/splash_dark_no_spinner.svg",
+      "size": 3715
+    },
+    {
+      "path": "01_VECTOR_MASTERS/app_icon_flow_light_symbol_only.svg",
+      "size": 2035
+    },
+    {
+      "path": "09_CONCEPT_REFERENCES/selected_reference_4.png",
+      "size": 55798
+    },
+    {
+      "path": "09_CONCEPT_REFERENCES/selected_reference_3.png",
+      "size": 54266
+    },
+    {
+      "path": "09_CONCEPT_REFERENCES/selected_reference_1.png",
+      "size": 38937
+    },
+    {
+      "path": "09_CONCEPT_REFERENCES/selected_reference_2.png",
+      "size": 70554
+    },
+    {
+      "path": "04_BANNERS/banner_dark_scope_and_wave_2400x520.png",
+      "size": 175310
+    },
+    {
+      "path": "04_BANNERS/banner_light_scope_and_wave.webp",
+      "size": 50186
+    },
+    {
+      "path": "04_BANNERS/banner_dark_scope_and_wave.webp",
+      "size": 63770
+    },
+    {
+      "path": "04_BANNERS/banner_light_scope_and_wave_1600x347.png",
+      "size": 97193
+    },
+    {
+      "path": "04_BANNERS/banner_dark_scope_and_wave_1600x347.png",
+      "size": 158192
+    },
+    {
+      "path": "04_BANNERS/banner_light_scope_and_wave_2400x520.png",
+      "size": 82925
+    },
+    {
+      "path": "04_BANNERS/banner_dark_scope_and_wave_1200x260.png",
+      "size": 114631
+    },
+    {
+      "path": "04_BANNERS/banner_light_scope_and_wave_1200x260.png",
+      "size": 68894
+    },
+    {
+      "path": "00_README_FIRST/tokens.css",
+      "size": 222
+    },
+    {
+      "path": "00_README_FIRST/README.md",
+      "size": 3203
+    },
+    {
+      "path": "00_README_FIRST/preview.png",
+      "size": 520738
+    },
+    {
+      "path": "00_README_FIRST/SOURCE_NOTES.md",
+      "size": 500
+    },
+    {
+      "path": "00_README_FIRST/colors.json",
+      "size": 292
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_dark_1880x440.png",
+      "size": 33372
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_light_1880x440.png",
+      "size": 41390
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_dark.webp",
+      "size": 32312
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_dark_1280x300.png",
+      "size": 86576
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_dark_1880x440.png",
+      "size": 89247
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_light_1280x300.png",
+      "size": 59016
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_light_940x220.png",
+      "size": 40401
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_light_940x220.png",
+      "size": 35822
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_light_1280x300.png",
+      "size": 52059
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_light.webp",
+      "size": 27884
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_light.webp",
+      "size": 26440
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_dark.webp",
+      "size": 25394
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_dark_940x220.png",
+      "size": 33666
+    },
+    {
+      "path": "03_LOGOS/wordmark_panel_dark_940x220.png",
+      "size": 56914
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_light_1880x440.png",
+      "size": 35946
+    },
+    {
+      "path": "03_LOGOS/wordmark_transparent_on_dark_1280x300.png",
+      "size": 49491
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/github_social_preview_1280x640.jpg",
+      "size": 60639
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/readme_header_1600x480.jpg",
+      "size": 46052
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/github_social_preview_1280x640.png",
+      "size": 142733
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/readme_header_1600x480.png",
+      "size": 112562
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/open_graph_1200x630.jpg",
+      "size": 54060
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/open_graph_1200x630.png",
+      "size": 130183
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/website_hero_1920x540.png",
+      "size": 131400
+    },
+    {
+      "path": "07_SOCIAL_REPOSITORY/website_hero_1920x540.jpg",
+      "size": 55218
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.icns",
+      "size": 538190
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/owon-ng.desktop.example",
+      "size": 190
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/owon-ng.ico",
+      "size": 71706
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/owon-ng-with-name.ico",
+      "size": 82716
+    },
+    {
+      "path": "06_PLATFORMS/WEB/pwa-maskable-512.png",
+      "size": 29480
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-48.png",
+      "size": 4142
+    },
+    {
+      "path": "06_PLATFORMS/WEB/pwa-192.png",
+      "size": 43553
+    },
+    {
+      "path": "06_PLATFORMS/WEB/pwa-maskable-192.png",
+      "size": 8622
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-96.png",
+      "size": 12973
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon.ico",
+      "size": 70436
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-16.png",
+      "size": 735
+    },
+    {
+      "path": "06_PLATFORMS/WEB/safari-pinned-tab.svg",
+      "size": 1613
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-512.png",
+      "size": 163351
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-192.png",
+      "size": 39724
+    },
+    {
+      "path": "06_PLATFORMS/WEB/site.webmanifest",
+      "size": 741
+    },
+    {
+      "path": "06_PLATFORMS/WEB/pwa-512.png",
+      "size": 175938
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-32.png",
+      "size": 2127
+    },
+    {
+      "path": "06_PLATFORMS/WEB/example-head.html",
+      "size": 337
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-64.png",
+      "size": 6471
+    },
+    {
+      "path": "06_PLATFORMS/WEB/favicon-256.png",
+      "size": 61133
+    },
+    {
+      "path": "06_PLATFORMS/WEB/apple-touch-icon.png",
+      "size": 33651
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-76@2x.png",
+      "size": 25289
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-20@2x.png",
+      "size": 2856
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-20@2x.png",
+      "size": 2856
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-40@1x.png",
+      "size": 2856
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-20@3x.png",
+      "size": 5500
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/Contents.json",
+      "size": 2350
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-29@3x.png",
+      "size": 10276
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ios-marketing-1024.png",
+      "size": 329292
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-76@1x.png",
+      "size": 8168
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-29@2x.png",
+      "size": 5247
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-40@3x.png",
+      "size": 17236
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-29@1x.png",
+      "size": 1694
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-83.5@2x.png",
+      "size": 29346
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-20@1x.png",
+      "size": 952
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-40@2x.png",
+      "size": 8915
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-29@2x.png",
+      "size": 5247
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-60@3x.png",
+      "size": 33651
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-iphone-60@2x.png",
+      "size": 17236
+    },
+    {
+      "path": "06_PLATFORMS/IOS/Assets.xcassets/AppIcon.appiconset/owon-ng-ipad-40@2x.png",
+      "size": 8915
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_128.png",
+      "size": 23412
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_256.png",
+      "size": 66767
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_512.png",
+      "size": 163351
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_32.png",
+      "size": 2402
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_32.png",
+      "size": 2127
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_16.png",
+      "size": 735
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_24.png",
+      "size": 1509
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_512.png",
+      "size": 175938
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_48.png",
+      "size": 4142
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_24.png",
+      "size": 1360
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_64.png",
+      "size": 6471
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_256.png",
+      "size": 61133
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng_128.png",
+      "size": 21224
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_64.png",
+      "size": 7371
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_16.png",
+      "size": 814
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/icons/owon-ng-with-name_48.png",
+      "size": 4677
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/StoreLogo.scale-100.png",
+      "size": 4442
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square44x44Logo.scale-200.png",
+      "size": 11363
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square150x150Logo.scale-200.png",
+      "size": 83864
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Wide310x150Logo.scale-400.png",
+      "size": 152172
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square71x71Logo.scale-400.png",
+      "size": 71157
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Wide310x150Logo.scale-200.png",
+      "size": 62852
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square150x150Logo.scale-100.png",
+      "size": 29970
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square71x71Logo.scale-200.png",
+      "size": 24820
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square71x71Logo.scale-100.png",
+      "size": 7819
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square310x310Logo.scale-200.png",
+      "size": 223731
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square44x44Logo.scale-100.png",
+      "size": 3558
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/StoreLogo.scale-200.png",
+      "size": 14148
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square150x150Logo.scale-400.png",
+      "size": 214425
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Wide310x150Logo.scale-100.png",
+      "size": 24147
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square44x44Logo.scale-400.png",
+      "size": 34269
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/StoreLogo.scale-400.png",
+      "size": 41995
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square310x310Logo.scale-100.png",
+      "size": 87856
+    },
+    {
+      "path": "06_PLATFORMS/WINDOWS/MSIX/Assets/Square310x310Logo.scale-400.png",
+      "size": 543282
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/16x16/apps/owon-ng.png",
+      "size": 735
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/22x22/apps/owon-ng.png",
+      "size": 1189
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/512x512/apps/owon-ng.png",
+      "size": 175938
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/24x24/apps/owon-ng.png",
+      "size": 1360
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/64x64/apps/owon-ng.png",
+      "size": 6471
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/256x256/apps/owon-ng.png",
+      "size": 66767
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/128x128/apps/owon-ng.png",
+      "size": 23412
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/1024x1024/apps/owon-ng.png",
+      "size": 372869
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/48x48/apps/owon-ng.png",
+      "size": 4142
+    },
+    {
+      "path": "06_PLATFORMS/LINUX/hicolor/32x32/apps/owon-ng.png",
+      "size": 2127
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xxxhdpi/ic_launcher_foreground.png",
+      "size": 20928
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xxxhdpi/ic_stat_owon_ng.png",
+      "size": 16785
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xxxhdpi/ic_launcher_monochrome.png",
+      "size": 17726
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+      "size": 4677
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+      "size": 5330
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+      "size": 43553
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+      "size": 45968
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+      "size": 14380
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+      "size": 15893
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xxhdpi/ic_launcher_foreground.png",
+      "size": 14391
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xxhdpi/ic_stat_owon_ng.png",
+      "size": 11466
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xxhdpi/ic_launcher_monochrome.png",
+      "size": 12022
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+      "size": 8952
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+      "size": 10127
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/values/owon_ng_colors.xml",
+      "size": 156
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xhdpi/ic_launcher_foreground.png",
+      "size": 8390
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xhdpi/ic_stat_owon_ng.png",
+      "size": 6477
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-xhdpi/ic_launcher_monochrome.png",
+      "size": 6902
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-hdpi/ic_launcher_foreground.png",
+      "size": 5821
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-hdpi/ic_stat_owon_ng.png",
+      "size": 4380
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-hdpi/ic_launcher_monochrome.png",
+      "size": 4611
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+      "size": 27778
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+      "size": 29800
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml",
+      "size": 318
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml",
+      "size": 318
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-mdpi/ic_launcher_foreground.png",
+      "size": 3434
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-mdpi/ic_stat_owon_ng.png",
+      "size": 2342
+    },
+    {
+      "path": "06_PLATFORMS/ANDROID/app/src/main/res/drawable-mdpi/ic_launcher_monochrome.png",
+      "size": 2526
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_256x256.png",
+      "size": 66767
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_32x32.png",
+      "size": 2402
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_16x16.png",
+      "size": 814
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_128x128.png",
+      "size": 23412
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_32x32@2x.png",
+      "size": 7371
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_128x128@2x.png",
+      "size": 66767
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_256x256@2x.png",
+      "size": 175938
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_512x512@2x.png",
+      "size": 372869
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_16x16@2x.png",
+      "size": 2402
+    },
+    {
+      "path": "06_PLATFORMS/MACOS/owon-ng.iconset/icon_512x512.png",
+      "size": 175938
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_with_spinner_1024x576.png",
+      "size": 114870
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_light_1280x720.png",
+      "size": 146265
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_no_spinner_2560x1440.png",
+      "size": 376557
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_light_1920x1080.png",
+      "size": 120898
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_technical_blue_scope_1280x720.png",
+      "size": 75992
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_technical_blue_scope_1600x900.png",
+      "size": 99825
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_light.webp",
+      "size": 66604
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_no_spinner_1600x900.png",
+      "size": 192347
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_light_1024x576.png",
+      "size": 114120
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_no_spinner_1920x1080.png",
+      "size": 120039
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_light_2560x1440.png",
+      "size": 376977
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_no_spinner_1280x720.png",
+      "size": 145948
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_no_spinner.webp",
+      "size": 69324
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_technical_blue_scope_2560x1440.png",
+      "size": 192355
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_with_spinner_1920x1080.png",
+      "size": 122193
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_with_spinner_1280x720.png",
+      "size": 148521
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_technical_blue_scope_1920x1080.png",
+      "size": 64310
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_technical_blue_scope.webp",
+      "size": 36356
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_light_1600x900.png",
+      "size": 192475
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_with_spinner_1600x900.png",
+      "size": 195564
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_with_spinner.webp",
+      "size": 70410
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_no_spinner_1024x576.png",
+      "size": 112933
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_technical_blue_scope_1024x576.png",
+      "size": 61407
+    },
+    {
+      "path": "05_SPLASH/LANDSCAPE/splash_dark_with_spinner_2560x1440.png",
+      "size": 382848
+    },
+    {
+      "path": "05_SPLASH/PORTRAIT/splash_portrait_dark_720x1280.png",
+      "size": 118630
+    },
+    {
+      "path": "05_SPLASH/PORTRAIT/splash_portrait_light_1440x2560.png",
+      "size": 305143
+    },
+    {
+      "path": "05_SPLASH/PORTRAIT/splash_portrait_dark_1080x1920.png",
+      "size": 108544
+    },
+    {
+      "path": "05_SPLASH/PORTRAIT/splash_portrait_light_720x1280.png",
+      "size": 115560
+    },
+    {
+      "path": "05_SPLASH/PORTRAIT/splash_portrait_dark_1440x2560.png",
+      "size": 313371
+    },
+    {
+      "path": "05_SPLASH/PORTRAIT/splash_portrait_light_1080x1920.png",
+      "size": 107157
+    },
+    {
+      "path": "08_STORE_ASSETS/SCREENSHOT_TEMPLATES/desktop_landscape_1920x1080_PLACEHOLDER.png",
+      "size": 59092
+    },
+    {
+      "path": "08_STORE_ASSETS/SCREENSHOT_TEMPLATES/README.md",
+      "size": 260
+    },
+    {
+      "path": "08_STORE_ASSETS/SCREENSHOT_TEMPLATES/phone_portrait_1242x2688_PLACEHOLDER.png",
+      "size": 73322
+    },
+    {
+      "path": "08_STORE_ASSETS/SCREENSHOT_TEMPLATES/tablet_landscape_2732x2048_PLACEHOLDER.png",
+      "size": 120651
+    },
+    {
+      "path": "08_STORE_ASSETS/APPLE_APP_STORE/marketing_icon_1024.png",
+      "size": 329292
+    },
+    {
+      "path": "08_STORE_ASSETS/MICROSOFT_STORE/store_icon_300.png",
+      "size": 83864
+    },
+    {
+      "path": "08_STORE_ASSETS/GOOGLE_PLAY/feature_graphic_1024x500.png",
+      "size": 108414
+    },
+    {
+      "path": "08_STORE_ASSETS/GOOGLE_PLAY/play_store_icon_512.png",
+      "size": 175938
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_48.png",
+      "size": 2004
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_128.png",
+      "size": 5879
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_512.png",
+      "size": 30250
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_32.png",
+      "size": 1013
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_1024.png",
+      "size": 48776
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_96.png",
+      "size": 4802
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_512.png",
+      "size": 23118
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_1024.png",
+      "size": 35722
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_48.png",
+      "size": 1787
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_24.png",
+      "size": 712
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_128.png",
+      "size": 6757
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_16.png",
+      "size": 424
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_512.png",
+      "size": 33090
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_128.png",
+      "size": 6060
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_256.png",
+      "size": 13534
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_256.png",
+      "size": 10032
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_96.png",
+      "size": 4296
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_64.png",
+      "size": 2623
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_32.png",
+      "size": 1205
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_1024.png",
+      "size": 40155
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_1024.png",
+      "size": 42091
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_24.png",
+      "size": 497
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_96.png",
+      "size": 4218
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_128.png",
+      "size": 4411
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_32.png",
+      "size": 1056
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_32.png",
+      "size": 1123
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_96.png",
+      "size": 4669
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_256.png",
+      "size": 14307
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_48.png",
+      "size": 1243
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_48.png",
+      "size": 1756
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_1024.png",
+      "size": 44838
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_24.png",
+      "size": 684
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_256.png",
+      "size": 12790
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_16.png",
+      "size": 397
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_dark_512.png",
+      "size": 28571
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_64.png",
+      "size": 2950
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_16.png",
+      "size": 459
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_24.png",
+      "size": 741
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_64.png",
+      "size": 1817
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_256.png",
+      "size": 15017
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_32.png",
+      "size": 712
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_orange_64.png",
+      "size": 2601
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_16.png",
+      "size": 326
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_16.png",
+      "size": 442
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_128.png",
+      "size": 6527
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_white_96.png",
+      "size": 3079
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_64.png",
+      "size": 2852
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_512.png",
+      "size": 31602
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_transparent_light_48.png",
+      "size": 1928
+    },
+    {
+      "path": "02_ICONS/TRANSPARENT/flow_symbol_mono_black_24.png",
+      "size": 803
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_48.png",
+      "size": 2962
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_48.png",
+      "size": 3486
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_144.png",
+      "size": 23794
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_72.png",
+      "size": 7486
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_20.png",
+      "size": 1094
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_40.png",
+      "size": 3114
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_20.png",
+      "size": 1235
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_24.png",
+      "size": 1211
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_72.png",
+      "size": 4853
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_256.png",
+      "size": 24169
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_128.png",
+      "size": 20444
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_256.png",
+      "size": 45010
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_96.png",
+      "size": 7126
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_384.png",
+      "size": 40680
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_32.png",
+      "size": 1759
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_40.png",
+      "size": 2621
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_512.png",
+      "size": 93442
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_180.png",
+      "size": 28656
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_20.png",
+      "size": 938
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_64.png",
+      "size": 4249
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_36.png",
+      "size": 3118
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_40.png",
+      "size": 2347
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_96.png",
+      "size": 11600
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_36.png",
+      "size": 2008
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_180.png",
+      "size": 24417
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_192.png",
+      "size": 26549
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_192.png",
+      "size": 35218
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_128.png",
+      "size": 10431
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_16.png",
+      "size": 698
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_1024.png",
+      "size": 177106
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_24.png",
+      "size": 1681
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_36.png",
+      "size": 2622
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_1024.png",
+      "size": 191857
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_64.png",
+      "size": 6358
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_1024.png",
+      "size": 188748
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_64.png",
+      "size": 5339
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_32.png",
+      "size": 2191
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_128.png",
+      "size": 17592
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_24.png",
+      "size": 1419
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_96.png",
+      "size": 9808
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_384.png",
+      "size": 76245
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_144.png",
+      "size": 20847
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_32.png",
+      "size": 2570
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_72.png",
+      "size": 8908
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_256.png",
+      "size": 38810
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_36.png",
+      "size": 2255
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_192.png",
+      "size": 17556
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_180.png",
+      "size": 16144
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_96.png",
+      "size": 13499
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_192.png",
+      "size": 31182
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_144.png",
+      "size": 17673
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_512.png",
+      "size": 106256
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_384.png",
+      "size": 84286
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_144.png",
+      "size": 12136
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_128.png",
+      "size": 14839
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_32.png",
+      "size": 1884
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_48.png",
+      "size": 4897
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_64.png",
+      "size": 7529
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_512.png",
+      "size": 53864
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_180.png",
+      "size": 32176
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_256.png",
+      "size": 50778
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_20.png",
+      "size": 975
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_16.png",
+      "size": 675
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_24.png",
+      "size": 1242
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_light_with_name_1024.png",
+      "size": 73469
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_40.png",
+      "size": 3681
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_512.png",
+      "size": 116407
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_72.png",
+      "size": 6357
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_round_with_name_16.png",
+      "size": 884
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_symbol_only_384.png",
+      "size": 66094
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_48.png",
+      "size": 4115
+    },
+    {
+      "path": "02_ICONS/APP_PNG/app_icon_flow_dark_with_name_16.png",
+      "size": 773
+    },
+    {
+      "path": "02_ICONS/JPEG/app_icon_flow_dark_symbol_only_1024.jpg",
+      "size": 69655
+    },
+    {
+      "path": "02_ICONS/JPEG/app_icon_flow_round_with_name_1024.jpg",
+      "size": 96265
+    },
+    {
+      "path": "02_ICONS/JPEG/app_icon_flow_light_with_name_1024.jpg",
+      "size": 63466
+    },
+    {
+      "path": "02_ICONS/JPEG/app_icon_flow_dark_with_name_1024.jpg",
+      "size": 87881
+    },
+    {
+      "path": "02_ICONS/WEBP/flow_symbol_transparent_dark_1024.webp",
+      "size": 34704
+    },
+    {
+      "path": "02_ICONS/WEBP/app_icon_flow_round_with_name_1024.webp",
+      "size": 70296
+    },
+    {
+      "path": "02_ICONS/WEBP/flow_symbol_mono_orange_1024.webp",
+      "size": 41966
+    },
+    {
+      "path": "02_ICONS/WEBP/app_icon_flow_dark_symbol_only_1024.webp",
+      "size": 36888
+    },
+    {
+      "path": "02_ICONS/WEBP/app_icon_flow_light_with_name_1024.webp",
+      "size": 33822
+    },
+    {
+      "path": "02_ICONS/WEBP/flow_symbol_mono_black_1024.webp",
+      "size": 30952
+    },
+    {
+      "path": "02_ICONS/WEBP/flow_symbol_transparent_light_1024.webp",
+      "size": 40706
+    },
+    {
+      "path": "02_ICONS/WEBP/flow_symbol_mono_white_1024.webp",
+      "size": 18436
+    },
+    {
+      "path": "02_ICONS/WEBP/app_icon_flow_dark_with_name_1024.webp",
+      "size": 46004
+    }
+  ]
+}

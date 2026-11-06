@@ -14,6 +14,7 @@ from PySide6.QtGui import QColor, QPalette
 from PySide6.QtTest import QTest
 from PySide6.QtWidgets import QApplication
 from native.app import ScopeWindow
+from native.branding import startup_splash
 from native.version import VERSION
 
 def main():
@@ -36,10 +37,14 @@ def main():
                     dark.setColor(group,role,QColor("#f2f2f2"))
             app.setPalette(dark)
             app.styleHints().setColorScheme(Qt.ColorScheme.Dark)
+        splash=startup_splash(app);splash.show();app.processEvents()
+        name=f"{seed}-startup.png"
+        if not splash.grab().save(str(output/name)):raise RuntimeError("Could not capture startup")
+        records.append({"file":name,"state":"startup","inherited_palette":seed})
         window=ScopeWindow()
         window.timer.stop()
         window.profile.setCurrentText("PWM")
-        window.show();QTest.qWait(120)
+        window.show();splash.finish(window);QTest.qWait(120)
         def capture(state):
             app.processEvents()
             name=f"{seed}-{state}.png"
@@ -58,6 +63,11 @@ def main():
                 recording=Path(tmp)/"demo.json"
                 window.capture.save(recording,"Opgeslagen voorbeeld",window.view_state())
                 window.read_capture(recording);capture("imported")
+            about=window.about_dialog();about.show();QTest.qWait(60)
+            name=f"{seed}-about.png"
+            if not about.grab().save(str(output/name)):raise RuntimeError("Could not capture About")
+            records.append({"file":name,"state":"about","inherited_palette":seed})
+            about.close()
             window.profile.showPopup();QTest.qWait(60)
             name=f"{seed}-profile-popup.png"
             if not window.profile.view().window().grab().save(str(output/name)):
