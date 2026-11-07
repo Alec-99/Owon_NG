@@ -21,3 +21,7 @@ Inspect at least the running, decoded, compact, imported/disabled and popup case
 ## 0.4.2 evidence
 
 The owner's Windows screenshot exposed inherited dark control surfaces combined with fixed dark text. The fix owns the Fusion palette and explicitly styles control states/popups. Local Linux/offscreen screenshots with an inherited dark palette were captured and visually reviewed. This caught missing dropdown arrows and an oversized compact layout; both were corrected and checked again. The startup entrypoint was also exercised at 125% scaling. Windows CI evidence is generated separately; do not describe local offscreen images as reviewed Windows screenshots.
+
+## 0.4.4 selected artwork correction
+
+All 30 automated checks passed; 16 screenshots were captured locally with Linux/Qt offscreen. The running window, compact decoded window with inherited dark palette, imported/disabled state, profile popup and About dialog were visually inspected. The exact selected dark banner fits at 1040x760 and the original named Flow icon is visible in About. Platform conversion is checked against the selected source pixels; Windows CI separately builds and starts the actual EXE. Low-resolution concept sources are retained unchanged; no detail is claimed beyond the supplied artwork.

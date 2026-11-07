@@ -26,7 +26,7 @@ def shell(w,button,pages,version):
   a=QAction(p,w);a.triggered.connect(lambda checked=False,r=i:w.nav.setCurrentRow(r));menu.addAction(a)
  help=w.menuBar().addMenu("&Help");help.addAction("Bediening en veiligheid",lambda:w.nav.setCurrentRow(7));help.addSeparator();help.addAction("Over OWON NG",w.show_about)
  bar=QToolBar("Bestand",w);bar.setMovable(False);bar.setToolButtonStyle(Qt.ToolButtonTextBesideIcon);w.addToolBar(bar)
- w.wordmark=BrandImage(WORDMARK,154,36,trim_padding=True);bar.addWidget(w.wordmark);bar.addSeparator()
+ w.wordmark=BrandImage(WORDMARK,240,46);bar.addWidget(w.wordmark);bar.addSeparator()
  for text,slot,icon in (("Openen",w.open_capture,QStyle.SP_DialogOpenButton),("Bewaren",w.save_capture,QStyle.SP_DialogSaveButton)):
   a=QAction(w.style().standardIcon(icon),text,w);a.triggered.connect(slot);bar.addAction(a)
  bar.addSeparator();bar.addWidget(QLabel("  Werkruimte  "))

@@ -2,9 +2,7 @@
   <qresource prefix="/owon">
     <file alias="down.svg">assets/down.svg</file>
     <file alias="up.svg">assets/up.svg</file>
-    <file alias="brand/app.ico">../assets/branding/flow-v2/06_PLATFORMS/WINDOWS/owon-ng.ico</file>
-    <file alias="brand/wordmark-light.png">../assets/branding/flow-v2/03_LOGOS/wordmark_transparent_on_light_940x220.png</file>
-    <file alias="brand/banner-light.png">../assets/branding/flow-v2/04_BANNERS/banner_light_scope_and_wave_1600x347.png</file>
-    <file alias="brand/splash-dark.png">../assets/branding/flow-v2/05_SPLASH/LANDSCAPE/splash_dark_no_spinner_1280x720.png</file>
+    <file alias="brand/app-source.png">../assets/branding/flow-v2/09_CONCEPT_REFERENCES/selected_reference_1.png</file>
+    <file alias="brand/banner-selected.png">../assets/branding/flow-v2/09_CONCEPT_REFERENCES/selected_reference_2.png</file>
   </qresource>
 </RCC>

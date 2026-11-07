@@ -1,7 +1,7 @@
 """Build native distributions without browser or HTTP server."""
 import argparse,pathlib,shutil,subprocess,sys,zipfile,importlib.metadata,runpy
 root=pathlib.Path(__file__).resolve().parents[1];version=runpy.run_path(str(root/'native/version.py'))['VERSION'];out=root/'artifacts';out.mkdir(exist_ok=True)
-brand=root/'assets/branding/flow-v2';icon=brand/'06_PLATFORMS/WINDOWS/owon-ng.ico'
+brand=root/'assets/branding/flow-v2';icon=out/'owon-ng-selected.ico'
 p=argparse.ArgumentParser();p.add_argument('target',choices=['python','windows','android']);args=p.parse_args()
 if args.target=='android':raise SystemExit('Native Android is not implemented; the old WebView APK is retired.')
 if args.target=='python':
@@ -11,6 +11,9 @@ if args.target=='python':
    if f.is_file():z.write(f,f.relative_to(root))
 else:
  if sys.platform!='win32':raise SystemExit('Build Windows EXE on Windows with the Native app packages workflow.')
+ sys.path.insert(0,str(root))
+ from native.branding_assets import write_windows_icon
+ write_windows_icon(brand/'09_CONCEPT_REFERENCES/selected_reference_1.png',icon)
  subprocess.run([sys.executable,'-m','PyInstaller','--noconfirm','--clean','--windowed','--onedir','--icon',str(icon),'--name',f'Owon_NG-{version}','app.py'],cwd=root,check=True)
  stage=root/'dist'/f'Owon_NG-{version}';shutil.copy(root/'docs/NATIVE_APP.md',stage/'LEESMIJ.md')
  shutil.copy(root/'docs/HARDWARE_VALIDATION.md',stage/'HARDWARE_VALIDATION.md')

@@ -12,7 +12,7 @@ from native.version import VERSION
 PAGES=["Automotive","Elektronica","Vrij meten","Bibliotheek","Opnames / Geschiedenis","Rapporten","Instellingen","Help"]
 from native.layout import STYLE, shell, scope
 from native.theme import configure_theme
-from native.branding import apply_branding,startup_splash,BrandImage,BANNER,ICON
+from native.branding import apply_branding,startup_splash,BrandImage,BANNER,ICON,application_icon
 from PySide6.QtGui import QIcon
 def button(text,fn):
  b=QPushButton(text);b.clicked.connect(fn);return b
@@ -22,7 +22,7 @@ def group(title):
 class ScopeWindow(QMainWindow):
  def __init__(self):
   super().__init__()
-  configure_theme(QApplication.instance());apply_branding(QApplication.instance());self.setWindowIcon(QIcon(ICON))
+  configure_theme(QApplication.instance());apply_branding(QApplication.instance());self.setWindowIcon(application_icon())
   self.setWindowTitle(f"Owon NG {VERSION} — native oscilloscoop · DEMO")
   self.resize(1440,960);self.running=True;self.saved=[];self.capture=fixture("CKP inductief")
   content=shell(self,button,PAGES,VERSION)
@@ -174,7 +174,8 @@ class ScopeWindow(QMainWindow):
   except ValueError as e:self.analysis_result.setText(str(e))
  def about_dialog(self):
   dialog=QDialog(self);dialog.setWindowTitle("Over OWON NG")
-  layout=QVBoxLayout(dialog);layout.addWidget(BrandImage(BANNER,560,122))
+  layout=QVBoxLayout(dialog);layout.addWidget(BrandImage(BANNER,560,106))
+  mark=QLabel();mark.setPixmap(application_icon().pixmap(96,96));mark.setAccessibleName("OWON NG app-icoon");layout.addWidget(mark)
   text=QLabel(f"<b>OWON NG {VERSION}</b><br>Native oscilloscoop voor automotive en elektronica.<br><br>Deze ontwikkelversie gebruikt simulaties en geïmporteerde samples.<br>Een werkende OWON-USB-driver en fysieke validatie zijn nog niet beschikbaar.<br><br>Onafhankelijk project; geen officiële fabrikantsoftware.")
   text.setWordWrap(True);layout.addWidget(text)
   buttons=QDialogButtonBox(QDialogButtonBox.Close);buttons.button(QDialogButtonBox.Close).setText("Sluiten");buttons.rejected.connect(dialog.reject);layout.addWidget(buttons)

@@ -7,20 +7,24 @@ from PySide6.QtGui import QIcon,QPainter,QPixmap,QRegion
 from PySide6.QtWidgets import QWidget,QSplashScreen
 from native import resources_rc
 from native.version import VERSION
+from native.branding_assets import icon_image
 
 NAME="OWON NG"
-ICON=":/owon/brand/app.ico"
-WORDMARK=":/owon/brand/wordmark-light.png"
-BANNER=":/owon/brand/banner-light.png"
-SPLASH=":/owon/brand/splash-dark.png"
+ICON=":/owon/brand/app-source.png"
+BANNER=":/owon/brand/banner-selected.png"
+WORDMARK=BANNER
+SPLASH=BANNER
 _identity_applied=False
+
+def application_icon():
+    return QIcon(QPixmap.fromImage(icon_image(ICON)))
 
 def apply_branding(app):
     global _identity_applied
     app.setApplicationVersion(VERSION)
     app.setApplicationName(NAME)
     app.setApplicationDisplayName(NAME)
-    app.setWindowIcon(QIcon(ICON))
+    app.setWindowIcon(application_icon())
     if sys.platform=="win32" and not _identity_applied:
         # Stable identity for native taskbar grouping, also when run with Python.
         set_identity=ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID
@@ -56,10 +60,10 @@ def startup_splash(app):
         raise RuntimeError("Startup image unavailable.")
     screen=app.primaryScreen()
     ratio=screen.devicePixelRatio() if screen else 1
-    size=QSize(round(640*ratio),round(360*ratio))
+    size=QSize(round(640*ratio),round(121*ratio))
     image=original.scaled(size,Qt.KeepAspectRatio,Qt.SmoothTransformation)
     image.setDevicePixelRatio(ratio)
     splash=QSplashScreen(image)
     splash.setAccessibleName("OWON NG wordt gestart")
-    splash.setWindowIcon(QIcon(ICON))
+    splash.setWindowIcon(application_icon())
     return splash
